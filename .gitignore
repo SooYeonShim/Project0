@@ -1,0 +1,49 @@
+# 빌드 결과물
+build/
+out/
+bin/
+lib/
+x64/
+x86/
+Debug/
+Release/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# 컴파일 결과물
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.pch
+*.ipch
+
+# Visual Studio 2022
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.VC.db
+*.VC.opendb
+
+# 디버그
+*.pdb
+*.ilk
+*.exp
+
+# 기타
+*.log
+*.tmp
+*.cache
+.DS_Store
+Thumbs.db
