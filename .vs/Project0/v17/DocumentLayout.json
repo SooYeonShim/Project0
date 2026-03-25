@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Project0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Project0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Project0.cpp",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Project0.cpp",
+              "RelativeDocumentMoniker": "Project0.cpp",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Project0.cpp",
+              "RelativeToolTip": "Project0.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-03-25T05:44:39.317Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
