@@ -76,12 +76,14 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
     std::string line(30, '=');
     std::cout << "현황판" << std::endl;
     std::cout << line << std::endl;
-    for (vector<Player>::const_iterator it = player.begin(); it != player.end(); ++it) {
+    for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it) {
+        cout << it->GetNickname() << "  " << it->GetHP() << " / " << it->GetMaxHP() << std::endl;
 
     }
     std::cout << std::endl;    
-    for (vector<Monster>::const_iterator it = monster.begin(); it != monster.end(); ++it) {
-
+    for (vector<Monster>::iterator it = monster.begin(); it != monster.end(); ++it) {
+        // TODO:: 몬스터 종류 이름을 가져오기
+        cout << "고블린" << "  " << it->GetHP() << " / " << it->GetMaxHP() << std::endl;
     }
     std::cout << line << std::endl;
 
@@ -181,6 +183,9 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             {
                 break;
             }
+            else if (it->GetIsDead()) {
+                continue;
+            }
             
             // 현황판 출력
             // Player의 XX스킬 공격 대상 설정
@@ -188,7 +193,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         }               
                   
         // Enemy Turn
-                // 적이 공격함
+                
 
         // End Loop Condition Check;
         
