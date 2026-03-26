@@ -1,14 +1,8 @@
-#pragma once
-
-enum class TargetType
-{
-	ENEMY,
-	FRIENDLY,
-	MYSELF
-};
+﻿#pragma once
 
 #include <vector>
 #include <string>
+#include "GameEnums.h"
 
 class Character;
 

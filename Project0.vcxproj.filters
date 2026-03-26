@@ -63,6 +63,9 @@
     <ClCompile Include="Battle\MonsterSpawn.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Dice\Defence.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle\BattleManager.h">
@@ -116,9 +119,13 @@
     <ClInclude Include="Battle\MonsterSpawn.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Dice\Defence.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="ReadMe.md" />
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>

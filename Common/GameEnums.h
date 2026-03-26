@@ -1,9 +1,12 @@
-#pragma once
+﻿#pragma once
 
 enum class JobType {
     Fighter, Archer, Defender, Rogue
 };
 
-enum class TargetType {
-    Enemy, Friendly, Myself
+enum class TargetType
+{
+    ENEMY,
+    FRIENDLY,
+    MYSELF
 };
