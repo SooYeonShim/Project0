@@ -187,20 +187,6 @@ void BattleManager::AddRerollCount(int count)
     }
 }
 
-
-BattleManager* BattleManager::sInstance = nullptr;
-
-BattleManager* BattleManager::GetInstance()
-{
-    if (!sInstance) 
-    {
-        sInstance = new BattleManager();
-    }
-
-    return sInstance;
-}
-
-
 BattleManager::BattleManager() 
 {
     RerollCount = 2;
