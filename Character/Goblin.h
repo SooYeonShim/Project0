@@ -3,8 +3,7 @@
 
 class Goblin : public Monster {
 public:
-	Goblin() : Monster(12, Dice()) {};
-
+	Goblin(Dice& MonsterDice) : Monster(12, MonsterDice) {};
 private:
 
 };
