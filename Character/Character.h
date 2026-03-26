@@ -20,7 +20,7 @@ public:
 	void SetCurrentAction(Action* CurrentAction);
 
 	void RollDice();
-	void DoAction(vector<Character> target);
+	void DoAction(vector<Character*> target);
 	
 private:
 	int HP;

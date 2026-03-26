@@ -1,24 +1,27 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <vector>
+
 #include "Player.h"
+#include "Monster.h"
+#include "Goblin.h"
 
 class BattleManager
 {
 public:
     static BattleManager& getInstance()
     {
-        static BattleManager instance; // ÃÖÃÊ 1È¸¸¸ »ı¼º
+        static BattleManager instance; // ìµœì´ˆ 1íšŒë§Œ ìƒì„±
         return instance;
     }
 
     bool Battle(vector<Player>&, int Stage);
-    void AddRerollCount();    
+    void AddRerollCount(int count);    
 
 private:
 
-    BattleManager() {};
-    // º¹»ç/´ëÀÔµµ ¸·À½
+    BattleManager();
+    // ë³µì‚¬/ëŒ€ì…ë„ ë§‰ìŒ
     BattleManager(const BattleManager&) = delete;
     BattleManager& operator=(const BattleManager&) = delete;
 
