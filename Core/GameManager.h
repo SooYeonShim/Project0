@@ -1,20 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Player.h"
 
-class GameManager 
+using namespace std;
+
+class GameManager
 {
 public:
     static GameManager& getInstance() {
-        static GameManager instance; // ÃÖÃÊ 1È¸¸¸ »ı¼º
+        static GameManager instance; // ìµœì´ˆ 1íšŒë§Œ ìƒì„±
         return instance;
     }
+
+
+
+    void InitializeCharacter(vector<Player>& Players);
+    void GameStart();
+    void BattleResult(bool Result);
+
 private:
-    // »ı¼ºÀÚ¸¦ privateÀ¸·Î ¸·À½
+    // ìƒì„±ìë¥¼ privateìœ¼ë¡œ ë§‰ìŒ
     GameManager() {}
 
-    // º¹»ç/´ëÀÔµµ ¸·À½
+    // ë³µì‚¬/ëŒ€ì…ë„ ë§‰ìŒ
     GameManager(const GameManager&) = delete;
     GameManager& operator=(const GameManager&) = delete;
 
