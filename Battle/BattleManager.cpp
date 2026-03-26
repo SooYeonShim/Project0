@@ -120,7 +120,7 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, s
 
 #pragma endregion
 
-bool BattleManager::Battle(std::vector<Player>& player, int stage)
+bool BattleManager::Battle(std::vector<Player>& players, int stage)
 {
     // 몬스터 생성
     // TODO:: MonsterSpawn으로 교체
@@ -140,7 +140,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
     while (true) 
     {
         // 플레이어 다이스 상태 초기화
-        for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+        for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
             it->SetCurrentAction(nullptr);
         }
@@ -160,7 +160,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
 
             // 생존자 리스트 중에 한명을 임의의 타겟으로 설정
             std::vector<Player*> alivePlayers;
-            for (auto& p : player)
+            for (Player& p : players)
             {
                 if (p.GetHP() > 0) { // HP가 0보다 큰 생존자만 추가
                     alivePlayers.push_back(&p);
@@ -174,7 +174,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             }
         }
 
-        PrintBattleBoard(player, monsters, targetMap);
+        PrintBattleBoard(players, monsters, targetMap);
 
         int remainRerollCount = RerollCount;
 
@@ -186,7 +186,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         // DICE PHASE
 
         // 주사위 굴리기
-        RollDiceByPlayers(player);
+        RollDiceByPlayers(players);
 
 
         bool isDicePhaseFinished = false;
@@ -211,7 +211,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             switch (userInput) 
             {
             case 0:
-                PrintBattleBoard(player, monsters, targetMap);
+                PrintBattleBoard(players, monsters, targetMap);
                 break;
             case 1:
                 // 주사위 리셋할 수 있게 처리               
@@ -220,8 +220,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
                 --remainRerollCount;
 
                 // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
-                RollDiceByPlayers(player);
-
+                RollDiceByPlayers(players);
                 break;
             case 3:
                 isDicePhaseFinished = true;
@@ -240,7 +239,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             
         bool isTargetPhaseFinished = false;
 
-        for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+        for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
             if (isTargetPhaseFinished) 
             {
@@ -287,7 +286,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
 
         // 플레이어 파티의 생존 여부 체크
         bool isGameOver = true;
-        for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+        for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
             // TODO:: isDead 플래그로 교체하기
             if (it->GetHP() > 0) {
@@ -309,11 +308,12 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
     return false;
 }
 
-void BattleManager::RollDiceByPlayers(std::vector<Player>& player) {
+void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
+{
 
-    WaitForEnter("주사위를 굴립니다. ( 게속 하려면 엔터키를 눌러주세요. )");
+    WaitForEnter("주사위를 굴립니다. ( 계속 하려면 엔터키를 눌러주세요. )");
 
-    for (auto it = player.begin(); it != player.end(); ++it)
+    for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
     {
         if (it->GetCurrentAction() == nullptr)
         {
@@ -331,8 +331,6 @@ void BattleManager::AddRerollCount(int count)
         RerollCount = 0;
     }
 }
-
-
 
 BattleManager::BattleManager()
 {
