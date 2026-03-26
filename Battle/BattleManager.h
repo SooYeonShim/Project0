@@ -1,7 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+
 #include "Player.h"
+#include "Monster.h"
 
 class BattleManager
 {
@@ -13,7 +15,7 @@ public:
     }
 
     bool Battle(vector<Player>&, int Stage);
-    void AddRerollCount();    
+    void AddRerollCount(int count);    
 
 private:
 
