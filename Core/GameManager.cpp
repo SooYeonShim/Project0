@@ -6,23 +6,43 @@ using namespace std;
 void GameManager::InitializeCharacter(vector<Player>& Players)
 {
     int PlayerCount = 0;
-    string NickName;
+    string Name;
 
-    for (int i = 0; i < 1; ++i)
+    for (int i = 0; i < 2; ++i)
     {
         int jobChoice;
 
         cout << i + 1 << "번 플레이어 이름: ";
-        getline(cin, NickName);
+        getline(cin, Name);
 
-        cout << "직업 선택 (0:Fighter, 1:Archer, 2:Defender, 3:Rogue): ";
-        cin >> jobChoice;
-        cin.ignore();
+        //0~3사이의 값이 안들어오는거 방지
+        while (true)
+        {
+            cout << "직업 선택 (0:Fighter, 1:Archer, 2:Defender, 3:Rogue): ";
+            if (!(cin >> jobChoice))
+            {
+                cin.clear();
+                cin.ignore(10000, '\n');
+                cout << "숫자만 입력 가능합니다. 다시 입력해주세요" << endl;
+                continue;
+            }
+
+            cin.ignore();
+
+            if (jobChoice >= 0 && jobChoice <= 3)
+            {
+                break;
+            }
+            else
+            {
+                cout << "0~3 사이의 숫자를 입력해주세요" << endl;
+            }
+        }
 
         Dice mydice;
 
         // 입력받은 숫자를 JobType으로 변환하여 추가
-        Players.push_back(Player(10, mydice, NickName, static_cast<JobType>(jobChoice)));
+        Players.push_back(Player(10, mydice, Name, static_cast<JobType>(jobChoice)));
     }
 
 }
@@ -35,8 +55,8 @@ void GameManager::GameStart()
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
     //초기화 정상작동 확인
-    cout << "첫 번째 플레이어 이름: " << Players[0].GetNickname() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
-    //cout << "두 번째 플레이어 이름: " << Players[1].GetNickname() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
+    cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
+    cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
 
     //처음 스테이지 초기화
     CurrentStage = 1;
