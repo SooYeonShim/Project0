@@ -74,14 +74,35 @@ static void PrintMenu(const std::vector<std::string>& menus, int width = 30)
 static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
 {
     std::string line(30, '=');
+    std::cout << line << std::endl;
     std::cout << "현황판" << std::endl;
     std::cout << line << std::endl;
-    for (vector<Player>::const_iterator it = player.begin(); it != player.end(); ++it) {
+    for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+    {
+        std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
+
+        // 장착상태 확인
+        /*if (it->GetCurrentAction() != nullptr) {
+            std::cout << " " << it->GetCurrentAction()->GetActionName();
+
+            // Target 설정
+        }*/
+
+        std::cout << std::endl;
 
     }
     std::cout << std::endl;    
-    for (vector<Monster>::const_iterator it = monster.begin(); it != monster.end(); ++it) {
+    for (vector<Monster>::iterator it = monster.begin(); it != monster.end(); ++it)
+    {
+        // TODO:: 몬스터 종류 이름을 가져오기
+        std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
 
+        if (it->GetCurrentAction() != nullptr) {
+            std::cout << " " << it->GetCurrentAction()->GetActionName();
+            
+        }
+
+        std::cout << std::endl;
     }
     std::cout << line << std::endl;
 
@@ -95,26 +116,42 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
     // 몬스터 생성
     // TODO:: MonsterSpawn으로 교체
     std::vector<Monster> monsters;
-    monsters.reserve(3);
+    monsters.reserve(6);
     
     for (int i = 0; i < 3; ++i) {
-        //monsters.push_back(Goblin());
+        Monster monster = TemplateManager::getInstance().GetMonsterByGoblin();
+        monster.SetCurrentAction(nullptr);
+        monsters.push_back(monster);
     }
+
+    int turn = 1;
 
     while (true) 
     {
+
+        PrintBattleBoard(player, monsters);
         // Enemy 
             // Enemy 다이스를 굴림 -> 다이스는 단일
             // 사용은 X, 공격 대상만 보여줌
+
+        // 플레이어 다이스 상태 초기화
+        for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it) {
+            it->SetCurrentAction(nullptr);
+        }
+
         
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it) 
         {
             // 몬스터가 주사위를 굴림
-            //it->RollDice();
+            it->RollDice();
         }
 
 
         int remainRerollCount = RerollCount;
+
+        std::stringstream ss;
+        ss << "[ 턴 : " << turn << " ]";
+        PrintMessage(ss.str());
 
         // Player Turn
         // DICE PHASE
@@ -145,16 +182,15 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             switch (userInput) 
             {
             case 0:
-                // 현황판 출력
                 PrintBattleBoard(player, monsters);
                 break;
             case 1:
-                // 주사위 착용할 수 있게 처리
+                // 주사위 착용할 수 있게 처리                
                 break;
             case 2:
                 --remainRerollCount;
 
-                // 주사위 새로 굴리기
+                // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
                 WaitForEnter("주사위를 굴립니다. ( 게속 하려면 엔터키를 눌러주세요. )");
 
                 break;
@@ -181,6 +217,9 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             {
                 break;
             }
+            else if (it->GetIsDead()) {
+                continue;
+            }
             
             // 현황판 출력
             // Player의 XX스킬 공격 대상 설정
@@ -188,11 +227,12 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         }               
                   
         // Enemy Turn
-                // 적이 공격함
+                
 
         // End Loop Condition Check;
         
         // 플레이어 파티의 생존 여부 체크
+        ++turn;
     }
     
     return false;
