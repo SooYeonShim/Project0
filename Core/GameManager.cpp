@@ -1,6 +1,5 @@
 ﻿#include "GameManager.h"
 
-
 using namespace std;
 
 void GameManager::InitializeCharacter(vector<Player>& Players)
@@ -38,3 +37,4 @@ void GameManager::BattleResult(bool Result)
 {
 
 }
+
