@@ -15,6 +15,9 @@ public:
 	void SetLevel(int Level);
 	void SetExp(int Exp);
 
+    
+
+
 private:
 	string Nickname;
 	JobType Job;
