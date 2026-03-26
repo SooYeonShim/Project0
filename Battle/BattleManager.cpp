@@ -157,8 +157,21 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             // 몬스터가 주사위를 굴림
             it->RollDice();            
 
-            // TODO:: 랜덤으로 초기화 + 타겟이 없는 경우는???
-            targetMap[&(*it)].push_back(&player[0]);
+
+            // 생존자 리스트 중에 한명을 임의의 타겟으로 설정
+            std::vector<Player*> alivePlayers;
+            for (auto& p : player)
+            {
+                if (p.GetHP() > 0) { // HP가 0보다 큰 생존자만 추가
+                    alivePlayers.push_back(&p);
+                }
+            }
+
+            if (!alivePlayers.empty())
+            {
+                int randomIndex = rand() % alivePlayers.size();
+                targetMap[&(*it)].push_back(alivePlayers[randomIndex]);
+            }
         }
 
         PrintBattleBoard(player, monsters, targetMap);
