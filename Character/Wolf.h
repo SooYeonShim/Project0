@@ -4,7 +4,7 @@
 
 class Wolf : public Monster {
 public:
-	Wolf(Dice& MonsterDice) : Monster(8, MonsterDice) {};
+	Wolf(Dice& MonsterDice) : Monster(8, MonsterDice, "늑대") {};
 
 private:
 
