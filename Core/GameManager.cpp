@@ -1,5 +1,6 @@
 ﻿#include "GameManager.h"
 
+
 using namespace std;
 
 void GameManager::InitializeCharacter(vector<Player>& Players)
@@ -18,8 +19,10 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         cin >> jobChoice;
         cin.ignore();
 
+        Dice mydice;
+
         // 입력받은 숫자를 JobType으로 변환하여 추가
-        Players.push_back(Player(10, Dice(), NickName, static_cast<JobType>(jobChoice)));
+        Players.push_back(Player(10, mydice, NickName, static_cast<JobType>(jobChoice)));
     }
 
 }
@@ -52,6 +55,8 @@ void GameManager::GameStart()
     //게임 종료
     return;
 
+    BattleResult(BM.Battle(Players, CurrentStage));
+
 }
 
 // 전투 결과에 따라 게임 종료 혹은 경험치&아이템 획득
@@ -67,6 +72,5 @@ void GameManager::BattleResult(bool Result)
         // 플레이어 캐릭터 전멸 게임 종료
         return;
     }
-
 }
 
