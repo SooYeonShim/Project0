@@ -4,7 +4,6 @@
 class Goblin : public Monster {
 public:
 	Goblin(Dice& MonsterDice) : Monster(12, MonsterDice) {};
-
 private:
 
 };
