@@ -1,4 +1,4 @@
-#include "Character.h"
+﻿#include "Character.h"
 
 
 int Character::GetHP() {
@@ -15,7 +15,7 @@ Dice Character::GetDice()
 	return CharacterDice;
 }
 
-Action Character::GetCurrentAction()
+Action* Character::GetCurrentAction()
 {
 	return CurrentAction;
 }
@@ -35,7 +35,7 @@ void Character::SetDice(Dice CharacterDice)
 	this->CharacterDice = CharacterDice;
 }
 
-Action Character::SetCurrentAction(Action CurrentAction)
+Action* Character::SetCurrentAction(Action* CurrentAction)
 {
 	this->CurrentAction = CurrentAction;
 }

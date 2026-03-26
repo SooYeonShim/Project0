@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 #include <vector>
 #include "Dice.h"
@@ -13,11 +13,11 @@ public:
 	int GetHP();
 	int GetShield();
 	Dice GetDice();
-	Action GetCurrentAction();
+	Action* GetCurrentAction();
 	void SetHP(int HP);
 	void SetShield(int Shield);
 	void SetDice(Dice CharacterDice);
-	Action SetCurrentAction(Action CurrentAction);
+	Action* SetCurrentAction(Action* CurrentAction);
 
 	void RollDice();
 	void DoAction(vector<Character> target);
@@ -26,5 +26,5 @@ private:
 	int HP;
 	int Shield;
 	Dice CharacterDice;
-	Action CurrentAction;
+	Action* CurrentAction;
 };
