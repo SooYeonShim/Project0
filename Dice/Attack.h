@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Action.h"
 
 
@@ -11,6 +11,8 @@ private:
 public:
 	virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target) override;
 	virtual void PrintInfo() override;
+
+    virtual Action* Clone() { new Attack(*this); }
 
 public:
 	Attack(int _power = 1);
