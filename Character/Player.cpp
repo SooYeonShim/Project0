@@ -1,8 +1,6 @@
 ﻿#include "Player.h"
 
-string Player::GetNickname() {
-    return Nickname;
-}
+
 JobType Player::GetJobType() {
     return Job;
 }
@@ -12,10 +10,7 @@ int Player::GetLevel() {
 int Player::GetExp() {
     return Exp;
 };
-void Player::SetNickname(string Nickname)
-{
-    this->Nickname = Nickname;
-}
+
 void Player::SetJobType(JobType Job)
 {
     this->Job = Job;

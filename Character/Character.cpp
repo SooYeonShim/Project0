@@ -1,6 +1,9 @@
 ﻿#include "Character.h"
 
 
+string Character::GetName() {
+	return Name;
+}
 int Character::GetHP() {
 	return HP;
 }
@@ -28,6 +31,10 @@ Action* Character::GetCurrentAction()
 	return CurrentAction;
 }
 
+void Character::SetName(string Name)
+{
+	this->Name = Name;
+}
 void Character::SetHP(int HP)
 {
 	this->HP = HP;
@@ -57,15 +64,21 @@ void Character::SetCurrentAction(Action* CurrentAction)
 {
 	this->CurrentAction = CurrentAction;
 }
+
 void Character::RollDice()
 {
     // 주사위의 GetRandomAction 메서드를 호출해 현재 액션에 저장
-    Action* CurrentAction = &CharacterDice.GetRandomAction();
+   CurrentAction = &CharacterDice.GetRandomAction();
 }
+
 void Character::DoAction(vector<Character*> target)
 {
-    // 본 객체의 주소를 vector에 넣고 타겟 캐릭터에 대해 액션 실행
-    std::vector<Character*> self;
-    self.push_back(this);
-    CurrentAction->DoAciton(self, target);
+    if (CurrentAction != nullptr)
+    {
+        // 본 객체의 주소를 vector에 넣고 타겟 캐릭터에 대해 액션 실행
+        std::vector<Character*> self;
+        self.push_back(this);
+
+        CurrentAction->DoAciton(self, target);
+    }
 }

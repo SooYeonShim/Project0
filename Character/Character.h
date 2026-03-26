@@ -9,9 +9,10 @@ using namespace std;
 class Character 
 {
 public:
-	Character(int MaxHP, Dice& CharacterDice) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice) {};
+	Character(int MaxHP, Dice& CharacterDice, string Name) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice), Name(Name), IsDead(false), CurrentAction(nullptr), Shield(0) {};
 
     // Getter
+    string GetName();
 	int GetHP();
     int GetMaxHP();
     bool GetIsDead();
@@ -20,6 +21,7 @@ public:
 	Action* GetCurrentAction();
 
     // Setter
+    void SetName(string Name);
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
     void SetIsDead(bool IsDead);
@@ -32,6 +34,7 @@ public:
 	void DoAction(vector<Character*> target);
 	
 private:
+    string Name; // 이름
 	int HP; // 체력
     int MaxHP; // 최대 체력
     bool IsDead; // 사망 여부
