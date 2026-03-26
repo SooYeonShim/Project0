@@ -12,12 +12,12 @@ public:
 	int GetExp();
 	void SetNickname(string Nickname);
 	void SetJobType(JobType job);
-	void SetLevel(int level);
+	void SetLevel(int Level);
 	void SetExp(int Exp);
 
 private:
 	string Nickname;
 	JobType Job;
-	int level;
+	int Level;
 	int Exp;
 };
