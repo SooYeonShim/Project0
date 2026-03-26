@@ -39,3 +39,13 @@ Action* Character::SetCurrentAction(Action* CurrentAction)
 {
 	this->CurrentAction = CurrentAction;
 }
+void Character::RollDice()
+{
+    Action* CurrentAction = &CharacterDice.GetRandomAction();
+}
+void Character::DoAction(vector<Character*> target)
+{
+    std::vector<Character*> self;
+    self.push_back(this);
+    CurrentAction->DoAciton(self, target);
+}
