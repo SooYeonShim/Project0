@@ -15,9 +15,9 @@ public:
 	Dice GetDice();
 	Action GetCurrentAction();
 	void SetHP(int HP);
-	void SetShield(int SetShield);
-	void SetDice(Dice dice);
-	Action SetCurrentAction();
+	void SetShield(int Shield);
+	void SetDice(Dice CharacterDice);
+	Action SetCurrentAction(Action CurrentAction);
 
 	void RollDice();
 	void DoAction(vector<Character> target);
