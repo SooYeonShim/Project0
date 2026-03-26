@@ -128,12 +128,19 @@
     <ClCompile Include="Battle\MonsterSpawn.cpp" />
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Core\GameManager.cpp" />
+    <ClCompile Include="Dice\Action\Attack.cpp" />
+    <ClCompile Include="Dice\Attack.cpp" />
+    <ClCompile Include="Dice\Dice.cpp" />
+    <ClCompile Include="Dice\Action\None.cpp" />
+    <ClCompile Include="Dice\None.cpp" />
     <ClCompile Include="Project0.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Battle\BattleManager.h" />
     <ClInclude Include="Battle\MonsterSpawn.h" />
-    <ClInclude Include="Character\Action.h" />
+    <ClInclude Include="Dice\Action.h" />
+    <ClInclude Include="Dice\Action\Attack.h" />
+    <ClInclude Include="Battle\BattleManager.h" />
+    <ClInclude Include="Dice\Action\Action.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Goblin.h" />
     <ClInclude Include="Character\Monster.h" />
@@ -142,7 +149,14 @@
     <ClInclude Include="Character\Wolf.h" />
     <ClInclude Include="Common\GameEnums.h" />
     <ClInclude Include="Core\GameManager.h" />
+    <ClInclude Include="Dice\Attack.h" />
     <ClInclude Include="Dice\Dice.h" />
+    <ClInclude Include="Dice\Action\None.h" />
+    <ClInclude Include="Dice\None.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
