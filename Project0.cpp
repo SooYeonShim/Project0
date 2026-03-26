@@ -4,10 +4,11 @@
 #include <iostream>
 #include <GameManager.h>
 
+
 int main()
 {
     std::cout << "Hello World!\n";
-    std::cout << "Hello World!\n";
+
     GameManager& gm = GameManager::getInstance();
 
     gm.GameStart();

@@ -6,7 +6,7 @@ class Action;
 class Dice
 {
 private:
-	std::vector<Action*> vecAction;
+    std::vector<Action*> vecAction;
 
 public:
 	// 다이스면을 전부 받아옵니다.
