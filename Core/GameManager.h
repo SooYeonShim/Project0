@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include "Player.h"
+#include "BattleManager.h"
+
 
 using namespace std;
 
