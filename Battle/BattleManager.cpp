@@ -71,7 +71,7 @@ static void PrintMenu(const std::vector<std::string>& menus, int width = 30)
     std::cout << line << std::endl;
 }
 
-static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
+static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, std::map<Monster*, std::vector<Player*>> targetMap)
 {
     std::string line(30, '=');
     std::cout << line << std::endl;
@@ -82,12 +82,11 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
         std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
 
         // 장착상태 확인
-        /*if (it->GetCurrentAction() != nullptr) {
-            std::cout << " " << it->GetCurrentAction()->GetActionName();
-
-            // Target 설정
-        }*/
-
+        if (it->GetCurrentAction() != nullptr)
+        {
+            std::cout << " " << it->GetCurrentAction()->GetActionName();                
+        }
+        
         std::cout << std::endl;
 
     }
@@ -97,15 +96,25 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
         // TODO:: 몬스터 종류 이름을 가져오기
         std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
 
-        if (it->GetCurrentAction() != nullptr) {
-            std::cout << " " << it->GetCurrentAction()->GetActionName();
-            
+        Action* currentAction = it->GetCurrentAction();
+        if (currentAction != nullptr) {
+            std::cout << " " << currentAction->GetActionName();
+
+            // Target 설정
+            if (targetMap.find(&(*it)) != targetMap.end()) {
+                auto targetPlayers = targetMap.at(&(*it));
+                std::cout << "    | ";
+                for (auto it = targetPlayers.begin(); it != targetPlayers.end(); ++it) {
+                    std::cout << (*it)->GetName() << " | ";
+                }
+            }
         }
 
         std::cout << std::endl;
     }
     std::cout << line << std::endl;
-
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
 
 
@@ -124,28 +133,35 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         monsters.push_back(monster);
     }
 
+    std::map<Monster*, std::vector<Player*>> targetMap;
+
     int turn = 1;
 
     while (true) 
     {
+        // 플레이어 다이스 상태 초기화
+        for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+        {
+            it->SetCurrentAction(nullptr);
+        }
 
-        PrintBattleBoard(player, monsters);
         // Enemy 
             // Enemy 다이스를 굴림 -> 다이스는 단일
             // 사용은 X, 공격 대상만 보여줌
 
-        // 플레이어 다이스 상태 초기화
-        for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it) {
-            it->SetCurrentAction(nullptr);
-        }
-
-        
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it) 
         {
+            // 몬스터의 기존 타겟 초기화
+            targetMap[&(*it)].clear();
+
             // 몬스터가 주사위를 굴림
-            it->RollDice();
+            it->RollDice();            
+
+            // TODO:: 랜덤으로 초기화 + 타겟이 없는 경우는???
+            targetMap[&(*it)].push_back(&player[0]);
         }
 
+        PrintBattleBoard(player, monsters, targetMap);
 
         int remainRerollCount = RerollCount;
 
@@ -157,11 +173,11 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         // DICE PHASE
 
         // 주사위 굴리기
-        WaitForEnter("주사위를 굴립니다. ( 게속 하려면 엔터키를 눌러주세요. )");
+        RollDiceByPlayers(player);
+
 
         bool isDicePhaseFinished = false;
-
-        std::vector<std::string> dicePhaseMenu = { "플레이어 행동", "", "0. 현황판 확인", "1. 주사위 착용하기", "2. 리롤하기", "3. 다음 페이즈로" };              
+        std::vector<std::string> dicePhaseMenu = { "플레이어 행동", "", "0. 현황판 확인", "1. 주사위 해제하기", "2. 리롤하기", "3. 다음 페이즈로" };              
 
         while (!isDicePhaseFinished)
         {
@@ -182,16 +198,16 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
             switch (userInput) 
             {
             case 0:
-                PrintBattleBoard(player, monsters);
+                PrintBattleBoard(player, monsters, targetMap);
                 break;
             case 1:
-                // 주사위 착용할 수 있게 처리                
+                // 주사위 리셋할 수 있게 처리               
                 break;
             case 2:
                 --remainRerollCount;
 
                 // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
-                WaitForEnter("주사위를 굴립니다. ( 게속 하려면 엔터키를 눌러주세요. )");
+                RollDiceByPlayers(player);
 
                 break;
             case 3:
@@ -227,15 +243,71 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
         }               
                   
         // Enemy Turn
-                
+        for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
+        {
+            if (it->GetIsDead())
+            {
+                continue;
+            }
+
+            std::vector<Character*> characters;
+            characters.reserve(20);
+
+            // 몬스터가 주사위를 굴림
+            auto targets = targetMap.find(&(*it));
+            if (targets != targetMap.end())
+            {
+                for (auto& p : targets->second)
+                {
+                    // 3. Player는 Character를 상속받았으므로 주소값을 push_back 가능
+                    characters.push_back(p);
+                }
+            }
+
+            it->DoAction(characters);
+
+            // TODO:: 랜덤으로 초기화 + 타겟이 없는 경우는???             
+        }
+
 
         // End Loop Condition Check;
-        
+
         // 플레이어 파티의 생존 여부 체크
+        bool isGameOver = true;
+        for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
+        {
+            // TODO:: isDead 플래그로 교체하기
+            if (it->GetHP() > 0) {
+                isGameOver = false;
+                break;
+            }
+        }
+
+        if (isGameOver)
+        {
+            // TODO:: 디버깅 확인용 GameManager에서 처리되면 삭제
+            std::cout << " 전투에서 패배했습니다." << std::endl;
+            return false;
+        }
+        
         ++turn;
     }
     
     return false;
+}
+
+void BattleManager::RollDiceByPlayers(std::vector<Player>& player) {
+
+    WaitForEnter("주사위를 굴립니다. ( 게속 하려면 엔터키를 눌러주세요. )");
+
+    for (auto it = player.begin(); it != player.end(); ++it)
+    {
+        if (it->GetCurrentAction() == nullptr)
+        {
+            it->RollDice();
+        }        
+    }
+
 }
 
 void BattleManager::AddRerollCount(int count)
@@ -247,7 +319,9 @@ void BattleManager::AddRerollCount(int count)
     }
 }
 
-BattleManager::BattleManager() 
+
+
+BattleManager::BattleManager()
 {
     RerollCount = 2;
 }
