@@ -17,7 +17,7 @@ public:
 	void SetHP(int HP);
 	void SetShield(int Shield);
 	void SetDice(Dice CharacterDice);
-	Action* SetCurrentAction(Action* CurrentAction);
+	void SetCurrentAction(Action* CurrentAction);
 
 	void RollDice();
 	void DoAction(vector<Character> target);
