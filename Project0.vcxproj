@@ -127,6 +127,7 @@
     <ClCompile Include="Battle\BattleManager.cpp" />
     <ClCompile Include="Battle\MonsterSpawn.cpp" />
     <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Core\GameManager.cpp" />
     <ClCompile Include="Dice\Attack.cpp" />
     <ClCompile Include="Dice\Defence.cpp" />

@@ -19,8 +19,10 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         cin >> jobChoice;
         cin.ignore();
 
+        Dice mydice;
+
         // 입력받은 숫자를 JobType으로 변환하여 추가
-        Players.push_back(Player(10, Dice(), NickName, static_cast<JobType>(jobChoice)));
+        Players.push_back(Player(10, mydice, NickName, static_cast<JobType>(jobChoice)));
     }
 
 }
