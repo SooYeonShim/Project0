@@ -63,6 +63,12 @@
     <ClCompile Include="Dice\None.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Template\TemplateManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle\BattleManager.h">
@@ -114,6 +120,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Dice\Heal.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Action\Attack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Action\None.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Template\TemplateManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

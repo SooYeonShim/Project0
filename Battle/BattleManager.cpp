@@ -98,7 +98,7 @@ bool BattleManager::Battle(std::vector<Player>& player, int stage)
     monsters.reserve(3);
     
     for (int i = 0; i < 3; ++i) {
-        monsters.push_back(Goblin());
+        //monsters.push_back(Goblin());
     }
 
     while (true) 

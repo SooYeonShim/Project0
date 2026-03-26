@@ -13,6 +13,9 @@ public:
 	void SetLevel(int Level);
 	void SetExp(int Exp);
 
+    
+
+
 private:
 	JobType Job;
 	int Level;
