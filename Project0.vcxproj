@@ -128,13 +128,11 @@
     <ClCompile Include="Battle\MonsterSpawn.cpp" />
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Core\GameManager.cpp" />
-    <ClCompile Include="Dice\Action\Attack.cpp" />
     <ClCompile Include="Dice\Attack.cpp" />
     <ClCompile Include="Dice\Defence.cpp" />
     <ClCompile Include="Dice\Dice.cpp" />
-    <ClCompile Include="Dice\Action\None.cpp" />
-    <ClCompile Include="Dice\None.cpp" />
     <ClCompile Include="Dice\Heal.cpp" />
+    <ClCompile Include="Dice\None.cpp" />
     <ClCompile Include="Project0.cpp" />
   </ItemGroup>
   <ItemGroup>
