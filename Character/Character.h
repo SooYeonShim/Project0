@@ -10,12 +10,16 @@ class Character
 {
 public:
 	Character(int MaxHP, Dice CharacterDice) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice) {};
+
+    // Getter
 	int GetHP();
     int GetMaxHP();
     bool GetIsDead();
 	int GetShield();
 	Dice GetDice();
 	Action* GetCurrentAction();
+
+    // Setter
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
     void SetIsDead(bool IsDead);
@@ -23,6 +27,7 @@ public:
 	void SetDice(Dice CharacterDice);
 	void SetCurrentAction(Action* CurrentAction);
 
+    // Function
 	void RollDice();
 	void DoAction(vector<Character*> target);
 	
