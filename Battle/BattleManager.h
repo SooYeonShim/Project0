@@ -4,6 +4,8 @@
 
 #include "Player.h"
 #include "Monster.h"
+#include "../Template/TemplateManager.h"
+
 //#include "Goblin.h"
 
 class BattleManager
