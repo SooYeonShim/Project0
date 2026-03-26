@@ -3,6 +3,9 @@
 #include <vector>
 #include <string>
 #include "Player.h"
+#include "BattleManager.h"
+#include "Character.h"
+#include "Dice.h"
 
 using namespace std;
 

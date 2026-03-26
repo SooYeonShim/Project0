@@ -1,4 +1,4 @@
-#include "Dice.h"
+ï»¿#include "Dice.h"
 
 #include <iostream>
 #include <random>
@@ -11,59 +11,59 @@ using namespace std;
 
 Dice::Dice()
 {
-	vecAction.push_back(new None);
-	vecAction.push_back(new None);
-	vecAction.push_back(new None);
-	vecAction.push_back(new None);
-	vecAction.push_back(new None);
-	vecAction.push_back(new None);
+    vecAction.push_back(new None);
+    vecAction.push_back(new None);
+    vecAction.push_back(new None);
+    vecAction.push_back(new None);
+    vecAction.push_back(new None);
+    vecAction.push_back(new None);
 }
 
 Dice::~Dice()
 {
-	// ¸Ş¸ğ¸® »èÁ¦
-	for (Action* action : vecAction)
-	{
-		delete action;
-	}
-	vecAction.clear();
+    // ë©”ëª¨ë¦¬ ì‚­ì œ
+    for (Action* action : vecAction)
+    {
+        delete action;
+    }
+    vecAction.clear();
 }
 
 Action& Dice::GetRandomAction()
 {
-	// TODO: ¿©±â¿¡ return ¹®À» »ğÀÔÇÕ´Ï´Ù.
+    // TODO: ì—¬ê¸°ì— return ë¬¸ì„ ì‚½ì…í•©ë‹ˆë‹¤.
 
-	// ³­¼ö »ı¼º
-	std::random_device rd;
-	std::mt19937 g(rd());
+    // ë‚œìˆ˜ ìƒì„±
+    std::random_device rd;
+    std::mt19937 g(rd());
 
-	// ¹üÀ§ ÁöÁ¤
-	uniform_int_distribution<int> distance(0, 5);
+    // ë²”ìœ„ ì§€ì •
+    uniform_int_distribution<int> distance(0, 5);
 
-	// ·£´ı °á°ú Ãâ·Â
-	int face = distance(g);
+    // ëœë¤ ê²°ê³¼ ì¶œë ¥
+    int face = distance(g);
 
-	return *(vecAction[face]);
+    return *(vecAction[face]);
 }
 
 void Dice::SetAction(int _faceNumber, Action* _SetAct)
 {
-	//¿¹¿ÜÁ¶°Ç °Ë»ç
-	if (_faceNumber < 0 && _faceNumber > 5)
-	{
-		cout << "Á¤»óÀûÀÎ ¹üÀ§°¡ ¾Æ´Õ´Ï´Ù." << endl;
-		return;
-	}
+    //ì˜ˆì™¸ì¡°ê±´ ê²€ì‚¬
+    if (_faceNumber < 0 && _faceNumber > 5)
+    {
+        cout << "ì •ìƒì ì¸ ë²”ìœ„ê°€ ì•„ë‹™ë‹ˆë‹¤." << endl;
+        return;
+    }
 
-	if (_SetAct == nullptr)
-	{
-		cout << "ÁÖ¾îÁø ÁÖ»çÀ§¸éÀÌ ¾ø½À´Ï´Ù." << endl;
-		return;
-	}
+    if (_SetAct == nullptr)
+    {
+        cout << "ì£¼ì–´ì§„ ì£¼ì‚¬ìœ„ë©´ì´ ì—†ìŠµë‹ˆë‹¤." << endl;
+        return;
+    }
 
-	// µî·ÏÇÏ±â Àü °¡Áö°íÀÖ´ø ¸é »èÁ¦
-	delete vecAction[_faceNumber];
+    // ë“±ë¡í•˜ê¸° ì „ ê°€ì§€ê³ ìˆë˜ ë©´ ì‚­ì œ
+    delete vecAction[_faceNumber];
 
-	// »õ·Î¿î ¸éÀ» µî·Ï
-	vecAction[_faceNumber] = _SetAct;
+    // ìƒˆë¡œìš´ ë©´ì„ ë“±ë¡
+    vecAction[_faceNumber] = _SetAct;
 }

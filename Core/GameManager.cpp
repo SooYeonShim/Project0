@@ -1,5 +1,6 @@
 ﻿#include "GameManager.h"
 
+
 using namespace std;
 
 void GameManager::InitializeCharacter(vector<Player>& Players)
@@ -7,7 +8,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     int PlayerCount = 0;
     string NickName;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 1; ++i)
     {
         int jobChoice;
 
@@ -19,22 +20,32 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         cin.ignore();
 
         // 입력받은 숫자를 JobType으로 변환하여 추가
-        Players.push_back(Player(NickName, static_cast<JobType>(jobChoice)));
+        Players.push_back(Player(10, Dice(), NickName, static_cast<JobType>(jobChoice)));
     }
 
 }
 
 void GameManager::GameStart()
 {
+    BattleManager& BM = BattleManager::getInstance();
     InitializeCharacter(Players);
     //초기화 정상작동 확인
     cout << "첫 번째 플레이어 이름: " << Players[0].GetNickname() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
     cout << "두 번째 플레이어 이름: " << Players[1].GetNickname() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
 
+    BattleResult(BM.Battle(Players, CurrentStage));
+
 }
 
 void GameManager::BattleResult(bool Result)
 {
+    if (Result == true)
+    {
 
+    }
+    else
+    {
+
+    }
 }
 
