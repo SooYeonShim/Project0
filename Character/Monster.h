@@ -1,11 +1,10 @@
-#pragma once
-#include <vector>
+﻿#pragma once
 #include "Character.h"
 
 
 class Monster : public Character {
 public:
-	Monster(int HP, Dice CharacterDice) : Character(HP, CharacterDice) {};
+	Monster(int HP, Dice& CharacterDice) : Character(HP, CharacterDice) {};
 
 private:
 

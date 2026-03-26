@@ -1,11 +1,10 @@
-#pragma once
+﻿#pragma once
+#include "Character.h"
 #include "Monster.h"
-
-Dice WolfDice;
 
 class Wolf : public Monster {
 public:
-	Wolf() : Monster(8, WolfDice) {};
+	Wolf(Dice& MonsterDice) : Monster(8, MonsterDice) {};
 
 private:
 
