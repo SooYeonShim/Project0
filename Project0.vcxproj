@@ -135,6 +135,7 @@
     <ClCompile Include="Dice\Heal.cpp" />
     <ClCompile Include="Dice\None.cpp" />
     <ClCompile Include="Project0.cpp" />
+    <ClCompile Include="Template\TemplateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle\MonsterSpawn.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Dice\Action\None.h" />
     <ClInclude Include="Dice\None.h" />
     <ClInclude Include="Dice\Heal.h" />
+    <ClInclude Include="Template\TemplateManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
