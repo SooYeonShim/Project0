@@ -28,24 +28,39 @@
     <Filter Include="헤더 파일\Core">
       <UniqueIdentifier>{9b9835b1-3b7a-46a0-bbf3-d92a54b52c56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Character">
-      <UniqueIdentifier>{110a3831-0228-4463-b9f8-8136c149e798}</UniqueIdentifier>
+    <Filter Include="data">
+      <UniqueIdentifier>{1b18a57a-6ae6-4a2f-b2b6-22a4a2b34655}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project0.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Character\Character.cpp">
-      <Filter>소스 파일\Character</Filter>
+    <ClCompile Include="Dice\Dice.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Battle\MonsterSpawn.cpp">
+    <ClCompile Include="Dice\Action\None.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\Action\Attack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\Attack.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\None.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\GameManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Character.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Battle\BattleManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Core\GameManager.cpp">
+    <ClCompile Include="Battle\MonsterSpawn.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +68,7 @@
     <ClInclude Include="Battle\BattleManager.h">
       <Filter>헤더 파일\Battle</Filter>
     </ClInclude>
-    <ClInclude Include="Character\Action.h">
+    <ClInclude Include="Dice\Action\Action.h">
       <Filter>헤더 파일\Battle</Filter>
     </ClInclude>
     <ClInclude Include="Character\Character.h">
@@ -77,14 +92,33 @@
     <ClInclude Include="Common\GameEnums.h">
       <Filter>헤더 파일\Common</Filter>
     </ClInclude>
+    <ClInclude Include="Core\GameManager.h">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
     <ClInclude Include="Dice\Dice.h">
       <Filter>헤더 파일\Dice</Filter>
     </ClInclude>
-    <ClInclude Include="Core\GameManager.h">
-      <Filter>헤더 파일\Core</Filter>
+    <ClInclude Include="Dice\Action\None.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Action\Attack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Attack.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Action.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\None.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Battle\MonsterSpawn.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="ReadMe.md" />
   </ItemGroup>
 </Project>
