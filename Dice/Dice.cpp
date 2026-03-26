@@ -19,6 +19,18 @@ Dice::Dice()
 	vecAction.push_back(new None);
 }
 
+Dice::Dice(const Dice& _Other)
+{
+    for (Action* action : _Other.vecAction)
+    {
+        if (action != nullptr)
+        {
+            this->vecAction.push_back(action->Clone());
+        }
+    }
+
+}
+
 Dice::~Dice()
 {
 	// 메모리 삭제
