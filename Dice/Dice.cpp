@@ -3,8 +3,8 @@
 #include <iostream>
 #include <random>
 
-#include "Action/Action.h"
-#include "Action/None.h"
+#include "Action.h"
+#include "None.h"
 
 using namespace std;
 
