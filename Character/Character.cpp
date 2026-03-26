@@ -35,7 +35,19 @@ void Character::SetDice(Dice CharacterDice)
 	this->CharacterDice = CharacterDice;
 }
 
-Action* Character::SetCurrentAction(Action* CurrentAction)
+void Character::SetCurrentAction(Action* CurrentAction)
 {
 	this->CurrentAction = CurrentAction;
+}
+void Character::RollDice()
+{
+    // 주사위의 GetRandomAction 메서드를 호출해 현재 액션에 저장
+    Action* CurrentAction = &CharacterDice.GetRandomAction();
+}
+void Character::DoAction(vector<Character*> target)
+{
+    // 본 객체의 주소를 vector에 넣고 타겟 캐릭터에 대해 액션 실행
+    std::vector<Character*> self;
+    self.push_back(this);
+    CurrentAction->DoAciton(self, target);
 }
