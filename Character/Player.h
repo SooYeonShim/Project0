@@ -5,7 +5,7 @@
 class Player : public Character
 {
 public:
-	Player(int HP, Dice CharacterDice, string Nickname, JobType Job): Character(HP, CharacterDice), Nickname(Nickname), Job(Job) {};
+	Player(int HP, Dice& CharacterDice, string Nickname, JobType Job): Character(HP, CharacterDice), Nickname(Nickname), Job(Job) {};
 	string GetNickname();
 	JobType GetJobType();
 	int GetLevel();
