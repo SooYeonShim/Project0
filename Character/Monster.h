@@ -4,7 +4,7 @@
 
 class Monster : public Character {
 public:
-	Monster(int HP, Dice& CharacterDice) : Character(HP, CharacterDice) {};
+	Monster(int HP, Dice& CharacterDice, string Name) : Character(HP, CharacterDice, Name) {};
 
 private:
 
