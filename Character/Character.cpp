@@ -5,6 +5,14 @@ int Character::GetHP() {
 	return HP;
 }
 
+int Character::GetMaxHP() {
+	return MaxHP;
+}
+
+bool Character::GetIsDead() {
+    return IsDead;
+}
+
 int Character::GetShield() 
 {
 	return Shield;
@@ -23,6 +31,16 @@ Action* Character::GetCurrentAction()
 void Character::SetHP(int HP)
 {
 	this->HP = HP;
+}
+
+void Character::SetIsDead(bool IsDead)
+{
+	this->IsDead = IsDead;
+}
+
+void Character::SetMaxHP(int MaxHP)
+{
+	this->MaxHP = MaxHP;
 }
 
 void Character::SetShield(int Shield)
