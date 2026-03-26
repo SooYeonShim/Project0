@@ -102,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Character;$(ProjectDir)Common;$(ProjectDir)Dice;$(ProjectDir)Battle;$(ProjectDir)Core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,19 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GameManager.h" />
     <ClCompile Include="Project0.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Action.h" />
-    <ClInclude Include="Goblin.h" />
-    <ClInclude Include="BattleManager.h" />
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="Dice.h" />
-    <ClInclude Include="GameEnums.h" />
-    <ClInclude Include="Monster.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="Wolf.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
