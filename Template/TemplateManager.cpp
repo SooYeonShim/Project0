@@ -6,7 +6,7 @@
 
 Goblin TemplateManager::GetMonsterByGoblin()
 {
-    Dice dice = GetDiceByWolf();
+    Dice dice = GetDiceByGobline();
 
 
     return Goblin(dice);
