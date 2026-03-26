@@ -124,10 +124,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle\BattleManager.cpp" />
+    <ClCompile Include="Battle\MonsterSpawn.cpp" />
+    <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Core\GameManager.cpp" />
     <ClCompile Include="Project0.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Battle\BattleManager.h" />
+    <ClInclude Include="Battle\MonsterSpawn.h" />
     <ClInclude Include="Character\Action.h" />
     <ClInclude Include="Character\Character.h" />
     <ClInclude Include="Character\Goblin.h" />
