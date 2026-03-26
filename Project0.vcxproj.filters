@@ -13,10 +13,60 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Battle">
+      <UniqueIdentifier>{f00791bf-f088-4f87-8959-0d708e878d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Character">
+      <UniqueIdentifier>{5e692026-0cc4-4e63-a8bd-a1f7c9cf2ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Common">
+      <UniqueIdentifier>{834bbc5f-b62a-4d15-a25a-6fa8f24d49ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Dice">
+      <UniqueIdentifier>{94e4036d-0e31-4c07-a6ce-f910024536cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Core">
+      <UniqueIdentifier>{9b9835b1-3b7a-46a0-bbf3-d92a54b52c56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project0.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Battle\BattleManager.h">
+      <Filter>헤더 파일\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Action.h">
+      <Filter>헤더 파일\Battle</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Goblin.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Monster.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Orc.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Wolf.h">
+      <Filter>헤더 파일\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\GameEnums.h">
+      <Filter>헤더 파일\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Dice.h">
+      <Filter>헤더 파일\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\GameManager.h">
+      <Filter>헤더 파일\Core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -126,6 +126,19 @@
   <ItemGroup>
     <ClCompile Include="Project0.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Battle\BattleManager.h" />
+    <ClInclude Include="Character\Action.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\Goblin.h" />
+    <ClInclude Include="Character\Monster.h" />
+    <ClInclude Include="Character\Orc.h" />
+    <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Character\Wolf.h" />
+    <ClInclude Include="Common\GameEnums.h" />
+    <ClInclude Include="Core\GameManager.h" />
+    <ClInclude Include="Dice\Dice.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

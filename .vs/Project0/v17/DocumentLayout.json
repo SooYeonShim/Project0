@@ -3,16 +3,52 @@
   "WorkspaceRootPath": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Wolf.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Wolf.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Orc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Orc.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Monster.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Monster.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Goblin.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Goblin.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Battle\\BattleManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Battle\\BattleManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Action.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Action.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Common\\GameEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Common\\GameEnums.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Character.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Character\\Character.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Dice\\Dice.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Dice\\Dice.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Core\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Core\\GameManager.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Project0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AF5B66CF-E173-413E-9D4D-14578D15173C}|Project0.vcxproj|solutionrelative:Project0.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Bravo 17\\source\\repos\\Project0\\Dice\\Dice.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Dice\\Dice.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,6 +63,123 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Wolf.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Wolf.h",
+              "RelativeDocumentMoniker": "Character\\Wolf.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Wolf.h",
+              "RelativeToolTip": "Character\\Wolf.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:51:18.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BattleManager.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Battle\\BattleManager.h",
+              "RelativeDocumentMoniker": "Battle\\BattleManager.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Battle\\BattleManager.h",
+              "RelativeToolTip": "Battle\\BattleManager.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:45:21.182Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GameEnums.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Common\\GameEnums.h",
+              "RelativeDocumentMoniker": "Common\\GameEnums.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Common\\GameEnums.h",
+              "RelativeToolTip": "Common\\GameEnums.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:26.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Player.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Player.h",
+              "RelativeDocumentMoniker": "Character\\Player.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Player.h",
+              "RelativeToolTip": "Character\\Player.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:25.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Goblin.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Goblin.h",
+              "RelativeDocumentMoniker": "Character\\Goblin.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Goblin.h",
+              "RelativeToolTip": "Character\\Goblin.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:22.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Character.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Character.h",
+              "RelativeDocumentMoniker": "Character\\Character.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Character.h",
+              "RelativeToolTip": "Character\\Character.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:13.454Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Action.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Action.h",
+              "RelativeDocumentMoniker": "Character\\Action.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Action.h",
+              "RelativeToolTip": "Character\\Action.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:12.418Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Orc.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Orc.h",
+              "RelativeDocumentMoniker": "Character\\Orc.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Orc.h",
+              "RelativeToolTip": "Character\\Orc.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:09.884Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Monster.h",
+              "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Monster.h",
+              "RelativeDocumentMoniker": "Character\\Monster.h",
+              "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Character\\Monster.h",
+              "RelativeToolTip": "Character\\Monster.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-03-26T01:44:05.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "GameManager.h",
               "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Core\\GameManager.h",
               "RelativeDocumentMoniker": "Core\\GameManager.h",
@@ -39,20 +192,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 9,
               "Title": "Dice.h",
               "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Dice\\Dice.h",
               "RelativeDocumentMoniker": "Dice\\Dice.h",
               "ToolTip": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Dice\\Dice.h",
               "RelativeToolTip": "Dice\\Dice.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-03-26T01:39:05.665Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 11,
               "Title": "Project0.cpp",
               "DocumentMoniker": "C:\\Users\\Bravo 17\\source\\repos\\Project0\\Project0.cpp",
               "RelativeDocumentMoniker": "Project0.cpp",

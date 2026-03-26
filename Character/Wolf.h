@@ -1,12 +1,11 @@
 #pragma once
-
 #include "Monster.h"
 
 Dice WolfDice;
 
-class Wolf : public Character {
+class Wolf : public Monster {
 public:
-	Wolf() : Monster(HP, WolfDice) {};
+	Wolf() : Monster(8, WolfDice) {};
 
 private:
 
