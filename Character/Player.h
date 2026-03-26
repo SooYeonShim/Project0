@@ -5,9 +5,9 @@
 class Player : public Character
 {
 public:
-	Player(int HP, Dice CharacterDice, string Nickname, JobType Job): Character(HP, CharacterDice), Nickname(Nickname), Job(Job) {};
-    string GetNickname() { return Nickname; }
-    JobType GetJobType() { return Job; }
+	Player(int HP, Dice& CharacterDice, string Nickname, JobType Job): Character(HP, CharacterDice), Nickname(Nickname), Job(Job) {};
+	string GetNickname();
+	JobType GetJobType();
 	int GetLevel();
 	int GetExp();
 	void SetNickname(string Nickname);

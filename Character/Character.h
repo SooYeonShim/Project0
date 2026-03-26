@@ -9,7 +9,7 @@ using namespace std;
 class Character 
 {
 public:
-	Character(int MaxHP, Dice CharacterDice) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice) {};
+	Character(int MaxHP, Dice& CharacterDice) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice) {};
 
     // Getter
 	int GetHP();
