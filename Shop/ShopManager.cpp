@@ -51,6 +51,10 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
             BuyItem(PlayerMoney);
             break;
         }
+        else if (PlayerInput == 3)
+        {
+            break;
+        }
         else 
         {
             cout << "잘못된 입력입니다. 다시 입력해주세요." << endl;
