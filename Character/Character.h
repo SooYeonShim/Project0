@@ -15,7 +15,7 @@ public:
     string GetName();
 	int GetHP();
     int GetMaxHP();
-    bool GetIsDead();
+    bool GetIsDead() const;
 	int GetShield();
 	Dice GetDice();
 	Action* GetCurrentAction();

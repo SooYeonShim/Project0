@@ -134,8 +134,8 @@
     <ClCompile Include="Dice\Dice.cpp" />
     <ClCompile Include="Dice\Heal.cpp" />
     <ClCompile Include="Dice\None.cpp" />
+    <ClCompile Include="Inventory\InventoryManager.cpp" />
     <ClCompile Include="Item\HealingPotion.cpp" />
-    <ClCompile Include="Inventory\Inventory.cpp" />
     <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Project0.cpp" />
     <ClCompile Include="Shop\ShopManager.cpp" />
@@ -161,8 +161,8 @@
     <ClInclude Include="Dice\Action\None.h" />
     <ClInclude Include="Dice\None.h" />
     <ClInclude Include="Dice\Heal.h" />
+    <ClInclude Include="Inventory\InventoryManager.h" />
     <ClInclude Include="Item\HealingPotion.h" />
-    <ClInclude Include="Inventory\Inventory.h" />
     <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Shop\ShopManager.h" />
     <ClInclude Include="Template\TemplateManager.h" />
