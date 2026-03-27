@@ -13,6 +13,12 @@ Defence::Defence(int _power)
 
 void Defence::PrintInfo()
 {
+    cout << "아군에게" << power << "의 쉴드를 줍니다." << endl;
+}
+
+void Defence::DoActive()
+{
+    // UI출력
     string selfnames = "?";
     string targetnames = "?";
 
@@ -33,11 +39,9 @@ void Defence::PrintInfo()
             targetnames += ", ";
     }
 
-    cout << selfnames <<"는 공격에 대비합니다. " << power << "만큼 쉴드가 증가합니다." << endl;
-}
+    cout << selfnames << "는 공격에 대비합니다. " << power << "만큼 쉴드가 증가합니다." << endl;
 
-void Defence::DoActive()
-{
+
     // 자기자신에게 쉴드 추가
     for (int i = 0; i < vecself.size(); ++i)
     {
