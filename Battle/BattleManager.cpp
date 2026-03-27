@@ -1,195 +1,46 @@
 ﻿#include <sstream>
-
 #include "BattleManager.h"
 
+
+// 임시코드 -> 다 옮기고 지울 예정
 #pragma region 출력 관련 편의상 만든 함수
 
+// 지우는 함수
+static void ClearScreen()
+{
+    return;
+    //UIManager::ClearScreen();
+}
+
+// 한글 폭 계산 (Visual Studio UTF-8 기준)
+static int GetVisualWidth(const std::string& str) {
+    UIManager::GetVisualWidth(str);
+}
+
+static void PrintMessage(std::string message) {
+    UIManager::PrintMessage(message);
+}
+
+static void WaitForEnter(std::string message) {
+    return UIManager::Wait(message);
+}
+
 static int GetUserInputNum() {
-    int choice;
-    while (true) 
-    {
-        std::cout << "명령어 입력 : ";
-        std::cin >> choice;
-
-        if (std::cin.fail()) 
-        {
-            std::cout << "잘못된 입력입니다. 숫자를 입력해주세요." << std::endl;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-        else 
-        {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            break;
-        }
-    }
-
-    return choice;
+    return UIManager::GetInput();
 }
 
-static void WaitForEnter(std::string message) 
-{
-    std::cout << message << std::endl;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+static void PrintMenu(const std::vector<std::string>& menus, int width = 60) {
+    UIManager::PrintMenu(menus, width);
 }
 
-static void PrintMessage(std::string message)
-{
-    std::cout << message << std::endl;
+static void PrintPlayerActionBoard(std::vector<Player>& players) {
+    UIManager::PrintActionStatus(players);
 }
 
-static void PrintMenu(const std::vector<std::string>& menus, int width = 100) 
-{
-    std::string line(width, '=');
-
-    std::cout << line << std::endl;
-
-    for (const std::string& menu : menus) {
-
-        int padding = (width - 4 - menu.length()) / 2;
-
-        std::cout << "== ";
-
-        for (int i = 0; i < padding; ++i)
-        {
-            std::cout << " ";
-        }
-
-        std::cout << menu;
-
-        int currentPos = 4 + padding + menu.length();
-        while (currentPos < width - 2) 
-        {
-            std::cout << " ";
-            currentPos++;
-        }
-
-        std::cout << " ==" << std::endl;
-    }
-
-    std::cout << line << std::endl;
+static void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters) {
+    UIManager::PrintBattleBoard(players, monsters);
 }
 
-static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
-{
-    std::string line(100, '=');
-    std::cout << line << std::endl;
-    std::cout << "현황판" << std::endl;
-    std::cout << line << std::endl;
-    for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
-    {
-        std::cout << it->GetName() << "  ";
-
-        if (!it->GetIsDead()) {
-
-            std::cout << it->GetHP() << " / " << it->GetMaxHP();
-
-            // 장착상태 확인
-            Action* currentAction = it->GetCurrentAction();
-            if (currentAction != nullptr)
-            {
-                std::cout << " " << currentAction->GetActionName();
-
-                std::vector<Character*> targets = currentAction->GetTatgerCharacters();
-
-                std::cout << "    | ";
-
-                TargetType actionType = currentAction->GetTargetType();
-                if (actionType == TargetType::ENEMY || actionType == TargetType::FRIENDLY)
-                {
-                    if (!currentAction->GetTatgerCharacters().empty())
-                    {
-                        for (std::vector<Character*>::iterator it = targets.begin(); it != targets.end(); ++it) {
-                            std::cout << (*it)->GetName() << " | ";
-                        }
-                    }
-                }
-                else if (actionType == TargetType::ENEMYALL || actionType == TargetType::FRIEDLYALL)
-                {
-                    std::cout << "전체 | ";
-                }
-                else if (actionType == TargetType::MYSELF)
-                {
-                    std::cout << it->GetName() << " | ";
-                }
-               
-
-            }
-
-
-        }
-        else
-        {
-            std::cout << "[ 사망 ]";
-        }
-
-        std::cout << std::endl;
-
-    }
-    std::cout << std::endl;    
-
-    for (vector<Monster>::iterator it = monster.begin(); it != monster.end(); ++it)
-    {
-        std::cout << it->GetName() << "  ";
-
-        if (!it->GetIsDead()) {
-            std::cout << it->GetHP() << " / " << it->GetMaxHP();
-
-            Action* currentAction = it->GetCurrentAction();
-            if (currentAction != nullptr) {
-                std::cout << " " << currentAction->GetActionName();
-                
-                std::vector<Character*> targets = currentAction->GetTatgerCharacters();
-
-                std::cout << "    | ";
-
-                // 적군 지정된 경우 출력 (공격 등)
-                if (!currentAction->GetTatgerCharacters().empty()) {
-                    for (std::vector<Character*>::iterator it = targets.begin(); it != targets.end(); ++it) {
-                        std::cout << (*it)->GetName() << " | ";
-                    }
-                }
-            }
-        }
-        else
-        {
-            std::cout << "[ 사망 ]";
-        }
-
-        std::cout << std::endl;
-    }
-    std::cout << line << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
-}
-
-static void PrintPlayerActionBoard(vector<Player>& players)
-{
-    std::string line(100, '=');
-    std::cout << line << std::endl;
-    std::cout << "액션 현황판" << std::endl;
-    std::cout << line << std::endl;
-    for (vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
-    {
-        std::cout << it->GetName() << "  ";
-
-        // 장착상태 확인
-        if (it->GetIsDead())
-        {
-            std::cout << " [ 사망 ]";
-        }
-        else if (it->GetCurrentAction() != nullptr)
-        {
-            std::cout << " " << it->GetCurrentAction()->GetActionName();
-        }
-
-        std::cout << std::endl;
-
-    }
-    std::cout << line << std::endl;
-    std::cout << std::endl;
-}
 
 #pragma endregion
 
@@ -202,6 +53,10 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
     while (true) 
     {
+        WaitForEnter("");
+        ClearScreen();
+
+
         // 플레이어 다이스 상태 초기화
         for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
@@ -410,7 +265,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         // 장착되지 않은 주사위 플레이어에게 자동 장착하기
 
+        ClearScreen();
+
         // TARGET PHASE        
+        PrintMessage("* 행동을 결정합니다. *");
+
 
         bool isTargetPhaseFinished = false;
 
@@ -612,7 +471,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
 {
 
-    WaitForEnter("주사위를 굴립니다. ( 계속 하려면 엔터키를 눌러주세요. )");
+    WaitForEnter("주사위를 굴립니다.\n");
 
     for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
     {
