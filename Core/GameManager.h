@@ -6,6 +6,7 @@
 #include "BattleManager.h"
 #include "Character.h"
 #include "Dice.h"
+#include "../Template/TemplateManager.h"
 
 
 using namespace std;
@@ -23,6 +24,10 @@ public:
     void InitializeCharacter(vector<Player>& Players);
     void GameStart();
     bool BattleResult(bool Result);
+    void PrintPlayerDice(vector<Player>& Players);
+    int GetUserInputNum();
+    int GetPlayerByName();
+
 
 private:
     // 생성자를 private으로 막음
