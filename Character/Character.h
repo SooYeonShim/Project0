@@ -9,7 +9,7 @@ using namespace std;
 class Character 
 {
 public:
-	Character(int MaxHP, Dice& CharacterDice, string Name) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice), Name(Name), IsDead(false), CurrentAction(nullptr), Shield(0) {};
+	Character(int MaxHP, Dice& CharacterDice, string Name) : HP(MaxHP), MaxHP(MaxHP), CharacterDice(CharacterDice), Name(Name), CurrentAction(nullptr), Shield(0) {};
 
     // Getter
     string GetName();
@@ -24,7 +24,7 @@ public:
     void SetName(string Name);
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
-    void SetIsDead(bool IsDead);
+    // void SetIsDead(bool IsDead);
 	void SetShield(int Shield);
 	void SetDice(Dice CharacterDice);
 	void SetCurrentAction(Action* CurrentAction);
@@ -33,11 +33,14 @@ public:
     void RollDice();
 	void DoAction(vector<Character*> target);
     void TakeDamage(int Damage);
+    void TakeHeal(int Damage);
+    void TakeShield(int Damage);
+    void EndTurn();
 
 protected:
     int HP; // 체력
     int MaxHP; // 최대 체력
-    bool IsDead; // 사망 여부
+    // bool IsDead; // 사망 여부 -> HP == 0 판정으로 대체
     int Shield; // 방어력
     Dice CharacterDice; // 고유 주사위
 
