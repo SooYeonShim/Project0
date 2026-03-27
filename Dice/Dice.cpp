@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <random>
+#include <iomanip>
 
 #include "Action.h"
 #include "None.h"
@@ -78,4 +79,63 @@ void Dice::SetAction(int _faceNumber, Action* _SetAct)
 
     // 새로운 면을 등록
     vecAction[_faceNumber] = _SetAct;
+}
+
+void Dice::PrintActionInfo()
+{
+    // 한 칸의 너비
+    const int width = 14;
+
+    // 인덱스와 이름을 합
+    auto getNameWithIndex = [&](int index) -> std::string
+        {
+            if (index >= 0 && index < vecAction.size() && vecAction[index] != nullptr)
+            {
+                // "0. Attack" 형태로 합치기
+                return std::to_string(index) + ". " + vecAction[index]->GetActionName();
+            }
+            return std::to_string(index) + ". Empty";
+        };
+
+    std::string indent(width + 3, ' ');
+
+    std::cout << "\n[ Dice Action Layout ]" << std::endl;
+
+    // 1. 상단 (0번) 천장
+    std::cout << indent << "+----------------+" << std::endl;
+    // 1. 상단 (0번) 내용
+    std::cout << indent << "| " << std::setw(width) << std::left << getNameWithIndex(0) << " |" << std::endl;
+
+    // 2. 중단 (1, 2, 3, 4) 천장 - 0번의 바닥과 이어짐
+    // 0번 아래에만 +--+가 오도록 구성
+    std::cout << "+----------------+----------------+----------------+----------------+" << std::endl;
+
+    // 2. 중단 내용
+    std::cout << "| " << std::setw(width) << std::left << getNameWithIndex(1) << " | "
+        << std::setw(width) << std::left << getNameWithIndex(2) << " | "
+        << std::setw(width) << std::left << getNameWithIndex(3) << " | "
+        << std::setw(width) << std::left << getNameWithIndex(4) << " |" << std::endl;
+
+    // 2. 중단 바닥 (5번의 천장과 이어짐)
+    std::cout << "+----------------+----------------+----------------+----------------+" << std::endl;
+
+    // 3. 하단 (5번) 내용
+    std::cout << indent << "| " << std::setw(width) << std::left << getNameWithIndex(5) << " |" << std::endl;
+    // 3. 하단 (5번) 바닥
+    std::cout << indent << "+----------------+" << std::endl;
+
+    std::cout << "\n[ ACTION DETAILS ]" << std::endl;
+    for (int i = 0; i < (int)vecAction.size(); ++i)
+    {
+        if (vecAction[i] != nullptr)
+        {
+            std::cout << i << ". [" << vecAction[i]->GetActionName() << "] : ";
+            vecAction[i]->PrintInfo(); // 각 액션 클래스에서 구현한 상세 설명 호출
+        }
+        else
+        {
+            std::cout << i << ". [Empty]" << std::endl;
+        }
+    }
+    std::cout << "---------------------------------------------\n" << std::endl;
 }
