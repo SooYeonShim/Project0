@@ -39,12 +39,18 @@ void Defence::DoActive()
             targetnames += ", ";
     }
 
-    cout << selfnames << "는 공격에 대비합니다. " << power << "만큼 쉴드가 증가합니다." << endl;
-
 
     // 자기자신에게 쉴드 추가
     for (int i = 0; i < vecself.size(); ++i)
     {
-        vecself[i]->TakeShield(power);
+        if (vecself[i]->GetIsDead())
+        {
+            cout << selfnames << "는 이미쓰러져 방어가 불가능합니다." << endl;
+        }
+        else
+        {
+            cout << selfnames << "는 공격에 대비합니다." << endl;
+            vecself[i]->TakeShield(power);
+        }
     }
 }

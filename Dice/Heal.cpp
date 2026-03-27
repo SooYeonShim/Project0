@@ -38,11 +38,17 @@ void Heal::DoActive()
             targetnames += ", ";
     }
 
-    cout << selfnames << "는 대상을 회복시킵니다. " << targetnames << "는 " << power << "만큼 hp가 회복합니다." << endl;
-
     // 타겟이된 아군에게 힐
     for (int i = 0; i < vectarget.size(); ++i)
     {
-        vectarget[i]->TakeHeal(power);
+        if (vectarget[i]->GetIsDead())
+        {
+            cout << selfnames << " 가 " << targetnames << " 에게 회복하려 했으나 쓰러진 대상은 치유가 불가능합니다." << endl;
+        }
+        else
+        {
+            cout << selfnames << "는 " << targetnames << "에게 " << power << "만큼 회복시킵니다." << endl;
+            vectarget[i]->TakeHeal(power);
+        }
     }
 }
