@@ -16,6 +16,6 @@ public:
     virtual Action* Clone() { return new Heal(*this); }
 
 public:
-    Heal(int _power = 1);
+    Heal(int _power = 3);
 };
 
