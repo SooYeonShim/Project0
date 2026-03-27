@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <iostream>
 #include <vector>
+#include <random>
 
 #include "Player.h"
 #include "Monster.h"
