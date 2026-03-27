@@ -62,7 +62,7 @@ Action& Dice::GetRandomAction()
 void Dice::SetAction(int _faceNumber, Action* _SetAct)
 {
     //예외조건 검사
-    if (_faceNumber < 0 && _faceNumber > 5)
+    if (_faceNumber < 0 || _faceNumber > 5)
     {
         cout << "정상적인 범위가 아닙니다." << endl;
         return;
@@ -83,46 +83,54 @@ void Dice::SetAction(int _faceNumber, Action* _SetAct)
 
 void Dice::PrintActionInfo()
 {
-    // 한 칸의 너비
-    const int width = 14;
+    const int width = 15; // 가로 길이를 15로 고정
 
-    // 인덱스와 이름을 합
-    auto getNameWithIndex = [&](int index) -> std::string
-        {
-            if (index >= 0 && index < vecAction.size() && vecAction[index] != nullptr)
-            {
-                // "0. Attack" 형태로 합치기
-                return std::to_string(index) + ". " + vecAction[index]->GetActionName();
-            }
-            return std::to_string(index) + ". Empty";
+    // 1. 선과 공백을 width에 맞춰 동적으로 생성 (수동 입력 방지)
+    const std::string hLine = "+" + std::string(width, '-');  // "+---------------"
+    const std::string indent(width + 1, ' ');                // "                "
+    const std::string emptyLine = "|" + std::string(width, ' ') + "|"; // "|               |"
+
+    // 중단 전용 빈 줄 (4칸 연속)
+    const std::string midEmpty = emptyLine + std::string(width, ' ') + "|" + std::string(width, ' ') + "|" + std::string(width, ' ') + "|";
+
+    auto getName = [&](int index) -> std::string {
+        if (index >= 0 && index < (int)vecAction.size() && vecAction[index] != nullptr) {
+            return std::to_string(index) + ". " + vecAction[index]->GetActionName();
+        }
+        return std::to_string(index) + ". Empty";
         };
 
-    std::string indent(width + 3, ' ');
+    std::cout << "\n[ Dice Net Layout ]" << std::endl;
 
-    std::cout << "\n[ Dice Action Layout ]" << std::endl;
+    // --- 1. 상단 (0번 면) ---
+    std::cout << indent << hLine << "+" << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << "| " << std::setw(width - 2) << std::left << getName(0) << " |" << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << emptyLine << std::endl;
 
-    // 1. 상단 (0번) 천장
-    std::cout << indent << "+----------------+" << std::endl;
-    // 1. 상단 (0번) 내용
-    std::cout << indent << "| " << std::setw(width) << std::left << getNameWithIndex(0) << " |" << std::endl;
+    // --- 2. 중단 (1, 2, 3, 4번 면) ---
+    std::cout << hLine << hLine << hLine << hLine << "+" << std::endl;
+    std::cout << midEmpty << std::endl;
+    std::cout << midEmpty << std::endl;
 
-    // 2. 중단 (1, 2, 3, 4) 천장 - 0번의 바닥과 이어짐
-    // 0번 아래에만 +--+가 오도록 구성
-    std::cout << "+----------------+----------------+----------------+----------------+" << std::endl;
+    std::cout << "| " << std::setw(width - 2) << std::left << getName(1) << " | "
+        << std::setw(width - 2) << std::left << getName(2) << " | "
+        << std::setw(width - 2) << std::left << getName(3) << " | "
+        << std::setw(width - 2) << std::left << getName(4) << " |" << std::endl;
 
-    // 2. 중단 내용
-    std::cout << "| " << std::setw(width) << std::left << getNameWithIndex(1) << " | "
-        << std::setw(width) << std::left << getNameWithIndex(2) << " | "
-        << std::setw(width) << std::left << getNameWithIndex(3) << " | "
-        << std::setw(width) << std::left << getNameWithIndex(4) << " |" << std::endl;
+    std::cout << midEmpty << std::endl;
+    std::cout << midEmpty << std::endl;
+    std::cout << hLine << hLine << hLine << hLine << "+" << std::endl;
 
-    // 2. 중단 바닥 (5번의 천장과 이어짐)
-    std::cout << "+----------------+----------------+----------------+----------------+" << std::endl;
-
-    // 3. 하단 (5번) 내용
-    std::cout << indent << "| " << std::setw(width) << std::left << getNameWithIndex(5) << " |" << std::endl;
-    // 3. 하단 (5번) 바닥
-    std::cout << indent << "+----------------+" << std::endl;
+    // --- 3. 하단 (5번 면) ---
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << "| " << std::setw(width - 2) << std::left << getName(5) << " |" << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << emptyLine << std::endl;
+    std::cout << indent << hLine << "+" << std::endl;
 
     std::cout << "\n[ ACTION DETAILS ]" << std::endl;
     for (int i = 0; i < (int)vecAction.size(); ++i)
