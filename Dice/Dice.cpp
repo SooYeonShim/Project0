@@ -95,9 +95,9 @@ void Dice::PrintActionInfo()
 
     auto getName = [&](int index) -> std::string {
         if (index >= 0 && index < (int)vecAction.size() && vecAction[index] != nullptr) {
-            return std::to_string(index) + ". " + vecAction[index]->GetActionName();
+            return std::to_string(index + 1) + ". " + vecAction[index]->GetActionName();
         }
-        return std::to_string(index) + ". Empty";
+        return std::to_string(index + 1) + ". Empty";
         };
 
     std::cout << "\n[ Dice Net Layout ]" << std::endl;
@@ -137,12 +137,12 @@ void Dice::PrintActionInfo()
     {
         if (vecAction[i] != nullptr)
         {
-            std::cout << i << ". [" << vecAction[i]->GetActionName() << "] : ";
+            std::cout << i+1 << ". [" << vecAction[i]->GetActionName() << "] : ";
             vecAction[i]->PrintInfo(); // 각 액션 클래스에서 구현한 상세 설명 호출
         }
         else
         {
-            std::cout << i << ". [Empty]" << std::endl;
+            std::cout << i+1 << ". [Empty]" << std::endl;
         }
     }
     std::cout << "---------------------------------------------\n" << std::endl;
