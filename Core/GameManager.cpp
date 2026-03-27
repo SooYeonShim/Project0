@@ -18,7 +18,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         //0~3사이의 값이 안들어오는거 방지
         while (true)
         {
-            cout << "직업 선택 (0:Warrior, 1:Archer, 2:Defender, 3:Rogue): ";
+            cout << "직업 선택 (1:Warrior, 2:Archer, 3:Defender, 4:Rogue): ";
             if (!(cin >> jobChoice))
             {
                 cin.clear();
@@ -29,20 +29,20 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
 
             cin.ignore();
 
-            if (jobChoice >= 0 && jobChoice <= 3)
+            if (jobChoice >= 1 && jobChoice <= 4)
             {
                 break;
             }
             else
             {
-                cout << "0~3 사이의 숫자를 입력해주세요" << endl;
+                cout << "1~4 사이의 숫자를 입력해주세요" << endl;
             }
         }
 
 
         auto& TM = TemplateManager::getInstance();
      
-        JobType ChoicedJob = static_cast<JobType>(jobChoice);
+        JobType ChoicedJob = static_cast<JobType>(jobChoice-1);
 
         Dice dice = TemplateManager::getInstance().GetDiceByType(ChoicedJob);
 
@@ -61,8 +61,8 @@ void GameManager::GameStart()
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
     //초기화 정상작동 확인
-    cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
-    cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
+    cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType())+1 << endl;
+    cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType())+1 << endl;
 
 
     //주사위 확인 혹은 전투 시작 선택지
