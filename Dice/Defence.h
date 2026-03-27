@@ -16,6 +16,6 @@ public:
     virtual Action* Clone() { return new Defence(*this); }
 
 public:
-    Defence(int _power = 2);
+    Defence(int _power = 4);
 };
 
