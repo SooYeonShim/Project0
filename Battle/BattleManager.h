@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <iostream>
 #include <vector>
+#include <random>
 
 #include "Player.h"
 #include "Monster.h"
@@ -22,12 +23,13 @@ public:
 
 private:
 
+    void RollDiceByPlayers(vector<Player>& players);
+
+
     BattleManager();
     // 복사/대입도 막음
     BattleManager(const BattleManager&) = delete;
     BattleManager& operator=(const BattleManager&) = delete;
 
-    int RerollCount;
-   
-
+    int RerollCount;    
 };
