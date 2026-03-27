@@ -18,8 +18,8 @@ void Heal::PrintInfo()
 
 void Heal::DoActive()
 {
-    string selfnames = "?";
-    string targetnames = "?";
+    string selfnames = "";
+    string targetnames = "";
 
     // 공격자 이름 추출
     for (int i = 0; i < vecself.size(); ++i)
