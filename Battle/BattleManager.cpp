@@ -17,6 +17,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
     ss << monsters.size() << " 마리의 적이 시비를 걸어왔다." << std::endl;
     UIManager::PrintMessage(ss.str());
 
+    int userInput;
 
     while (true) 
     {
@@ -148,7 +149,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             UIManager::PrintMenu(dicePhaseMenu);
 
-            int userInput = UIManager::GetInput();
+            userInput = UIManager::GetInput();
 
             switch (userInput) 
             {
@@ -366,7 +367,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             }
 
             UIManager::PrintMenu(actionTargetMenu);
-            int userInput = UIManager::GetInput();
+            userInput = UIManager::GetInput();
             bool isValidOrder = false;
 
 
@@ -383,7 +384,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     continue;
                 }
                 cout << "유효하지 않은 대상입니다." << std::endl;
-                int userInput = UIManager::GetInput();
+                userInput = UIManager::GetInput();
             }
         }               
 
