@@ -56,13 +56,15 @@ void GameManager::GameStart()
 {
 
     BattleManager& BM = BattleManager::getInstance();
+    ShopManager& SM = ShopManager::getInstance();
 
-    //플레이어 캐릭터 초기화55
+    //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
     //초기화 정상작동 확인
     cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
     cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
 
+    SM.EnterShop(Players, PlayerMoney);
 
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
@@ -113,6 +115,9 @@ void GameManager::GameStart()
 
     }
 
+    //상점 진입
+    //SM.EnterShop(Players, PlayerMoney);
+
     //게임 종료
     return;
 
@@ -133,6 +138,8 @@ bool GameManager::BattleResult(bool Result)
                 player.SetExp(player.GetExp() + 10);
             }
         }
+        // 돈 획득
+        PlayerMoney = 100;
         return true;
     }
     else

@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Player.h"
 
+using namespace std;
+
 class ShopManager
 {
 public:
@@ -11,8 +13,11 @@ public:
         return instance;
     }
 
-    void HealAllPlayer(vector<Player>& Players);
-    void BuyItem(int PlayerMoney);
+    void HealAllPlayer(vector<Player>& Players, int& PlayerMoney);
+    void BuyItem(int& PlayerMoney);
+    void EnterShop(vector<Player>& Players, int& PlayerMoney);
+    int GetUserInputNum();
+    void PrintShopUI(int PlayerMoney);
 
 private:
     // 생성자를 private으로 막음
