@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -102,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)Inventory;$(ProjectDir)Item;$(ProjectDir)Character;$(ProjectDir)Common;$(ProjectDir)Dice;$(ProjectDir)Battle;$(ProjectDir)Core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,7 +124,54 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Battle\BattleManager.cpp" />
+    <ClCompile Include="Battle\MonsterSpawn.cpp" />
+    <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Character\Player.cpp" />
+    <ClCompile Include="Core\GameManager.cpp" />
+    <ClCompile Include="Core\UIManager.h" />
+    <ClCompile Include="Dice\Attack.cpp" />
+    <ClCompile Include="Dice\Defence.cpp" />
+    <ClCompile Include="Dice\Dice.cpp" />
+    <ClCompile Include="Dice\Heal.cpp" />
+    <ClCompile Include="Dice\None.cpp" />
+    <ClCompile Include="Inventory\InventoryManager.cpp" />
+    <ClCompile Include="Item\HealingPotion.cpp" />
+    <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Project0.cpp" />
+    <ClCompile Include="Shop\ShopManager.cpp" />
+    <ClCompile Include="Template\TemplateManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Battle\MonsterSpawn.h" />
+    <ClInclude Include="Dice\Action.h" />
+    <ClInclude Include="Dice\Action\Attack.h" />
+    <ClInclude Include="Battle\BattleManager.h" />
+    <ClInclude Include="Dice\Action\Action.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\Goblin.h" />
+    <ClInclude Include="Character\Monster.h" />
+    <ClInclude Include="Character\Orc.h" />
+    <ClInclude Include="Character\Player.h" />
+    <ClInclude Include="Character\Wolf.h" />
+    <ClInclude Include="Common\GameEnums.h" />
+    <ClInclude Include="Core\GameManager.h" />
+    <ClInclude Include="Dice\Attack.h" />
+    <ClInclude Include="Dice\Defence.h" />
+    <ClInclude Include="Dice\Dice.h" />
+    <ClInclude Include="Dice\Action\None.h" />
+    <ClInclude Include="Dice\None.h" />
+    <ClInclude Include="Dice\Heal.h" />
+    <ClInclude Include="Inventory\InventoryManager.h" />
+    <ClInclude Include="Item\HealingPotion.h" />
+    <ClInclude Include="Item\Item.h" />
+    <ClInclude Include="Shop\ShopManager.h" />
+    <ClInclude Include="Template\TemplateManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".editorconfig" />
+    <None Include=".gitignore" />
+    <None Include="ReadMe.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
