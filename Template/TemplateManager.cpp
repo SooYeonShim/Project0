@@ -142,3 +142,38 @@ Dice TemplateManager::GetDiceByType(JobType _type)
 
     return Dice();
 }
+
+Player TemplateManager::GetPlayerByType(string Nickname, JobType _type)
+{
+    int HP = 0;
+    Dice dice;
+
+    switch (_type)
+    {
+    case JobType::Fighter:
+        HP = 10;
+        dice = GetDiceByWarrior();
+        break;
+
+    case JobType::Defender:
+        HP = 14;
+        dice = GetDiceByDefender();
+        break;
+
+    case JobType::Archer:
+        HP = 8;
+        dice = GetDiceByArcher();
+        break;
+
+    case JobType::Rogue:
+        HP = 8;
+        dice = GetDiceByRogue();
+        break;
+
+
+    default:
+        break;
+    }
+
+    return Player(HP, dice, Nickname, _type);
+}

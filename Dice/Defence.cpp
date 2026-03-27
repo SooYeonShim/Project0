@@ -45,8 +45,6 @@ void Defence::DoActive()
     // 자기자신에게 쉴드 추가
     for (int i = 0; i < vecself.size(); ++i)
     {
-        int currentshield = vecself[i]->GetShield();
-        currentshield += power;
-        vecself[i]->SetShield(currentshield);
+        vecself[i]->TakeShield(power);
     }
 }
