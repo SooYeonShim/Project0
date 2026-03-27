@@ -14,7 +14,7 @@ public:
         return instance;
     }
 
-    Item* AddItem(Item* Item);
+    bool AddItem(Item* Item);
     bool Use(int index, Character* target);
     void ShowInventory();
 
