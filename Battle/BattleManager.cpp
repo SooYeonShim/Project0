@@ -86,9 +86,35 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
             std::cout << it->GetHP() << " / " << it->GetMaxHP();
 
             // 장착상태 확인
-            if (it->GetCurrentAction() != nullptr)
+            Action* currentAction = it->GetCurrentAction();
+            if (currentAction != nullptr)
             {
-                std::cout << " " << it->GetCurrentAction()->GetActionName();
+                std::cout << " " << currentAction->GetActionName();
+
+                std::vector<Character*> targets = currentAction->GetTatgerCharacters();
+
+                std::cout << "    | ";
+
+                TargetType actionType = currentAction->GetTargetType();
+                if (actionType == TargetType::ENEMY || actionType == TargetType::FRIENDLY)
+                {
+                    if (!currentAction->GetTatgerCharacters().empty())
+                    {
+                        for (std::vector<Character*>::iterator it = targets.begin(); it != targets.end(); ++it) {
+                            std::cout << (*it)->GetName() << " | ";
+                        }
+                    }
+                }
+                else if (actionType == TargetType::ENEMYALL || actionType == TargetType::FRIEDLYALL)
+                {
+                    std::cout << "전체 | ";
+                }
+                else if (actionType == TargetType::MYSELF)
+                {
+                    std::cout << it->GetName() << " | ";
+                }
+               
+
             }
 
 
