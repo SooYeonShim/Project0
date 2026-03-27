@@ -22,7 +22,7 @@ public:
 
     void InitializeCharacter(vector<Player>& Players);
     void GameStart();
-    void BattleResult(bool Result);
+    bool BattleResult(bool Result);
 
 private:
     // 생성자를 private으로 막음
@@ -34,6 +34,7 @@ private:
 
 
     int CurrentStage;
+    bool GameResult;
     vector<Player> Players;
 
 
