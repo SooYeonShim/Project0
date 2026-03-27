@@ -35,7 +35,7 @@ void Player::SetExp(int Exp)
         ++Level;
         MaxHP += 3;
         // NextLevelExp += NextLevelExp/4; 레벨링
-        this->Exp = 0;
+        this->Exp -= NextLevelExp;
     }
 }
 void Player::SetNextLevelExp(int NextLevelExp)
