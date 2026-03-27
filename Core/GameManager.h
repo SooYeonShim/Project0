@@ -26,7 +26,7 @@ public:
     void InitializeCharacter(vector<Player>& Players);
     void GameStart();
     bool BattleResult(bool Result);
-    void PrintPlayerDice(vector<Player>& Players);
+    void PrintPlayerDice();
     int GetUserInputNum();
     int GetPlayerByName();
 
