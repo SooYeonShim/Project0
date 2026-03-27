@@ -2,13 +2,14 @@
 #include "InventoryManager.h"
 
 
-    Item* InventoryManager::AddItem(Item* Item) {
+    bool InventoryManager::AddItem(Item* Item) {
         if (ItemList.size() >= MaxCapacity) {
             std::cout << "인벤토리가 가득 찼습니다.\n";
-            return nullptr;
+            delete Item;
+            return false;
         }
         ItemList.push_back(Item);
-        return ItemList.back();
+        return true;
     }
 
     bool InventoryManager::Use(int index, Character* target) {
