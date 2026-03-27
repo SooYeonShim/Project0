@@ -7,8 +7,8 @@
 #include "Player.h"
 #include "MonsterSpawn.h"
 #include "Monster.h"
+#include "GameEnums.h";
 
-//#include "Goblin.h"
 
 class BattleManager
 {
