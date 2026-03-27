@@ -159,7 +159,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             case 1:
             {
                 // 주사위 리셋할 수 있게 처리
-                std::vector<std::string> removeActionMenu = { "해제 할 액션 선택", "" };
+                std::vector<std::string> removeActionMenu = { "해제 할 액션 선택", "", "0. 뒤로가기" };
                 std::map<int, Player*> menuIndexToPlayerMap;
                 int menuIndex = 1;
 
@@ -180,10 +180,15 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
 
                 UIManager::PrintMenu(removeActionMenu, 80);
-                int playerChoice = UIManager::GetInput();
-                if (menuIndexToPlayerMap.find(playerChoice) != menuIndexToPlayerMap.end())
+                userInput = UIManager::GetInput();
+                if (userInput == 0)
                 {
-                    menuIndexToPlayerMap[playerChoice]->SetCurrentAction(nullptr);
+                    break;
+                }
+
+                if (menuIndexToPlayerMap.find(userInput) != menuIndexToPlayerMap.end())
+                {
+                    menuIndexToPlayerMap[userInput]->SetCurrentAction(nullptr);
                     UIManager::PrintActionStatus(players);
                 }
                 else
