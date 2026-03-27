@@ -52,7 +52,7 @@ void GameManager::GameStart()
 
     BattleManager& BM = BattleManager::getInstance();
 
-    //플레이어 캐릭터 초기화
+    //플레이어 캐릭터 초기화55
     InitializeCharacter(Players);
     //초기화 정상작동 확인
     cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
@@ -65,10 +65,20 @@ void GameManager::GameStart()
     while (CurrentStage != 3)
     {
         //전투 돌입
-        BattleResult(BM.Battle(Players, CurrentStage));
+        GameResult = BattleResult(BM.Battle(Players, CurrentStage));
 
-        //게임 종료 후 스테이지 증가 
-        ++CurrentStage;
+        //배틀 결과에 따라 전멸 시 즉시 게임 죵로
+        if (GameResult == true)
+        {
+            //게임 종료 후 스테이지 증가 
+            ++CurrentStage;
+
+        }
+        else
+        {
+            break;
+        }
+
 
     }
 
@@ -89,7 +99,7 @@ bool GameManager::BattleResult(bool Result)
         {
             if (player.GetIsDead() != false)
             {
-                player.SetExp(10);
+                player.SetExp(player.GetExp() + 10);
             }
         }
         return true;
