@@ -102,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)Character;$(ProjectDir)Common;$(ProjectDir)Dice;$(ProjectDir)Battle;$(ProjectDir)Core</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)Inventory;$(ProjectDir)Item;$(ProjectDir)Character;$(ProjectDir)Common;$(ProjectDir)Dice;$(ProjectDir)Battle;$(ProjectDir)Core</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +134,8 @@
     <ClCompile Include="Dice\Dice.cpp" />
     <ClCompile Include="Dice\Heal.cpp" />
     <ClCompile Include="Dice\None.cpp" />
+    <ClCompile Include="Inventory\Inventory.cpp" />
+    <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Project0.cpp" />
     <ClCompile Include="Template\TemplateManager.cpp" />
   </ItemGroup>
@@ -157,6 +159,8 @@
     <ClInclude Include="Dice\Action\None.h" />
     <ClInclude Include="Dice\None.h" />
     <ClInclude Include="Dice\Heal.h" />
+    <ClInclude Include="Inventory\Inventory.h" />
+    <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Template\TemplateManager.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,15 +1,22 @@
 ﻿#include "Player.h"
 
 
-JobType Player::GetJobType() {
+JobType Player::GetJobType()
+{
     return Job;
 }
-int Player::GetLevel() {
+int Player::GetLevel()
+{
     return Level;
-};
-int Player::GetExp() {
+}
+int Player::GetExp()
+{
     return Exp;
-};
+}
+int Player::GetNextLevelExp()
+{
+    return NextLevelExp;
+}
 
 void Player::SetJobType(JobType Job)
 {
@@ -22,4 +29,16 @@ void Player::SetLevel(int Level)
 void Player::SetExp(int Exp)
 {
     this->Exp = Exp;
+    // 레벨 업
+    if (Exp >= NextLevelExp)
+    {
+        ++Level;
+        MaxHP += 3;
+        // NextLevelExp += NextLevelExp/4; 레벨링
+        this->Exp = 0;
+    }
+}
+void Player::SetNextLevelExp(int NextLevelExp)
+{
+    this->NextLevelExp = NextLevelExp;
 }

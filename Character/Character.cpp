@@ -82,3 +82,9 @@ void Character::DoAction(vector<Character*> target)
         CurrentAction->DoAciton(self, target);
     }
 }
+
+void Character::TakeDamage(int Damage)
+{
+    cout << Name << "의 총 피해량: " << Damage - Shield << endl;
+    HP = HP + Shield - Damage;
+}

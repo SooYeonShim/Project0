@@ -30,15 +30,18 @@ public:
 	void SetCurrentAction(Action* CurrentAction);
 
     // Function
-	void RollDice();
+    void RollDice();
 	void DoAction(vector<Character*> target);
-	
-private:
-    string Name; // 이름
-	int HP; // 체력
+    void TakeDamage(int Damage);
+
+protected:
+    int HP; // 체력
     int MaxHP; // 최대 체력
     bool IsDead; // 사망 여부
-	int Shield; // 방어력
-	Dice CharacterDice; // 고유 주사위
+    int Shield; // 방어력
+    Dice CharacterDice; // 고유 주사위
+
+private:
+    string Name; // 이름
 	Action* CurrentAction; // 이번 턴에 취하는 행동
 };
