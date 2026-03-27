@@ -1,7 +1,7 @@
 ﻿#include "HealingPotion.h"
 
+void HealingPotion::Use(Character& target) {
 
-
-void HealingPotion::Use() {
+    target.SetHP(max(target.GetMaxHP(), target.GetHP() + 5));
 
 }

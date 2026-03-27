@@ -12,7 +12,7 @@ int Character::GetMaxHP() {
 	return MaxHP;
 }
 
-bool Character::GetIsDead() {
+bool Character::GetIsDead() const {
     return HP == 0;
 }
 
