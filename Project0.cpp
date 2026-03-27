@@ -7,7 +7,7 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Game Start!\n";
 
     GameManager& gm = GameManager::getInstance();
 
