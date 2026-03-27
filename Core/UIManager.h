@@ -208,11 +208,7 @@ public:
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
     }
 
-    static void Log(std::string msg) {
-        std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << msg << "\n";
-    }
-
-    //
+    // [12] 시스템 메세지
     static void PrintMessage(std::string message, bool bNewLine = false) {
         std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
         if (bNewLine) {
