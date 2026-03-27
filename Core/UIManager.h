@@ -202,7 +202,8 @@ public:
 
     // [11] 시스템 메시지 및 대기
     static void Wait(std::string msg) {
-        std::cout << "\n" << BOLD << YELLOW << "  SYSTEM >> " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
+        std::cout << "\n" << BOLD << YELLOW << "  " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
+        std::cout << std::endl;
         std::cout << std::endl;
         std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
     }
@@ -212,7 +213,10 @@ public:
     }
 
     //
-    static void PrintMessage(std::string message) {
+    static void PrintMessage(std::string message, bool bNewLine = false) {
         std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
+        if (bNewLine) {
+            cout << std::endl;
+        }
     }
 };

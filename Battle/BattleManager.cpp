@@ -1,49 +1,6 @@
 ﻿#include <sstream>
 #include "BattleManager.h"
 
-
-// 임시코드 -> 다 옮기고 지울 예정
-#pragma region 출력 관련 편의상 만든 함수
-
-// 지우는 함수
-static void ClearScreen()
-{
-    return;
-    //UIManager::ClearScreen();
-}
-
-// 한글 폭 계산 (Visual Studio UTF-8 기준)
-static int GetVisualWidth(const std::string& str) {
-    UIManager::GetVisualWidth(str);
-}
-
-static void PrintMessage(std::string message) {
-    UIManager::PrintMessage(message);
-}
-
-static void WaitForEnter(std::string message) {
-    return UIManager::Wait(message);
-}
-
-static int GetUserInputNum() {
-    return UIManager::GetInput();
-}
-
-static void PrintMenu(const std::vector<std::string>& menus, int width = 60) {
-    UIManager::PrintMenu(menus, width);
-}
-
-static void PrintPlayerActionBoard(std::vector<Player>& players) {
-    UIManager::PrintActionStatus(players);
-}
-
-static void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters) {
-    UIManager::PrintBattleBoard(players, monsters);
-}
-
-
-#pragma endregion
-
 bool BattleManager::Battle(std::vector<Player>& players, int stage)
 {
     // 몬스터 생성
@@ -51,10 +8,19 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
     
     int turn = 1;
 
+    stringstream ss;
+
+    // TODO:: 배틀 시작할 때  줄바꿈함.
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    ss << monsters.size() << " 마리의 적이 시비를 걸어왔다." << std::endl;
+    UIManager::PrintMessage(ss.str());
+
+
     while (true) 
     {
-        WaitForEnter("");
-        ClearScreen();
+        UIManager::Wait("");
 
 
         // 플레이어 다이스 상태 초기화
@@ -151,13 +117,13 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         }
 
-        PrintBattleBoard(players, monsters);
+        UIManager::PrintBattleBoard(players, monsters);
 
         int remainRerollCount = RerollCount;
 
         std::stringstream ss;
         ss << "[ 턴 : " << turn << " ]";
-        PrintMessage(ss.str());
+        UIManager::PrintMessage(ss.str());
 
         // Player Turn
         // DICE PHASE
@@ -166,7 +132,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         RollDiceByPlayers(players);
 
         bool isDicePhaseFinished = false;
-        std::vector<std::string> dicePhaseMenu = { "플레이어 행동", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤하기", "3. 다음 페이즈로" };              
+        std::vector<std::string> dicePhaseMenu = { "플레이어 행동", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 다음 페이즈로" };              
 
         while (!isDicePhaseFinished)
         {
@@ -178,16 +144,16 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             std::stringstream ss;
             ss << "현재 남은 리롤 횟수 : " << remainRerollCount;
-            PrintMessage(ss.str());
+            UIManager::PrintMessage(ss.str());
 
-            PrintMenu(dicePhaseMenu);
+            UIManager::PrintMenu(dicePhaseMenu);
 
-            int userInput = GetUserInputNum();
+            int userInput = UIManager::GetInput();
 
             switch (userInput) 
             {
             case 0:
-                PrintBattleBoard(players, monsters);
+                UIManager::PrintBattleBoard(players, monsters);
                 break;
             case 1:
             {
@@ -212,12 +178,12 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     ++menuIndex;
                 }
 
-                PrintMenu(removeActionMenu, 80);
-                int playerChoice = GetUserInputNum();
+                UIManager::PrintMenu(removeActionMenu, 80);
+                int playerChoice = UIManager::GetInput();
                 if (menuIndexToPlayerMap.find(playerChoice) != menuIndexToPlayerMap.end())
                 {
                     menuIndexToPlayerMap[playerChoice]->SetCurrentAction(nullptr);
-                    PrintPlayerActionBoard(players);
+                    UIManager::PrintActionStatus(players);
                 }
                 else
                 {
@@ -241,7 +207,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 if (allPlayerReadyAction)
                 {
-                    PrintMessage("리롤 할 대상이 없습니다. 먼저 행동을 해제해 주세요.");
+                    UIManager::PrintMessage("리롤 할 대상이 없습니다. 먼저 행동을 해제해 주세요.");
                     break;
                 }
 
@@ -253,11 +219,20 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             }
                 break;
             case 3:
+                for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
+                {
+                    it->SetCurrentAction(nullptr);
+                }
+
+                // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
+                RollDiceByPlayers(players);
+                break;
+            case 4:
                 isDicePhaseFinished = true;
                 break;
 
             default:
-                PrintMessage("유효하지 않은 명령입니다.");
+                UIManager::PrintMessage("유효하지 않은 명령입니다.");
                 break;
             }
         }
@@ -265,10 +240,10 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         // 장착되지 않은 주사위 플레이어에게 자동 장착하기
 
-        ClearScreen();
 
         // TARGET PHASE        
-        PrintMessage("* 행동을 결정합니다. *");
+        UIManager::PrintMessage("* 대상을 선택하자. *");
+        UIManager::Wait("");
 
 
         bool isTargetPhaseFinished = false;
@@ -328,7 +303,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             }
 
 
-            PrintBattleBoard(players, monsters);
+            UIManager::PrintBattleBoard(players, monsters);
 
             int menuIndex = 0;
             std::map<int, Character*> menuIndexToTargetMap;
@@ -390,8 +365,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
-            PrintMenu(actionTargetMenu);
-            int userInput = GetUserInputNum();
+            UIManager::PrintMenu(actionTargetMenu);
+            int userInput = UIManager::GetInput();
             bool isValidOrder = false;
 
 
@@ -408,14 +383,34 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     continue;
                 }
                 cout << "유효하지 않은 대상입니다." << std::endl;
-                int userInput = GetUserInputNum();
+                int userInput = UIManager::GetInput();
             }
-
-
-
-            PrintBattleBoard(players, monsters);
         }               
-                  
+
+        UIManager::PrintBattleBoard(players, monsters);
+
+
+        // 넘어가기 적들 다 쓰러트리면 적 페이즈 X
+
+        bool isWin = true;
+
+        for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
+        {
+            if (!it->GetIsDead())
+            {
+                isWin = false;
+                break;
+            }
+        }
+
+        if (isWin)
+        {
+            return true;
+        }
+
+        UIManager::PrintMessage("* 조심해! 적들이 움직인다 *");
+        UIManager::Wait("");
+
         // Enemy Turn
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
         {
@@ -446,7 +441,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             return false;
         }
 
-        bool isWin = true;
+        isWin = true;
 
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
         {
@@ -471,7 +466,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
 {
 
-    WaitForEnter("주사위를 굴립니다.\n");
+    UIManager::PrintMessage("주사위를 굴리자");
+    UIManager::Wait("");    
 
     for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
     {
@@ -481,7 +477,7 @@ void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
         }        
     }    
 
-    PrintPlayerActionBoard(player);
+    UIManager::PrintActionStatus(player);
 }
 
 void BattleManager::AddRerollCount(int count)
