@@ -39,11 +39,18 @@ void Attack::DoActive()
             targetnames += ", ";
     }
 
-    cout << selfnames << " 가 " << targetnames << " 에게 " << power << "의 피해를 가했습니다." << endl;
 
     // 단일 타겟에게 피해량만큼 피
     for (int i = 0; i < vectarget.size(); ++i)
     {
-        vectarget[i]->TakeDamage(power);
+        if (vectarget[i]->GetIsDead())
+        {
+            cout << selfnames << " 가 " << targetnames << " 에게 공격하려 했으나 대상은 이미 쓰러져 있습니다." << endl;
+        }
+        else
+        {
+            cout << selfnames << " 가 " << targetnames << " 에게 " << power << "의 피해를 가했습니다." << endl;
+            vectarget[i]->TakeDamage(power);
+        }
     }
 }
