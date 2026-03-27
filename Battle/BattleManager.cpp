@@ -39,7 +39,7 @@ static void PrintMessage(std::string message)
     std::cout << message << std::endl;
 }
 
-static void PrintMenu(const std::vector<std::string>& menus, int width = 30) 
+static void PrintMenu(const std::vector<std::string>& menus, int width = 100) 
 {
     std::string line(width, '=');
 
@@ -73,7 +73,7 @@ static void PrintMenu(const std::vector<std::string>& menus, int width = 30)
 
 static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, std::map<Monster*, std::vector<Player*>> targetMap)
 {
-    std::string line(30, '=');
+    std::string line(100, '=');
     std::cout << line << std::endl;
     std::cout << "현황판" << std::endl;
     std::cout << line << std::endl;
@@ -93,7 +93,6 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, s
     std::cout << std::endl;    
     for (vector<Monster>::iterator it = monster.begin(); it != monster.end(); ++it)
     {
-        // TODO:: 몬스터 종류 이름을 가져오기
         std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
 
         Action* currentAction = it->GetCurrentAction();
@@ -145,7 +144,6 @@ static void PrintPlayerActionBoard(vector<Player>& players)
 bool BattleManager::Battle(std::vector<Player>& players, int stage)
 {
     // 몬스터 생성
-    // TODO:: MonsterSpawn으로 교체
     std::vector<Monster> monsters;
     monsters.reserve(6);
     
@@ -358,8 +356,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     characters.push_back(p);
                 }
             }
-
-            it->GetCurrentAction()->PrintInfo();
+            
             it->DoAction(characters);            
 
             // TODO:: 랜덤으로 초기화 + 타겟이 없는 경우는???             
@@ -372,8 +369,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         bool isGameOver = true;
         for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
-            // TODO:: isDead 플래그로 교체하기
-            if (it->GetHP() > 0)
+            if (it->GetIsDead())
             {
                 isGameOver = false;
                 break;
@@ -391,8 +387,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
         {
-            // TODO:: isDead 플래그로 교체하기
-            if (it->GetHP() > 0)
+            if (it->GetIsDead())
             {
                 isWin = false;
                 break;
