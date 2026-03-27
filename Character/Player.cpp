@@ -33,7 +33,14 @@ void Player::SetExp(int Exp)
     if (Exp >= NextLevelExp)
     {
         ++Level;
+
+        // 현재 HP 비율에 맞춰 레벨업 시 HP 조정
+        float HPRatio = (float)HP / (float)MaxHP;
+
         MaxHP += 3;
+
+        HP = (int)(MaxHP * HPRatio);
+
         // NextLevelExp += NextLevelExp/4; 레벨링
         this->Exp -= NextLevelExp;
     }
