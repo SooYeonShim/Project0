@@ -17,8 +17,10 @@ protected:
     std::vector<Character*> vectarget;
 
 public:
-	std::string GetActionName() { return ActionName; }
+	virtual std::string GetActionName() { return ActionName; }
     TargetType GetTargetType() { return Type; }
+
+    void SetActionName(std::string _str) { ActionName = _str; }
 
     // 필요한거 아니면 호출안하는게좋음 getter setter
     const std::vector<Character*>& GetSelfCharacters() { return vecself; }
