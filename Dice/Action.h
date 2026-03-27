@@ -20,6 +20,13 @@ public:
 	std::string GetActionName() { return ActionName; }
     TargetType GetTargetType() { return Type; }
 
+    // 필요한거 아니면 호출안하는게좋음 getter setter
+    const vector<Character*>& GetSelfCharacters() { return vecself; }
+    const vector<Character*>& GetTatgerCharacters() { return vectarget; }
+    void SetSelfCharacters(vector<Character*>& _vec) { vecself = _vec; }
+    void SetTatgerCharacters(vector<Character*>& _vec) { vectarget = _vec; }
+
+
     // 타겟 설정만 한 단계
     virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
     {
