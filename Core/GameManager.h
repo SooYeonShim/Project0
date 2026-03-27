@@ -35,6 +35,7 @@ private:
 
     int CurrentStage;
     bool GameResult;
+
     vector<Player> Players;
 
 
