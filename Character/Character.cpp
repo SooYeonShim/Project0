@@ -40,13 +40,6 @@ void Character::SetHP(int HP)
 	this->HP = HP;
 }
 
-
-// HP = 0 상태일 시 사망으로 처리
-//void Character::SetIsDead(bool IsDead)
-//{
-//	this->IsDead = IsDead;
-//}
-
 void Character::SetMaxHP(int MaxHP)
 {
 	this->MaxHP = MaxHP;

@@ -19,7 +19,7 @@ public:
     virtual Action* Clone() { return new Attack(*this); }
 
 public:
-	Attack(int _power = 1);
+	Attack(int _power = 3);
 
 };
 

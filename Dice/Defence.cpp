@@ -6,7 +6,7 @@
 using namespace std;
 
 Defence::Defence(int _power)
-    :Action("Defence", TargetType::MYSELF)
+    :Action("Defence", TargetType::FRIENDLY)
     , power(_power)
 {
 }
@@ -19,8 +19,8 @@ void Defence::PrintInfo()
 void Defence::DoActive()
 {
     // UI출력
-    string selfnames = "?";
-    string targetnames = "?";
+    string selfnames = "";
+    string targetnames = "";
 
     // 공격자 이름 추출
     for (int i = 0; i < vecself.size(); ++i)
@@ -40,17 +40,17 @@ void Defence::DoActive()
     }
 
 
-    // 자기자신에게 쉴드 추가
-    for (int i = 0; i < vecself.size(); ++i)
+    // 대상에게 쉴드 추가
+    for (int i = 0; i < vectarget.size(); ++i)
     {
-        if (vecself[i]->GetIsDead())
+        if (vectarget[i]->GetIsDead())
         {
             cout << selfnames << "는 이미쓰러져 방어가 불가능합니다." << endl;
         }
         else
         {
             cout << selfnames << "는 공격에 대비합니다." << endl;
-            vecself[i]->TakeShield(power);
+            vectarget[i]->TakeShield(power);
         }
     }
 }

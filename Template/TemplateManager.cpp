@@ -29,10 +29,10 @@ Wolf TemplateManager::GetMonsterByWolf()
 Dice TemplateManager::GetDiceByGobline()
 {
     Dice newdice;
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Attack);
-    newdice.SetAction(4, new Attack);
-    newdice.SetAction(5, new Heal);
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(3));
+    newdice.SetAction(5, new Heal(3));
 
     return newdice;
 }
@@ -40,11 +40,11 @@ Dice TemplateManager::GetDiceByGobline()
 Dice TemplateManager::GetDiceByOrc()
 {
     Dice newdice;
-    newdice.SetAction(1, new Defence);
-    newdice.SetAction(2, new Defence);
-    newdice.SetAction(3, new Attack);
-    newdice.SetAction(4, new Attack);
-    newdice.SetAction(5, new Attack);
+    newdice.SetAction(1, new Defence(3));
+    newdice.SetAction(2, new Defence(4));
+    newdice.SetAction(3, new Attack(5));
+    newdice.SetAction(4, new Attack(5));
+    newdice.SetAction(5, new Attack(7));
 
     return newdice;
 }
@@ -52,12 +52,12 @@ Dice TemplateManager::GetDiceByOrc()
 Dice TemplateManager::GetDiceByWolf()
 {
     Dice newdice;
-    newdice.SetAction(0, new Attack);
-    newdice.SetAction(1, new Attack);
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Attack);
-    newdice.SetAction(4, new Attack);
-    newdice.SetAction(5, new Attack);
+    newdice.SetAction(0, new Attack(2));
+    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(3));
+    newdice.SetAction(5, new Attack(5));
 
     return newdice;
 }
@@ -65,13 +65,13 @@ Dice TemplateManager::GetDiceByWolf()
 Dice TemplateManager::GetDiceByWarrior()
 {
     Dice newdice;
-    // 2뎀1 1뎀4 방어1
-    newdice.SetAction(0, new Defence);
-    newdice.SetAction(1, new Attack);
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Attack);
-    newdice.SetAction(4, new Attack);
-    newdice.SetAction(5, new Attack(2));
+    
+    newdice.SetAction(0, new Defence(2));
+    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(3));
+    newdice.SetAction(5, new Attack(5));
 
     return newdice;
 }
@@ -79,11 +79,11 @@ Dice TemplateManager::GetDiceByWarrior()
 Dice TemplateManager::GetDiceByArcher()
 {
     Dice newdice;
-    // 꽝2 2뎀3 1뎀1
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Attack(2));
-    newdice.SetAction(4, new Attack(2));
-    newdice.SetAction(5, new Attack(2));
+   
+    newdice.SetAction(2, new Attack(4));
+    newdice.SetAction(3, new Attack(5));
+    newdice.SetAction(4, new Attack(5));
+    newdice.SetAction(5, new Attack(5));
 
     return newdice;
 }
@@ -91,12 +91,12 @@ Dice TemplateManager::GetDiceByArcher()
 Dice TemplateManager::GetDiceByDefender()
 {
     Dice newdice;
-    // 꽝1 1뎀2 1힐1 2방어2
-    newdice.SetAction(1, new Attack);
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Heal);
-    newdice.SetAction(4, new Defence(2));
-    newdice.SetAction(5, new Defence(2));
+    
+    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Heal(3));
+    newdice.SetAction(4, new Defence(4));
+    newdice.SetAction(5, new Defence(5));
 
     return newdice;
 }
@@ -104,12 +104,12 @@ Dice TemplateManager::GetDiceByDefender()
 Dice TemplateManager::GetDiceByRogue()
 {
     Dice newdice;
-    // 꽝1 1뎀3 2뎀2
-    newdice.SetAction(1, new Attack);
-    newdice.SetAction(2, new Attack);
-    newdice.SetAction(3, new Attack);
-    newdice.SetAction(4, new Attack(2));
-    newdice.SetAction(5, new Attack(2));
+    
+    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(4));
+    newdice.SetAction(4, new Attack(5));
+    newdice.SetAction(5, new Attack(5));
 
     return newdice;
 }
@@ -176,4 +176,11 @@ Player TemplateManager::GetPlayerByType(string Nickname, JobType _type)
     }
 
     return Player(HP, dice, Nickname, _type);
+}
+
+Item* TemplateManager::GetHealingPotion()
+{
+    HealingPotion* newPotion = new HealingPotion;
+
+    return newPotion;
 }

@@ -8,6 +8,7 @@
 #include "Goblin.h"
 #include "Orc.h"
 #include "Wolf.h"
+#include "HealingPotion.h"
 
 using namespace std;
 
@@ -45,7 +46,9 @@ public:
     // 직업 타입을 주면 직업 반환
     Player GetPlayerByType(string Nickname, JobType _type);
 
-    // 주사위면 입력수치만큼을 새롭게 만들어서 보내줌
+    // 아이템 생성
+    //*주의! 해당 포인터는 힙메모리에 있고 명확한 소유주가 없기에 메모리관리를 주의해야함*
+    Item* GetHealingPotion();
 
 private:
     // 생성자를 private으로 막음
