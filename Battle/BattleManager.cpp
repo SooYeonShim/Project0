@@ -86,9 +86,35 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
             std::cout << it->GetHP() << " / " << it->GetMaxHP();
 
             // 장착상태 확인
-            if (it->GetCurrentAction() != nullptr)
+            Action* currentAction = it->GetCurrentAction();
+            if (currentAction != nullptr)
             {
-                std::cout << " " << it->GetCurrentAction()->GetActionName();
+                std::cout << " " << currentAction->GetActionName();
+
+                std::vector<Character*> targets = currentAction->GetTatgerCharacters();
+
+                std::cout << "    | ";
+
+                TargetType actionType = currentAction->GetTargetType();
+                if (actionType == TargetType::ENEMY || actionType == TargetType::FRIENDLY)
+                {
+                    if (!currentAction->GetTatgerCharacters().empty())
+                    {
+                        for (std::vector<Character*>::iterator it = targets.begin(); it != targets.end(); ++it) {
+                            std::cout << (*it)->GetName() << " | ";
+                        }
+                    }
+                }
+                else if (actionType == TargetType::ENEMYALL || actionType == TargetType::FRIEDLYALL)
+                {
+                    std::cout << "전체 | ";
+                }
+                else if (actionType == TargetType::MYSELF)
+                {
+                    std::cout << it->GetName() << " | ";
+                }
+               
+
             }
 
 
@@ -183,38 +209,91 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         }
 
         // Enemy 
-            // Enemy 다이스를 굴림 -> 다이스는 단일
-            // 사용은 X, 공격 대상만 보여줌
-
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it) 
         {
             // 몬스터의 기존 타겟 초기화
 
             // 몬스터가 주사위를 굴림
-            it->RollDice();            
+            it->RollDice();
 
+            std::vector<Character*> aliveCharacters;
 
-            // 생존자 리스트 중에 한명을 임의의 타겟으로 설정
-            std::vector<Character*> alivePlayers;
-            for (Player& p : players)
+            TargetType type = it->GetCurrentAction()->GetTargetType();
+
+            switch (type)
             {
-                if (!p.GetIsDead()) { // HP가 0보다 큰 생존자만 추가
-                    alivePlayers.push_back(&p);
+            case TargetType::ENEMY:
+            {
+                for (Player& p : players)
+                {
+                    if (!p.GetIsDead()) { // HP가 0보다 큰 생존자만 추가
+                        aliveCharacters.push_back(&p);
+                    }
+                }
+
+                if (!aliveCharacters.empty())
+                {
+                    std::random_device rd;
+                    std::mt19937 g(rd());
+
+                    // 범위 지정
+                    uniform_int_distribution<int> distance(0, aliveCharacters.size() - 1);
+                    it->DoAction({ aliveCharacters[distance(g)] });
                 }
             }
-
-            if (!alivePlayers.empty())
+                break;
+            case TargetType::FRIENDLY:
             {
+                std::vector<Character*> aliveMonsters;
+                for (Monster& m : monsters)
+                {
+                    if (!m.GetIsDead())
+                    {
+                        aliveMonsters.push_back(&m);
+                    }
+                }
 
-                std::random_device rd;
-                std::mt19937 g(rd());
+                if (!aliveMonsters.empty())
+                {
+                    std::random_device rd;
+                    std::mt19937 g(rd());
 
-                // 범위 지정
-                uniform_int_distribution<int> distance(0, alivePlayers.size() - 1);
-                
-
-                it->DoAction({ alivePlayers[distance(g)] });
+                    // 범위 지정
+                    uniform_int_distribution<int> distance(0, aliveMonsters.size() - 1);
+                    it->DoAction({ aliveMonsters[distance(g)] });
+                }
             }
+                break;
+            case TargetType::MYSELF:
+                it->DoAction({ &(*it) });
+
+                break;
+            case TargetType::ENEMYALL:
+
+                for (Player& p : players)
+                {
+                    if (!p.GetIsDead())
+                    {
+                        aliveCharacters.push_back(&p);
+                    }
+                }
+
+
+                it->DoAction( aliveCharacters );
+                break;
+            case TargetType::FRIEDLYALL:
+
+                for (Monster& p : monsters)
+                {
+                    if (!p.GetIsDead())
+                    { 
+                        aliveCharacters.push_back(&p);
+                    }
+                }
+
+                it->DoAction( aliveCharacters );
+            }
+
         }
 
         PrintBattleBoard(players, monsters);
@@ -351,34 +430,99 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
+            Action* currentAction = it->GetCurrentAction();
+
+            std::vector<Character*> aliveCharacters;
+
+            // 적 전체 & 아군 전체인 경우 따로 물을 필요 X 바로 적용
+            if (currentAction->GetTargetType() == TargetType::FRIEDLYALL)
+            {
+                for (Player& p : players)
+                {
+                    if (!p.GetIsDead())
+                    {
+                        aliveCharacters.push_back(&p);
+                    }
+                }
+
+                it->DoAction(aliveCharacters);
+                continue;
+            }
+            else if (currentAction->GetTargetType() == TargetType::ENEMYALL)
+            {
+                for (Monster& p : monsters)
+                {
+                    if (!p.GetIsDead())
+                    {
+                        aliveCharacters.push_back(&p);
+                    }
+                }
+
+                it->DoAction(aliveCharacters);
+
+                continue;
+            }
+            else if (currentAction->GetTargetType() == TargetType::MYSELF)
+            {
+                it->DoAction({ &(*it) });
+                continue;
+            }
+
+
             PrintBattleBoard(players, monsters);
 
             int menuIndex = 0;
-            std::map<int, Character*> menuIndexToMonsterMap;
+            std::map<int, Character*> menuIndexToTargetMap;
             std::stringstream sst;
             sst << it->GetName() << " 의 " << it->GetCurrentAction()->GetActionName();
 
             std::vector<std::string> actionTargetMenu = { sst.str(), ""};
 
-
-            for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
+            // 몬스터 단일 대상
+            if (currentAction->GetTargetType() == TargetType::ENEMY)
             {
-                if (mostser_it->GetIsDead())
+                for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
                 {
-                    continue;
+                    if (mostser_it->GetIsDead())
+                    {
+                        continue;
+                    }
+
+                    ++menuIndex;
+
+                    stringstream ss;
+
+                    if (mostser_it->GetCurrentAction() != nullptr)
+                    {
+                        ss << menuIndex << ". " << mostser_it->GetName();
+                    }
+                    actionTargetMenu.push_back(ss.str());
+                    menuIndexToTargetMap[menuIndex] = &(*mostser_it);
                 }
-
-                ++menuIndex;
-
-                stringstream ss;
-
-                if (mostser_it->GetCurrentAction() != nullptr)
-                {
-                    ss << menuIndex << ". " << mostser_it->GetName(); // 액션 " << it->GetCurrentAction()->GetActionName() << " 을 적용";
-                }
-                actionTargetMenu.push_back(ss.str());
-                menuIndexToMonsterMap[menuIndex] = &(*mostser_it);
             }
+            else if (currentAction->GetTargetType() == TargetType::FRIENDLY) // 아군 단일 대상
+            {
+                for (std::vector<Player>::iterator player_it = players.begin(); player_it != players.end(); ++player_it)
+                {
+                    if (player_it->GetIsDead())
+                    {
+                        continue;
+                    }
+
+                    ++menuIndex;
+
+                    stringstream ss;
+
+                    if (player_it->GetCurrentAction() != nullptr)
+                    {
+                        ss << menuIndex << ". " << player_it->GetName();
+                    }
+                    actionTargetMenu.push_back(ss.str());
+                    menuIndexToTargetMap[menuIndex] = &(*player_it);
+                }
+            }
+            
+
 
             // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이즈를 종료시킴
             if (menuIndex == 0)
@@ -394,11 +538,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             while (!isValidOrder)
             {
-                if (menuIndexToMonsterMap.find(userInput) != menuIndexToMonsterMap.end())
+                if (menuIndexToTargetMap.find(userInput) != menuIndexToTargetMap.end())
                 {
                     Action* currentAction = it->GetCurrentAction();
 
-                    it->DoAction({ menuIndexToMonsterMap.find(userInput)->second });
+                    it->DoAction({ menuIndexToTargetMap.find(userInput)->second });
                     currentAction->DoActive();
 
                     isValidOrder = true;
