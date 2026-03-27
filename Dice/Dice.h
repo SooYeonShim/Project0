@@ -18,6 +18,9 @@ public:
 	// 다이스면을 등록합니다. 기존자리의 면은 삭제됩니다.
 	void SetAction(int _faceNumber, Action* _SetAct);
 
+    // 면들의 정보를 출력합니다.
+    void PrintActionInfo();
+
 public:
 	Dice();
     Dice(const Dice& _Other);

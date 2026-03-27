@@ -8,5 +8,7 @@ enum class TargetType
 {
     ENEMY,
     FRIENDLY,
-    MYSELF
+    MYSELF,
+    ENEMYALL,
+    FRIEDLYALL,
 };
