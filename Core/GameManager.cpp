@@ -80,17 +80,25 @@ void GameManager::GameStart()
 }
 
 // 전투 결과에 따라 게임 종료 혹은 경험치&아이템 획득
-void GameManager::BattleResult(bool Result)
+bool GameManager::BattleResult(bool Result)
 {
     if (Result == true)
     {
-        // 경험치 및 아이템 획득
-        return;
+        // 경험치 획득
+        for (Player player : Players)
+        {
+            if (player.GetIsDead() != false)
+            {
+                player.SetExp(10);
+            }
+        }
+        return true;
     }
     else
     {
         // 플레이어 캐릭터 전멸 게임 종료
-        return;
+        cout << "모든 캐릭터 사망하였습니다. 게임 종료" << endl;
+        return false;
     }
 }
 
