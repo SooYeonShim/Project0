@@ -44,8 +44,6 @@ void Attack::DoActive()
     // 단일 타겟에게 피해량만큼 피
     for (int i = 0; i < vectarget.size(); ++i)
     {
-        int EnemyHP = vectarget[i]->GetHP();
-        EnemyHP -= power;
-        vectarget[i]->SetHP(EnemyHP);
+        vectarget[i]->TakeDamage(power);
     }
 }

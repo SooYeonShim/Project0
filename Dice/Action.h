@@ -21,6 +21,7 @@ public:
     TargetType GetTargetType() { return Type; }
 
     void SetActionName(std::string _str) { ActionName = _str; }
+    void SetTargetType(TargetType _type) { Type = _type; }
 
     // 필요한거 아니면 호출안하는게좋음 getter setter
     const std::vector<Character*>& GetSelfCharacters() { return vecself; }

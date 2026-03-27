@@ -43,8 +43,6 @@ void Heal::DoActive()
     // 타겟이된 아군에게 힐
     for (int i = 0; i < vectarget.size(); ++i)
     {
-        int targetHP = vectarget[i]->GetHP();
-        targetHP += power;
-        vectarget[i]->SetHP(targetHP);
+        vectarget[i]->TakeHeal(power);
     }
 }
