@@ -12,9 +12,9 @@ int Character::GetMaxHP() {
 	return MaxHP;
 }
 
-//bool Character::GetIsDead() {
-//    return IsDead;
-//}
+bool Character::GetIsDead() {
+    return HP == 0;
+}
 
 int Character::GetShield() 
 {
@@ -40,6 +40,8 @@ void Character::SetHP(int HP)
 	this->HP = HP;
 }
 
+
+// HP = 0 상태일 시 사망으로 처리
 //void Character::SetIsDead(bool IsDead)
 //{
 //	this->IsDead = IsDead;

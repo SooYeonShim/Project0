@@ -15,7 +15,7 @@ public:
     string GetName();
 	int GetHP();
     int GetMaxHP();
-    // bool GetIsDead();
+    bool GetIsDead();
 	int GetShield();
 	Dice GetDice();
 	Action* GetCurrentAction();
@@ -40,7 +40,7 @@ public:
 protected:
     int HP; // 체력
     int MaxHP; // 최대 체력
-    // bool IsDead; // 사망 여부
+    // bool IsDead; // 사망 여부 -> HP == 0 판정으로 대체
     int Shield; // 방어력
     Dice CharacterDice; // 고유 주사위
 
