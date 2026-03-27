@@ -71,7 +71,7 @@ static void PrintMenu(const std::vector<std::string>& menus, int width = 100)
     std::cout << line << std::endl;
 }
 
-static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, std::map<Monster*, std::vector<Player*>> targetMap)
+static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster)
 {
     std::string line(100, '=');
     std::cout << line << std::endl;
@@ -79,34 +79,56 @@ static void PrintBattleBoard(vector<Player>& player, vector<Monster>& monster, s
     std::cout << line << std::endl;
     for (vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
     {
-        std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
+        std::cout << it->GetName() << "  ";
 
-        // 장착상태 확인
-        if (it->GetCurrentAction() != nullptr)
-        {
-            std::cout << " " << it->GetCurrentAction()->GetActionName();                
+        if (!it->GetIsDead()) {
+
+            std::cout << it->GetHP() << " / " << it->GetMaxHP();
+
+            // 장착상태 확인
+            if (it->GetCurrentAction() != nullptr)
+            {
+                std::cout << " " << it->GetCurrentAction()->GetActionName();
+            }
+
+
         }
-        
+        else
+        {
+            std::cout << "[ 사망 ]";
+        }
+
         std::cout << std::endl;
 
     }
     std::cout << std::endl;    
+
     for (vector<Monster>::iterator it = monster.begin(); it != monster.end(); ++it)
     {
-        std::cout << it->GetName() << "  " << it->GetHP() << " / " << it->GetMaxHP();
+        std::cout << it->GetName() << "  ";
 
-        Action* currentAction = it->GetCurrentAction();
-        if (currentAction != nullptr) {
-            std::cout << " " << currentAction->GetActionName();
+        if (!it->GetIsDead()) {
+            std::cout << it->GetHP() << " / " << it->GetMaxHP();
 
-            // Target 설정
-            if (targetMap.find(&(*it)) != targetMap.end()) {
-                auto targetPlayers = targetMap.at(&(*it));
+            Action* currentAction = it->GetCurrentAction();
+            if (currentAction != nullptr) {
+                std::cout << " " << currentAction->GetActionName();
+                
+                std::vector<Character*> targets = currentAction->GetTatgerCharacters();
+
                 std::cout << "    | ";
-                for (auto it = targetPlayers.begin(); it != targetPlayers.end(); ++it) {
-                    std::cout << (*it)->GetName() << " | ";
+
+                // 적군 지정된 경우 출력 (공격 등)
+                if (!currentAction->GetTatgerCharacters().empty()) {
+                    for (std::vector<Character*>::iterator it = targets.begin(); it != targets.end(); ++it) {
+                        std::cout << (*it)->GetName() << " | ";
+                    }
                 }
             }
+        }
+        else
+        {
+            std::cout << "[ 사망 ]";
         }
 
         std::cout << std::endl;
@@ -127,7 +149,11 @@ static void PrintPlayerActionBoard(vector<Player>& players)
         std::cout << it->GetName() << "  ";
 
         // 장착상태 확인
-        if (it->GetCurrentAction() != nullptr)
+        if (it->GetIsDead())
+        {
+            std::cout << " [ 사망 ]";
+        }
+        else if (it->GetCurrentAction() != nullptr)
         {
             std::cout << " " << it->GetCurrentAction()->GetActionName();
         }
@@ -144,17 +170,8 @@ static void PrintPlayerActionBoard(vector<Player>& players)
 bool BattleManager::Battle(std::vector<Player>& players, int stage)
 {
     // 몬스터 생성
-    std::vector<Monster> monsters;
-    monsters.reserve(6);
+    std::vector<Monster> monsters = MonsterSpawn::getInstance().StageSpawner(stage);
     
-    for (int i = 0; i < 3; ++i) {
-        Monster monster = TemplateManager::getInstance().GetMonsterByGoblin();
-        monster.SetCurrentAction(nullptr);
-        monsters.push_back(monster);
-    }
-
-    std::map<Monster*, std::vector<Player*>> targetMap;
-
     int turn = 1;
 
     while (true) 
@@ -172,17 +189,16 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it) 
         {
             // 몬스터의 기존 타겟 초기화
-            targetMap[&(*it)].clear();
 
             // 몬스터가 주사위를 굴림
             it->RollDice();            
 
 
             // 생존자 리스트 중에 한명을 임의의 타겟으로 설정
-            std::vector<Player*> alivePlayers;
+            std::vector<Character*> alivePlayers;
             for (Player& p : players)
             {
-                if (p.GetHP() > 0) { // HP가 0보다 큰 생존자만 추가
+                if (!p.GetIsDead()) { // HP가 0보다 큰 생존자만 추가
                     alivePlayers.push_back(&p);
                 }
             }
@@ -195,13 +211,13 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 // 범위 지정
                 uniform_int_distribution<int> distance(0, alivePlayers.size() - 1);
+                
 
-
-                targetMap[&(*it)].push_back(alivePlayers[distance(g)]);
+                it->DoAction({ alivePlayers[distance(g)] });
             }
         }
 
-        PrintBattleBoard(players, monsters, targetMap);
+        PrintBattleBoard(players, monsters);
 
         int remainRerollCount = RerollCount;
 
@@ -237,7 +253,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             switch (userInput) 
             {
             case 0:
-                PrintBattleBoard(players, monsters, targetMap);
+                PrintBattleBoard(players, monsters);
                 break;
             case 1:
             {
@@ -316,8 +332,9 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         // 장착되지 않은 주사위 플레이어에게 자동 장착하기
 
         // TARGET PHASE        
-            
+
         bool isTargetPhaseFinished = false;
+
 
         for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
@@ -329,10 +346,71 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             {
                 continue;
             }
-            
-            // 현황판 출력
-            // Player의 XX스킬 공격 대상 설정
-            // 몬스터 리스트 중에서 번호로 입력받기
+            else if (it->GetCurrentAction() == nullptr)
+            {
+                continue;
+            }
+
+            PrintBattleBoard(players, monsters);
+
+            int menuIndex = 0;
+            std::map<int, Character*> menuIndexToMonsterMap;
+            std::stringstream sst;
+            sst << it->GetName() << " 의 " << it->GetCurrentAction()->GetActionName();
+
+            std::vector<std::string> actionTargetMenu = { sst.str(), ""};
+
+
+            for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
+            {
+                if (mostser_it->GetIsDead())
+                {
+                    continue;
+                }
+
+                ++menuIndex;
+
+                stringstream ss;
+
+                if (mostser_it->GetCurrentAction() != nullptr)
+                {
+                    ss << menuIndex << ". " << mostser_it->GetName(); // 액션 " << it->GetCurrentAction()->GetActionName() << " 을 적용";
+                }
+                actionTargetMenu.push_back(ss.str());
+                menuIndexToMonsterMap[menuIndex] = &(*mostser_it);
+            }
+
+            // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이즈를 종료시킴
+            if (menuIndex == 0)
+            {
+                isTargetPhaseFinished = true;
+                continue;
+            }
+
+            PrintMenu(actionTargetMenu);
+            int userInput = GetUserInputNum();
+            bool isValidOrder = false;
+
+
+            while (!isValidOrder)
+            {
+                if (menuIndexToMonsterMap.find(userInput) != menuIndexToMonsterMap.end())
+                {
+                    Action* currentAction = it->GetCurrentAction();
+
+                    it->DoAction({ menuIndexToMonsterMap.find(userInput)->second });
+                    currentAction->DoActive();
+
+                    isValidOrder = true;
+                    continue;
+                }
+                cout << "유효하지 않은 대상입니다." << std::endl;
+                int userInput = GetUserInputNum();
+            }
+
+
+
+            PrintBattleBoard(players, monsters);
         }               
                   
         // Enemy Turn
@@ -342,24 +420,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             {
                 continue;
             }
-
-            std::vector<Character*> characters;
-            characters.reserve(20);
-
-            // 몬스터가 주사위를 굴림
-            auto targets = targetMap.find(&(*it));
-            if (targets != targetMap.end())
-            {
-                for (auto& p : targets->second)
-                {
-                    // 3. Player는 Character를 상속받았으므로 주소값을 push_back 가능
-                    characters.push_back(p);
-                }
-            }
-            
-            it->DoAction(characters);            
-
-            // TODO:: 랜덤으로 초기화 + 타겟이 없는 경우는???             
+           
+            it->GetCurrentAction()->DoActive();           
         }
 
 
@@ -369,7 +431,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         bool isGameOver = true;
         for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
         {
-            if (it->GetIsDead())
+            if (!it->GetIsDead())
             {
                 isGameOver = false;
                 break;
@@ -377,9 +439,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         }
 
         if (isGameOver)
-        {
-            // TODO:: 디버깅 확인용 GameManager에서 처리되면 삭제
-            std::cout << " 전투에서 패배했습니다." << std::endl;
+        {            
             return false;
         }
 
@@ -387,7 +447,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
         {
-            if (it->GetIsDead())
+            if (!it->GetIsDead())
             {
                 isWin = false;
                 break;

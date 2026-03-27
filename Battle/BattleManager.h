@@ -2,10 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <map>
 
 #include "Player.h"
+#include "MonsterSpawn.h"
 #include "Monster.h"
-#include "../Template/TemplateManager.h"
 
 //#include "Goblin.h"
 
