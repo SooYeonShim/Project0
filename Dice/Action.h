@@ -12,9 +12,22 @@ private:
 	std::string ActionName;
 	TargetType Type;
 
+protected:
+    std::vector<Character*> vecself;
+    std::vector<Character*> vectarget;
+
 public:
 	std::string GetActionName() { return ActionName; }
-	virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target) = 0;
+    TargetType GetTargetType() { return Type; }
+
+    // 타겟 설정만 한 단계
+    virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
+    {
+        vecself = _self;
+        vectarget = _target;
+    };
+    // 실제 효과 실행
+    virtual void DoActive() = 0;
 	virtual void PrintInfo() = 0;
 
     // 새롭게 힙메모리에 만들어 생성해 건네줌

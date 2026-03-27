@@ -24,7 +24,7 @@ public:
     }
 
 public:
-    // 초기 생성
+    // 초기 생성, 몬스터
     Goblin GetMonsterByGoblin();
     Orc GetMonsterByOrc();
     Wolf GetMonsterByWolf();
@@ -33,6 +33,14 @@ public:
     Dice GetDiceByOrc();
     Dice GetDiceByWolf();
 
+    // 직업 주사위
+    Dice GetDiceByWarrior();
+    Dice GetDiceByArcher();
+    Dice GetDiceByDefender();
+    Dice GetDiceByRogue();
+
+    // 직업타입을 주면 직업주사위반환
+    Dice GetDiceByType(JobType _type);
 
 private:
     // 생성자를 private으로 막음
