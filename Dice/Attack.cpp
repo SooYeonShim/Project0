@@ -1,4 +1,4 @@
-#include "Attack.h"
+ï»¿#include "Attack.h"
 #include <iostream>
 
 using namespace std;
@@ -11,16 +11,41 @@ Attack::Attack(int _power)
 {
 }
 
-
-void Attack::DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
-{
-	// ´ÜÀÏ Å¸°Ù¿¡°Ô ÇÇÇØ·®¸¸Å­ ÇÇÇØ
-	int EnemyHP = _target[0]->GetHP();
-	EnemyHP -= power;
-	_target[0]->SetHP(EnemyHP);
-}
-
 void Attack::PrintInfo()
 {
-	cout << "Àû¿¡°Ô " << power << "ÀÇ ÇÇÇØ¸¦ ÀÔÈü´Ï´Ù." << endl;
+    cout << "ì ì—ê²Œ"<< power << "ì˜ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤." << endl;
+}
+
+void Attack::DoActive()
+{
+    // UIì¶œë ¥
+    string selfnames = "?";
+    string targetnames = "?";
+
+    // ê³µê²©ìž ì´ë¦„ ì¶”ì¶œ
+    for (int i = 0; i < vecself.size(); ++i)
+    {
+        selfnames += vecself[i]->GetName();
+
+        if (i < vecself.size() - 1)
+            selfnames += ", ";
+    }
+    // íƒ€ê²Ÿ ì´ë¦„ ì¶”ì¶œ
+    for (int i = 0; i < vectarget.size(); ++i)
+    {
+        targetnames += vectarget[i]->GetName();
+
+        if (i < vectarget.size() - 1)
+            targetnames += ", ";
+    }
+
+    cout << selfnames << " ê°€ " << targetnames << " ì—ê²Œ " << power << "ì˜ í”¼í•´ë¥¼ ê°€í–ˆìŠµë‹ˆë‹¤." << endl;
+
+    // ë‹¨ì¼ íƒ€ê²Ÿì—ê²Œ í”¼í•´ëŸ‰ë§Œí¼ í”¼
+    for (int i = 0; i < vectarget.size(); ++i)
+    {
+        int EnemyHP = vectarget[i]->GetHP();
+        EnemyHP -= power;
+        vectarget[i]->SetHP(EnemyHP);
+    }
 }

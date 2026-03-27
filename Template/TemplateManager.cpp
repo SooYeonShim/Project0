@@ -61,3 +61,84 @@ Dice TemplateManager::GetDiceByWolf()
 
     return newdice;
 }
+
+Dice TemplateManager::GetDiceByWarrior()
+{
+    Dice newdice;
+    // 2뎀1 1뎀4 방어1
+    newdice.SetAction(0, new Defence);
+    newdice.SetAction(1, new Attack);
+    newdice.SetAction(2, new Attack);
+    newdice.SetAction(3, new Attack);
+    newdice.SetAction(4, new Attack);
+    newdice.SetAction(5, new Attack(2));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByArcher()
+{
+    Dice newdice;
+    // 꽝2 2뎀3 1뎀1
+    newdice.SetAction(2, new Attack);
+    newdice.SetAction(3, new Attack(2));
+    newdice.SetAction(4, new Attack(2));
+    newdice.SetAction(5, new Attack(2));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByDefender()
+{
+    Dice newdice;
+    // 꽝1 1뎀2 1힐1 2방어2
+    newdice.SetAction(1, new Attack);
+    newdice.SetAction(2, new Attack);
+    newdice.SetAction(3, new Heal);
+    newdice.SetAction(4, new Defence(2));
+    newdice.SetAction(5, new Defence(2));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByRogue()
+{
+    Dice newdice;
+    // 꽝1 1뎀3 2뎀2
+    newdice.SetAction(1, new Attack);
+    newdice.SetAction(2, new Attack);
+    newdice.SetAction(3, new Attack);
+    newdice.SetAction(4, new Attack(2));
+    newdice.SetAction(5, new Attack(2));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByType(JobType _type)
+{
+    switch (_type)
+    {
+    case JobType::Fighter:
+        return GetDiceByWarrior();
+        break;
+
+    case JobType::Defender:
+        return GetDiceByDefender();
+        break;
+
+    case JobType::Archer:
+        return GetDiceByArcher();
+        break;
+
+    case JobType::Rogue:
+        return GetDiceByRogue();
+        break;
+
+
+    default:
+        break;
+    }
+
+
+    return Dice();
+}

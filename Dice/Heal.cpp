@@ -11,15 +11,40 @@ Heal::Heal(int _power)
 {
 }
 
-void Heal::DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
-{
-    // 타겟이된 아군에게 힐
-    int targetHP = _target[0]->GetHP();
-    targetHP += power;
-    _target[0]->SetHP(targetHP);
-}
-
 void Heal::PrintInfo()
 {
-    cout << "대상을 회복시킵니다. " << power << "만큼 hp가 회복합니다." << endl;
+    cout << "아군에게 " << power << "만큼 hp가 회복합니다." << endl;
+}
+
+void Heal::DoActive()
+{
+    string selfnames = "?";
+    string targetnames = "?";
+
+    // 공격자 이름 추출
+    for (int i = 0; i < vecself.size(); ++i)
+    {
+        selfnames += vecself[i]->GetName();
+
+        if (i < vecself.size() - 1)
+            selfnames += ", ";
+    }
+    // 타겟 이름 추출
+    for (int i = 0; i < vectarget.size(); ++i)
+    {
+        targetnames += vectarget[i]->GetName();
+
+        if (i < vectarget.size() - 1)
+            targetnames += ", ";
+    }
+
+    cout << selfnames << "는 대상을 회복시킵니다. " << targetnames << "는 " << power << "만큼 hp가 회복합니다." << endl;
+
+    // 타겟이된 아군에게 힐
+    for (int i = 0; i < vectarget.size(); ++i)
+    {
+        int targetHP = vectarget[i]->GetHP();
+        targetHP += power;
+        vectarget[i]->SetHP(targetHP);
+    }
 }
