@@ -64,7 +64,6 @@ void GameManager::GameStart()
     cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType()) << endl;
     cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType()) << endl;
 
-    SM.EnterShop(Players, PlayerMoney);
 
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
@@ -79,9 +78,7 @@ void GameManager::GameStart()
         if (PlayerChoice == 1)
         {
             cout << "확인하고 싶은 플레이어 캐릭터의 이름을 입력해주세요." << endl;
-            int PlayerIndex = GetPlayerByName();
-            Dice dice = Players[PlayerIndex].GetDice();
-            dice.PrintActionInfo();
+            PrintPlayerDice();
             continue;
         }
         //전투 돌입을 위해 while 탈출
@@ -116,11 +113,12 @@ void GameManager::GameStart()
     }
 
     //상점 진입
-    //SM.EnterShop(Players, PlayerMoney);
+    SM.EnterShop(Players, PlayerMoney);
 
     //게임 종료
     return;
 
+    //전투 결과에 따라
     BattleResult(BM.Battle(Players, CurrentStage));
 
 }
@@ -150,10 +148,25 @@ bool GameManager::BattleResult(bool Result)
     }
 }
 
-void GameManager::PrintPlayerDice(vector<Player>& Players)
+
+// PlayerIndex를 통해 플레이어가 보유하고 있는 다이스 출력
+void GameManager::PrintPlayerDice()
 {
+    int PlayerIndex = GetPlayerByName();
+    if (PlayerIndex == -1)
+    {
+        cout << endl;
+        cout << "존재하지 않은 플레이어 이름입니다." << endl;
+    }
+    else
+    {
+        Dice dice = Players[PlayerIndex].GetDice();
+        dice.PrintActionInfo();
+    }
 }
 
+
+// 유저 입력 받은 후 입력값 반환
 int GameManager::GetUserInputNum()
 {
     int PlayerInput;

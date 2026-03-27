@@ -44,20 +44,23 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
         if (PlayerInput == 1)
         {
             HealAllPlayer(Players, PlayerMoney);
-
+            break;
         }
         else if (PlayerInput == 2)
         {
             BuyItem(PlayerMoney);
-        }
-        else if (PlayerInput == 3)
-        {
             break;
+        }
+        else 
+        {
+            cout << "잘못된 입력입니다. 다시 입력해주세요." << endl;
         }
 
     }
 }
 
+
+// 유저 입력 받은 후 입력 값 반환
 int ShopManager::GetUserInputNum()
 {
     int PlayerInput;
@@ -80,6 +83,8 @@ int ShopManager::GetUserInputNum()
     return PlayerInput;
 }
 
+
+// 상점 UI 출력
 void ShopManager::PrintShopUI(int PlayerMoney)
 {
     cout << "\n================================" << endl;
