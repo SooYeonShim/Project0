@@ -21,6 +21,9 @@ public:
     // 면들의 정보를 출력합니다.
     void PrintActionInfo();
 
+    // 면들의 정보를 간략하게 출력합니다.
+    void PrintActionSmallInfo();
+
 public:
 	Dice();
     Dice(const Dice& _Other);
