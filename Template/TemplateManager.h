@@ -9,6 +9,7 @@
 #include "Goblin.h"
 #include "Orc.h"
 #include "Wolf.h"
+#include "Troll.h"
 #include "HealingPotion.h"
 
 using namespace std;
@@ -39,10 +40,12 @@ public:
     Goblin GetMonsterByGoblin();
     Orc GetMonsterByOrc();
     Wolf GetMonsterByWolf();
+    Troll GetMonsterByTroll();
 
     Dice GetDiceByGobline();
     Dice GetDiceByOrc();
     Dice GetDiceByWolf();
+    Dice GetDiceByTroll();
 
     // 직업 주사위
     Dice GetDiceByWarrior();

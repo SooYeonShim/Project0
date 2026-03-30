@@ -32,6 +32,11 @@ vector<Monster> MonsterSpawn::StageSpawner(int _stage)
         vecmst.push_back(TemplateManager::getInstance().GetMonsterByOrc());
         break;
 
+    case 4:
+        vecmst.push_back(TemplateManager::getInstance().GetMonsterByOrc());
+        vecmst.push_back(TemplateManager::getInstance().GetMonsterByTroll());
+        break;
+
     // 없는스테이지요청이다? 빈거반환
     default:
         break;

@@ -119,10 +119,12 @@ void Character::TakeShield(int Shield_)
     std::cout << Name
         << " 방어도 증가: " << Shield_
         << " (현재 방어도: " << this->Shield << ")\n";
+
 }
 
 // 턴 종료시 호출하는 함수
 void Character::EndTurn()
 {
     this->Shield = 0;
+    CurrentAction = nullptr;
 }
