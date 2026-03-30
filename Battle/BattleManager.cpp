@@ -455,8 +455,20 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         }
 
 
-        // End Loop Condition Check;
 
+        // TURN 엔드 처리 (상태이상 등)
+        for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
+        {
+            it->EndTurn();
+        }
+
+
+        for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
+        {
+            it->EndTurn();
+        }
+
+        // End Loop Condition Check;
         // 플레이어 파티의 생존 여부 체크
         bool isGameOver = true;
         for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
