@@ -71,7 +71,7 @@ void GameManager::GameStart()
     }
     //IM.ShowInventory();
 
-    //SM.EnterShop(Players, PlayerMoney);
+    SM.EnterShop(Players, PlayerMoney);
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
     while (true)
@@ -94,6 +94,8 @@ void GameManager::GameStart()
         }
     }
 
+
+    UM.ClearMenuBox();
     //처음 스테이지 초기화
     CurrentStage = 1;
     //스테이지가 3이 되기전까지 전투 반복

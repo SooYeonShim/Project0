@@ -4,6 +4,7 @@
 #include "InventoryManager.h"
 #include "HealingPotion.h"
 #include "Item.h"
+#include "UIManager.h"
 
 using namespace std;
 
