@@ -11,6 +11,7 @@
 #include "HealingPotion.h"
 #include "Item.h"
 #include "../Template/TemplateManager.h"
+#include "UIManager.h"
 
 
 using namespace std;
@@ -30,8 +31,8 @@ public:
     void GameStart();
     bool BattleResult(bool Result);
     void PrintPlayerDice();
-    int GetUserInputNum();
     int GetPlayerByName();
+    string GetJobName(JobType JobType);
 
 
 private:

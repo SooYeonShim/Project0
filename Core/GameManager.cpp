@@ -5,37 +5,33 @@ using namespace std;
 
 void GameManager::InitializeCharacter(vector<Player>& Players)
 {
+    UIManager& UM = UIManager::getInstance();
+    InventoryManager& IM = InventoryManager::getInstance();
+
     int PlayerCount = 0;
     string Name;
 
+    //플레이어 이름 및 직업 정하기
     for (int i = 0; i < 3; ++i)
     {
         int jobChoice;
 
-        cout << i + 1 << "번 플레이어 이름: ";
-        getline(cin, Name);
+        
+        Name = UM.GetUserInput(to_string(i+1) + "번 플레이어 이름을 입력해주세요: ");
 
         //0~3사이의 값이 안들어오는거 방지
         while (true)
         {
-            cout << "직업 선택 (1:Warrior, 2:Archer, 3:Defender, 4:Rogue): ";
-            if (!(cin >> jobChoice))
-            {
-                cin.clear();
-                cin.ignore(10000, '\n');
-                cout << "숫자만 입력 가능합니다. 다시 입력해주세요" << endl;
-                continue;
-            }
-
-            cin.ignore();
-
+            UM.ClearMainWindowBox();
+            UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue)");         
+            jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 플레이어의 직업을 정해주세요: ");
             if (jobChoice >= 1 && jobChoice <= 4)
             {
                 break;
             }
             else
             {
-                cout << "1~4 사이의 숫자를 입력해주세요" << endl;
+                UM.PrintInputWarning("1~4자리 숫자를 입력해주세요.");
             }
         }
 
@@ -50,10 +46,11 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         Players.push_back(Player(10, dice, Name, ChoicedJob));
     }
 
-    InventoryManager& IM = InventoryManager::getInstance();
+    UM.ClearMainWindowBox();
+
+    // 인벤토리에 힐링 포션 하나 넣기
     Item* hpPotion = new HealingPotion();
     IM.AddItem(hpPotion);
-    IM.ShowInventory();
 }
 
 void GameManager::GameStart()
@@ -61,22 +58,28 @@ void GameManager::GameStart()
 
     BattleManager& BM = BattleManager::getInstance();
     ShopManager& SM = ShopManager::getInstance();
+    UIManager& UM = UIManager::getInstance();
+    InventoryManager& IM = InventoryManager::getInstance();
 
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
+
     //초기화 정상작동 확인
-    cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType())+1 << endl;
-    cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType())+1 << endl;
+    for (int i=0; i<Players.size(); ++i)
+    {
+        UM.PrintMessage(to_string(i+1) + " 번째 플레이어 이름: " + Players[i].GetName() + " 직업: " + GetJobName(Players[i].GetJobType()));
+    }
+    //IM.ShowInventory();
 
     SM.EnterShop(Players, PlayerMoney);
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
     while (true)
     {
-        cout << "=================================" << endl;
-        cout << "1. 플레이어 직업 주사위 확인" << endl;
-        cout << "2. 전투 시작" << endl;
-        int PlayerChoice = GetUserInputNum();
+        vector<string> menu = { "1. 플레이어 직업 주사위 확인", "2. 전투 시작" };
+        UM.PrintMenuBox(menu);
+
+        int PlayerChoice = UM.GetUserInputNumber("선택 입력: ");
 
         //플레이어의 이름을 통해 주사위 보여줌
         if (PlayerChoice == 1)
@@ -91,6 +94,8 @@ void GameManager::GameStart()
         }
     }
 
+
+    UM.ClearMenuBox();
     //처음 스테이지 초기화
     CurrentStage = 1;
     //스테이지가 3이 되기전까지 전투 반복
@@ -155,35 +160,62 @@ bool GameManager::BattleResult(bool Result)
 // 모든 Player의 직업 다이스 출력
 void GameManager::PrintPlayerDice()
 {
-    for (Player player : Players)
-    {
-        player.GetDice().PrintActionInfo();
-    }
+    UIManager& UM = UIManager::getInstance();
+    int PlayerChoice;
+    int TotalPlayer = Players.size();
+    int CurrentPlayer = 0;
+    vector<string> menu;
+
     
-}
-
-
-// 유저 입력 받은 후 입력값 반환
-int GameManager::GetUserInputNum()
-{
-    int PlayerInput;
-    while (true)
+    while (CurrentPlayer >= 0 && CurrentPlayer < TotalPlayer)
     {
-        cout << "선택 입력 : ";
-        cin >> PlayerInput;
-        if (cin.fail())
-        {
-            cout << "잘못된 입력입니다. 숫자를 입력해주세요." << endl;
-            continue;
+        UM.ClearMainWindowBox();
+        UM.PrintMessage(to_string(CurrentPlayer+1) + " 번째 플레이어 이름: " + Players[CurrentPlayer].GetName() + " 직업: " + GetJobName(Players[CurrentPlayer].GetJobType()));
+        Players[CurrentPlayer].GetDice().PrintActionInfo();
 
+        //현재 플레이어 수에 따라 선택 메뉴 출력
+        if (CurrentPlayer == 0)
+        {
+            menu = { "1. 다음 주사위", "0. 나가기" };
+        }
+        else if (CurrentPlayer == Players.size()-1)
+        {
+            menu = { "1. 이전 주사위", "0. 나가기" };
         }
         else
         {
+            menu = { "1. 이전 주사위", "2. 다음 주사위", "0. 나가기" };
+
+        }
+
+        UM.ClearMenuBox();
+        UM.PrintMenuBox(menu);
+        PlayerChoice = UM.GetUserInputNumber("선택 입력: ");
+        if (PlayerChoice == 0)
+        {
             break;
         }
+        else if (PlayerChoice == 1)
+        {
+            if (CurrentPlayer == 0)
+            {
+                CurrentPlayer += 1;
+            }
+            else
+            {
+                CurrentPlayer -= 1;
+            }
+            
+        }
+        else if (PlayerChoice == 2)
+        {
+            CurrentPlayer += 1;
+        }
     }
-    return PlayerInput;
+
+    UM.ClearMainWindowBox();
 }
+
 
 
 //Player의 인덱스를 이름으로 반환
@@ -215,4 +247,23 @@ int GameManager::GetPlayerByName()
     }
     return PlayerIndex;
 }
+
+string GameManager::GetJobName(JobType JobType)
+{
+    switch (JobType)
+    {
+    case JobType::Archer:
+        return "Archer";
+        break;
+    case JobType::Fighter:
+        return "Fighter";
+        break;
+    case JobType::Rogue:
+        return "Rogue";
+        break;
+    case JobType::Defender:
+        return "Defender";
+        break;
+    }
+  }
 

@@ -130,8 +130,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         int remainRerollCount = RerollCount;
 
-        
-
         // Player Turn
         // DICE PHASE
 
@@ -140,7 +138,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         UIManager::getInstance().PrintBattleBoard(players, monsters);
 
         bool isDicePhaseFinished = false;
-        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 다음 페이즈로" };              
+        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 아이템 사용", "5. 다음 페이즈로"};
 
         while (!isDicePhaseFinished)
         {
@@ -203,7 +201,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
                 else
                 {
-                    cout << "유효하지 않은 명령입니다.";
+                    UIManager::getInstance().PrintInputWarning("유효하지 않은 명령입니다.");                    
                 }
             }
 
@@ -249,12 +247,85 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 RollDiceByPlayers(players);
                 UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
+
             case 4:
+            {
+                InventoryManager::getInstance().ShowInventory();
+
+                std::vector<std::string> askchooseItemMenu = { "아이템을 사용하시겠습니까?", "", "0. 아이템 사용 취소", "", "[ 사용 하려는 아이템의 번호를 입력해주세요. ]" };
+                UIManager::getInstance().PrintMenuBox(askchooseItemMenu);
+
+                int itemNumber = 0;
+
+                while (true)
+                {
+                    itemNumber = UIManager::getInstance().GetUserInputNumber("");
+
+                    if (itemNumber == 0 || InventoryManager::getInstance().IsValidIndex(itemNumber - 1))
+                    {
+                        break;
+                    }
+
+                    UIManager::getInstance().PrintInputWarning("유효하지 않은 아이템입니다. 올바른 번호를 입력해주세요.");                   
+                }
+
+                UIManager::getInstance().ClearMenuBox();
+
+                // 아이템 사용에서 빠져나감
+                if (itemNumber == 0)
+                {
+                    break;
+                }
+
+                std::vector<std::string> askchoosePlayerMenu = { "아이템을 사용할 플레이어를 입력해주세요.", "", "0. 아이템 사용 취소"};
+                std::stringstream ss;
+                int menuIndex = 1;
+                int playerNumber = 0;
+
+                for (std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it)
+                {
+                    stringstream ss;
+                    if (it->GetCurrentAction() != nullptr)
+                    {
+                        ss << menuIndex << ". " << it->GetName();
+                        askchoosePlayerMenu.push_back(ss.str());
+                        ++menuIndex;
+                    }
+                }
+
+                UIManager::getInstance().PrintMenuBox(askchoosePlayerMenu);
+
+                while (true)
+                {
+                    playerNumber = UIManager::getInstance().GetUserInputNumber("");
+                    if (playerNumber == 0)
+                    {
+                        break;
+                    }
+
+                    if (playerNumber >= 1 && playerNumber <= players.size())
+                    {
+                        break;
+                    }
+
+                    UIManager::getInstance().PrintInputWarning("유효하지 않은 명령입니다.");
+                }
+
+                if (itemNumber != 0 && playerNumber > 0)
+                {
+                    InventoryManager::getInstance().Use(itemNumber - 1, &players[playerNumber - 1]);
+                }
+
+            }
+
+                break;
+
+            case 5:
                 isDicePhaseFinished = true;
                 break;
 
             default:
-                UIManager::getInstance().PrintMessage("유효하지 않은 명령입니다.");
+                UIManager::getInstance().PrintInputWarning("유효하지 않은 명령입니다.");
                 break;
             }
         }
@@ -410,8 +481,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     continue;
                 }
 
-                // TODO:: 경고 문구 통합 방법 찾기
-                cout << "유효하지 않은 대상입니다." << std::endl;
+                UIManager::getInstance().PrintInputWarning("유효하지 않은 대상입니다.");
                 userInput = UIManager::getInstance().GetUserInputNumber("");
             }
         }               
