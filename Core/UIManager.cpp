@@ -362,8 +362,6 @@ void UIManager::PrintInputWarning(std::string msg)
     std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
-
-
 void UIManager::InputLineClear() const
 {
     // 입력창 위치로 커서 이동

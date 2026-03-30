@@ -130,7 +130,6 @@
     <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Core\GameManager.cpp" />
     <ClCompile Include="Core\UIManager.cpp" />
-    <ClCompile Include="Core\UIManager.h" />
     <ClCompile Include="Dice\Attack.cpp" />
     <ClCompile Include="Dice\Defence.cpp" />
     <ClCompile Include="Dice\Dice.cpp" />
@@ -146,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Battle\MonsterSpawn.h" />
     <ClInclude Include="Character\Troll.h" />
+    <ClInclude Include="Core\UIManager.h" />
     <ClInclude Include="Dice\Action.h" />
     <ClInclude Include="Dice\Action\Attack.h" />
     <ClInclude Include="Battle\BattleManager.h" />
