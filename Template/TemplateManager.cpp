@@ -35,6 +35,13 @@ Wolf TemplateManager::GetMonsterByWolf()
     return Wolf(dice);
 }
 
+Troll TemplateManager::GetMonsterByTroll()
+{
+    Dice dice = GetDiceByTroll();
+
+    return Troll(dice);
+}
+
 Dice TemplateManager::GetDiceByGobline()
 {
     Dice newdice;
@@ -66,6 +73,19 @@ Dice TemplateManager::GetDiceByWolf()
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(3));
+    newdice.SetAction(5, new Attack(5));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByTroll()
+{
+    Dice newdice;
+    newdice.SetAction(0, new Attack(2));
+    newdice.SetAction(1, CreateActionByName("AllAttack"));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(5));
     newdice.SetAction(5, new Attack(5));
 
     return newdice;
