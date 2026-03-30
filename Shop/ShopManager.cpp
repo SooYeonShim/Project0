@@ -5,6 +5,16 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
 {
     if (PlayerMoney >= 50)
     {
+        for (Player& player : Players)
+        {
+            //모든 플레이어의 체력 5 회복
+            //만약 10을 넘기면 10으로 고정
+            player.SetHP(player.GetHP() + 5);
+            if (player.GetHP() > 10)
+            {
+                player.SetHP(10);
+            }
+        }
         cout << "모든 플레이어 체력 회복" << endl;
         PlayerMoney -= 50;
     }
@@ -18,12 +28,14 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
 // 아이템 구매
 void ShopManager::BuyItem(int& PlayerMoney)
 {
+    //인벤토리 매니저 호출
     InventoryManager& IM = InventoryManager::getInstance();
     cout << "구매하고 싶은 아이템을 선택해주세요.(1:힐링포션)" << endl;
     int PlayerChoice = GetUserInputNum();
     
     switch (PlayerChoice)
     {
+    // 힐링 포션 구매
     case 1:
         if (PlayerMoney >= 50)
         {
