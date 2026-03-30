@@ -130,8 +130,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         int remainRerollCount = RerollCount;
 
-        
-
         // Player Turn
         // DICE PHASE
 
@@ -140,7 +138,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         UIManager::getInstance().PrintBattleBoard(players, monsters);
 
         bool isDicePhaseFinished = false;
-        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 다음 페이즈로" };              
+        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 아이템 사용", "5. 다음 페이즈로"};
 
         while (!isDicePhaseFinished)
         {
@@ -249,7 +247,18 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 RollDiceByPlayers(players);
                 UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
+
             case 4:
+                InventoryManager::getInstance().ShowInventory();
+
+                // 아이템을 사용하시겠습니까?
+                // 아이템 번호를 입력받기
+
+
+
+                break;
+
+            case 5:
                 isDicePhaseFinished = true;
                 break;
 

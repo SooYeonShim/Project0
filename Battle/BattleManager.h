@@ -9,6 +9,7 @@
 #include "Monster.h"
 #include "GameEnums.h"
 #include "UIManager.h"
+#include "InventoryManager.h"
 
 class BattleManager
 {
