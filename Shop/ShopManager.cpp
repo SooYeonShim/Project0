@@ -144,7 +144,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
 
     vector<string> Menu;
 
-    Menu = { "     ★  상점  ★", "파티원이 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
+    Menu = { "     ★  상점  ★", "파티원이 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)(-50 골드)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
     UM.PrintMenuBox(Menu);
 }
 
@@ -159,7 +159,7 @@ void ShopManager::ShopActionUI(vector<Player>& Players, int& PlayerMoney)
     // 요구조건 = 50골드이상
     if (PlayerMoney < 50)
     {
-        UM.PrintInputWarning("다이스 면을 사려면 50골드 이상이 필요합니다.");
+        UM.PrintInputWarning("다이스 면을 사려면 50 골드 이상이 필요합니다.");
         return;
     }
 
