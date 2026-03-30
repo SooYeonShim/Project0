@@ -21,6 +21,7 @@ public:
     }
 
     bool Battle(vector<Player>&, int Stage);
+    void RollDiceByPlayersAndPrintStatus(std::vector<Player>& player, std::vector<Monster>& monster);
     void AddRerollCount(int count);    
 
 private:

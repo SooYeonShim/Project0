@@ -518,7 +518,49 @@ void UIManager::PrintMonsterSprite(std::string monsterType, int startColumn, boo
     }
     else if (monsterType == "오크")
     {
+        std::cout << "\x1b[7C";
+        std::cout << "|V_V|";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
 
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[6C";
+        std::cout << "ㅇ(   )ㅇ";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[7C";
+        std::cout << "//  \\";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[6C";
+        std::cout << "고블린";
     }
 
 }
