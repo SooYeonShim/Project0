@@ -6,7 +6,10 @@
 #include "BattleManager.h"
 #include "../Shop/ShopManager.h"
 #include "Character.h"
+#include "InventoryManager.h"
 #include "Dice.h"
+#include "HealingPotion.h"
+#include "Item.h"
 #include "../Template/TemplateManager.h"
 
 
