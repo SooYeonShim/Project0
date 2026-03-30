@@ -12,6 +12,17 @@
         return true;
     }
 
+    bool InventoryManager::IsValidIndex(int index) {
+        if (ItemList[index] != nullptr)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     bool InventoryManager::Use(int index, Character* target) {
         if (index < 0 || index >= ItemList.size())
             return false;
@@ -34,7 +45,7 @@
             return;
         }
         for (int i = 0; i < ItemList.size(); i++) {
-            std::cout << "[" << i << "] " << ItemList[i]->GetName() << " : " << ItemList[i]->GetItemInfo() << ")\n";
+            std::cout << "[" << i+1 << "] " << ItemList[i]->GetName() << " : " << ItemList[i]->GetItemInfo() << ")\n";
         }
     }
 
