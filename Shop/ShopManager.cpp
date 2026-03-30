@@ -18,16 +18,31 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
 // 아이템 구매
 void ShopManager::BuyItem(int& PlayerMoney)
 {
-    if (PlayerMoney >= 50)
+    InventoryManager& IM = InventoryManager::getInstance();
+    cout << "구매하고 싶은 아이템을 선택해주세요.(1:힐링포션)" << endl;
+    int PlayerChoice = GetUserInputNum();
+    
+    switch (PlayerChoice)
     {
-        cout << "아이템 구매 테스트" << endl;
-        PlayerMoney -= 50;
-        cout << "남은 돈 : " << PlayerMoney << endl;
+    case 1:
+        if (PlayerMoney >= 50)
+        {
+            Item* hpPotion = new HealingPotion();
+            IM.AddItem(hpPotion);
+            cout << "힐링 포션이 구매되었습니다. (-50 골드)" << endl;
+            PlayerMoney -= 50;
+            cout << "남은 돈 : " << PlayerMoney << endl;          
+        }
+        else
+        {
+            cout << "보유 돈이 부족합니다." << endl;
+        }
+        break;
+    default:
+        cout << "잘못된 아이템을 선택하셨습니다." << endl;
+        break;
     }
-    else
-    {
-        cout << "보유 돈이 부족합니다." << endl;
-    }
+\
     
 
 }
@@ -35,6 +50,11 @@ void ShopManager::BuyItem(int& PlayerMoney)
 //상점 진입
 void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
 {
+
+    // 인벤토리 생성
+    InventoryManager& IM = InventoryManager::getInstance();
+
+
     while (true)
     {
         int PlayerInput = 0;
@@ -49,9 +69,15 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
         else if (PlayerInput == 2)
         {
             BuyItem(PlayerMoney);
-            break;
+            continue;
+
         }
         else if (PlayerInput == 3)
+        {
+            IM.ShowInventory();
+            continue;
+        }
+        else if (PlayerInput == 4)
         {
             break;
         }
@@ -97,6 +123,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
     cout << "================================" << endl;
     cout << " 1. 플레이어 회복" << endl;
     cout << " 2. 아이템 구매" << endl;
-    cout << " 3. 상점 나가기" << endl;
+    cout << " 3. 인벤토리 확인" << endl;
+    cout << " 4. 상점 나가기" << endl;
     cout << "--------------------------------" << endl;
 }
