@@ -871,8 +871,30 @@ void UIManager::CloseTempScreen()
     return;
 }
 
-int_type UIManager::overflow(int_type c)
+streambuf::int_type UIManager::overflow(int_type c)
 {
-    return int_type();
-}
+    if (c == EOF) return EOF;
 
+
+    if (AtStartOfLine && IsIntercepting) {
+        if (CurrentWindowIndex == 1) {
+
+            char buf[64];
+            // 전체 시퀀스를 하나의 버퍼에 담습니다.
+            int len = sprintf(buf, "\x1b[3;%dr\x1b[%d;%dH", StartStatusRow, StartStatusRow, LeftMargin);
+            mOriginalBuffer->sputn(buf, len);
+
+        }
+        AtStartOfLine = false;
+    }
+
+    // 2. 현재 들어온 실제 문자(c)를 원본 버퍼에 출력
+    int_type result = mOriginalBuffer->sputc(c);
+
+    // 3. 현재 문자가 줄바꿈이면 다음 문자가 올 때 위치 조정을 하도록 플래그 설정
+    if (c == '\n') {
+        AtStartOfLine = true;
+    }
+
+    return result;
+}
