@@ -24,7 +24,6 @@ public:
     void SetName(string Name);
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
-    // void SetIsDead(bool IsDead);
 	void SetShield(int Shield);
 	void SetDice(Dice CharacterDice);
 	void SetCurrentAction(Action* CurrentAction);
