@@ -69,6 +69,7 @@ void Character::SetCurrentAction(Action* CurrentAction)
 	this->CurrentAction = CurrentAction;
 }
 
+
 void Character::RollDice()
 {
     // 주사위의 GetRandomAction 메서드를 호출해 현재 액션에 저장
@@ -107,6 +108,30 @@ void Character::DoAction(vector<Character*> target)
         CurrentAction->DoAciton(self, target);
     }
 }
+
+void Character::AddStatusEffect(StatusEffect Effect)
+{
+    bool found = false;
+
+    for (auto& E : StatusEffects)
+    {
+        if (E.kind == Effect.kind)
+        {
+            // 기존 효과가 있으면 turnsRemaining 증가
+            E.turnsRemaining += Effect.turnsRemaining;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        // 없으면 새로 추가
+        StatusEffects.push_back(Effect);
+    }
+
+}
+
 // 대미지 입음
 void Character::TakeDamage(int Damage)
 {
