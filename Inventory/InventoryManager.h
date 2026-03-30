@@ -15,6 +15,7 @@ public:
     }
 
     bool AddItem(Item* Item);
+    bool IsValidIndex(int index);
     bool Use(int index, Character* target);
     void ShowInventory();
 
