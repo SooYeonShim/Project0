@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 enum class JobType {
-    Fighter, Archer, Defender, Rogue
+    Fighter, Archer, Defender, Rogue, Cleric
 };
 
 enum class TargetType
