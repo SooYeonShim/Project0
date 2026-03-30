@@ -600,7 +600,7 @@ void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
             it->RollDice();
             // 주사위 대상 초기화
             std::vector<Character*> none;
-            it->GetCurrentAction()->DoAciton(none, none);
+            it->GetCurrentAction()->DoAction(none, none);
         }        
     }    
     UIManager::getInstance().ClearMainWindowBox();    

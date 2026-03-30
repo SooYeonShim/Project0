@@ -105,7 +105,7 @@ void Character::DoAction(vector<Character*> target)
         std::vector<Character*> self;
         self.push_back(this);
 
-        CurrentAction->DoAciton(self, target);
+        CurrentAction->DoAction(self, target);
     }
 }
 
