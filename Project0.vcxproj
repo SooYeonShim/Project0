@@ -131,9 +131,12 @@
     <ClCompile Include="Core\GameManager.cpp" />
     <ClCompile Include="Core\UIManager.cpp" />
     <ClCompile Include="Dice\Attack.cpp" />
+    <ClCompile Include="Dice\AttackStatus.cpp" />
+    <ClCompile Include="Dice\Cure.cpp" />
     <ClCompile Include="Dice\Defence.cpp" />
     <ClCompile Include="Dice\Dice.cpp" />
     <ClCompile Include="Dice\Heal.cpp" />
+    <ClCompile Include="Dice\InflictStatus.cpp" />
     <ClCompile Include="Dice\None.cpp" />
     <ClCompile Include="Inventory\InventoryManager.cpp" />
     <ClCompile Include="Item\HealingPotion.cpp" />
@@ -145,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Battle\MonsterSpawn.h" />
     <ClInclude Include="Character\Troll.h" />
+    <ClInclude Include="Common\StatusEffect.h" />
     <ClInclude Include="Core\UIManager.h" />
     <ClInclude Include="Dice\Action.h" />
     <ClInclude Include="Dice\Action\Attack.h" />
@@ -159,9 +163,12 @@
     <ClInclude Include="Common\GameEnums.h" />
     <ClInclude Include="Core\GameManager.h" />
     <ClInclude Include="Dice\Attack.h" />
+    <ClInclude Include="Dice\AttackStatus.h" />
+    <ClInclude Include="Dice\Cure.h" />
     <ClInclude Include="Dice\Defence.h" />
     <ClInclude Include="Dice\Dice.h" />
     <ClInclude Include="Dice\Action\None.h" />
+    <ClInclude Include="Dice\InflictStatus.h" />
     <ClInclude Include="Dice\None.h" />
     <ClInclude Include="Dice\Heal.h" />
     <ClInclude Include="Inventory\InventoryManager.h" />
