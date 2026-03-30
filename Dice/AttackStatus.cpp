@@ -62,6 +62,7 @@ void AttackStatus::DoActive()
 			{
 				// Todo :: 대상에게 상태이상 구조체 넣기
 				cout << "는 " << target->GetName() << " 에게 [" << onHitStatuses[k].name << "] 부여" << endl;
+                target->AddStatusEffect(onHitStatuses[k]);
 			}
 		}
 	}
