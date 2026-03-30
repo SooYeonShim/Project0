@@ -293,7 +293,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     }
                 }
 
-                UIManager::getInstance().PrintMenuBox(askchooseItemMenu);
+                UIManager::getInstance().PrintMenuBox(askchoosePlayerMenu);
 
                 while (true)
                 {
@@ -313,7 +313,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 if (itemNumber != 0 && playerNumber > 0)
                 {
-                    InventoryManager::getInstance().Use(playerNumber, &players[playerNumber - 1]);
+                    InventoryManager::getInstance().Use(itemNumber - 1, &players[playerNumber - 1]);
                 }
 
             }
