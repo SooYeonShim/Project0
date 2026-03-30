@@ -386,7 +386,7 @@ void TemplateManager::PrintShopActionList()
     {
         InitActions();
     }
-
+    
     // 순회하며 상점의 액션리스트들을 알려줌
     for (int i = 0; i < ShopActionlists.size(); ++i)
     {
