@@ -30,6 +30,7 @@ public:
 
     // Function
     void RollDice();
+    void DoActive();
 	void DoAction(vector<Character*> target);
     void TakeDamage(int Damage);
     void TakeHeal(int Damage);
@@ -46,4 +47,5 @@ protected:
 private:
     string Name; // 이름
 	Action* CurrentAction; // 이번 턴에 취하는 행동
+    // vector<StatusEffect> StatusEffects; // 상태이상 벡터 or 맵
 };
