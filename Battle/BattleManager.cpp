@@ -61,7 +61,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     std::mt19937 g(rd());
 
                     // 범위 지정
-                    uniform_int_distribution<int> distance(0, aliveCharacters.size() - 1);
+                    size_t endRange = aliveCharacters.size() > 0 ? aliveCharacters.size() - 1 : 0;
+                    uniform_int_distribution<size_t> distance(0, endRange);
                     it->DoAction({ aliveCharacters[distance(g)] });
                 }
             }
@@ -83,7 +84,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     std::mt19937 g(rd());
 
                     // 범위 지정
-                    uniform_int_distribution<int> distance(0, aliveMonsters.size() - 1);
+                    size_t endRange = aliveMonsters.size() > 0 ? aliveMonsters.size() - 1 : 0;
+                    uniform_int_distribution<size_t> distance(0, endRange);
                     it->DoAction({ aliveMonsters[distance(g)] });
                 }
             }
