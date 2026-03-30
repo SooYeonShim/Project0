@@ -118,7 +118,7 @@ Dice TemplateManager::GetDiceByTroll()
 {
     Dice newdice;
     newdice.SetAction(0, CreateActionByName("Stun(2)"));
-    newdice.SetAction(1, CreateActionByName("AllAttack(3)"));
+    newdice.SetAction(1, CreateActionByName("AllAtk(3)"));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
@@ -143,8 +143,8 @@ Dice TemplateManager::GetDiceByElitGobline()
 Dice TemplateManager::GetDiceByElitWolf()
 {
     Dice newdice;
-    newdice.SetAction(0, CreateActionByName("Bleeding(3)"));
-    newdice.SetAction(1, CreateActionByName("Bleeding(3)"));
+    newdice.SetAction(0, CreateActionByName("Bleed(3)"));
+    newdice.SetAction(1, CreateActionByName("Bleed(3)"));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
@@ -156,7 +156,7 @@ Dice TemplateManager::GetDiceByElitWolf()
 Dice TemplateManager::GetDiceByElitOrc()
 {
     Dice newdice;
-    newdice.SetAction(0, CreateActionByName("AllAttack(3)"));
+    newdice.SetAction(0, CreateActionByName("AllAtk(3)"));
     newdice.SetAction(1, new Attack(5));
     newdice.SetAction(2, new Attack(5));
     newdice.SetAction(3, new Attack(7));
@@ -209,8 +209,8 @@ Dice TemplateManager::GetDiceByRogue()
 {
     Dice newdice;
     
-    newdice.SetAction(0, CreateActionByName("Bleeding(3)"));
-    newdice.SetAction(1, CreateActionByName("Bleeding(3)"));
+    newdice.SetAction(0, CreateActionByName("Bleed(3)"));
+    newdice.SetAction(1, CreateActionByName("Bleed(3)"));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
@@ -315,12 +315,12 @@ void TemplateManager::InitActions()
     // 광역공격
     Attack* atk = new Attack(3);
     atk->SetTargetType(TargetType::ENEMYALL);
-    atk->SetActionName("AllAttack");
+    atk->SetActionName("AllAtk");
     Actionlists.push_back(atk);
 
     atk = new Attack(5);
     atk->SetTargetType(TargetType::ENEMYALL);
-    atk->SetActionName("AllAttack");
+    atk->SetActionName("AllAtk");
     Actionlists.push_back(atk);
 
     // 광역 힐
@@ -332,7 +332,7 @@ void TemplateManager::InitActions()
     // 광역 방어
     Defence* def = new Defence(5);
     def->SetTargetType(TargetType::FRIEDLYALL);
-    def->SetActionName("AllDefence");
+    def->SetActionName("AllDef");
     Actionlists.push_back(def);
 
     // 상태이상
@@ -343,7 +343,7 @@ void TemplateManager::InitActions()
     vector<StatusEffect> veceffect;
     veceffect.push_back(effect);
     InflictStatus* stat = new InflictStatus(veceffect);
-    stat->SetActionName("Bleeding");
+    stat->SetActionName("Bleed");
     Actionlists.push_back(stat);
 
     effect.kind = StateType::STUN;
@@ -370,10 +370,10 @@ void TemplateManager::InitActions()
     AddToShoplists("Attack(7)");
     AddToShoplists("Heal(5)");
     AddToShoplists("Defence(6)");
-    AddToShoplists("AllAttack(5)");
+    AddToShoplists("AllAtk(5)");
     AddToShoplists("AllHeal(3)");
-    AddToShoplists("AllDefence(5)");
-    AddToShoplists("Bleeding(3)");
+    AddToShoplists("AllDef(5)");
+    AddToShoplists("Bleed(3)");
     AddToShoplists("Stun(1)");
 
     IsActionlists = true;
