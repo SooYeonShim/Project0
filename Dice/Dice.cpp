@@ -147,3 +147,20 @@ void Dice::PrintActionInfo()
     }
     std::cout << "---------------------------------------------\n" << std::endl;
 }
+
+void Dice::PrintActionSmallInfo()
+{
+    for (int i = 0; i < (int)vecAction.size(); ++i)
+    {
+        if (vecAction[i] != nullptr)
+        {
+            std::cout << i + 1 << ". [" << vecAction[i]->GetActionName() << "] : ";
+            vecAction[i]->PrintInfo(); // 각 액션 클래스에서 구현한 상세 설명 호출
+        }
+        else
+        {
+            std::cout << i + 1 << ". [Empty]" << std::endl;
+        }
+    }
+    std::cout << "---------------------------------------------\n" << std::endl;
+}
