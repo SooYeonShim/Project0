@@ -3,6 +3,7 @@
 #include "Attack.h"
 #include "Defence.h"
 #include "Heal.h"
+#include "InflictStatus.h"
 
 TemplateManager::~TemplateManager()
 {
@@ -259,6 +260,36 @@ void TemplateManager::InitActions()
     def->SetActionName("AllDefence");
     Actionlists.push_back(def);
 
+    // 상태이상
+    StatusEffect effect;
+    effect.kind = StateType::BLEED;
+    effect.name = "출혈";
+    effect.turnsRemaining = 3;
+    vector<StatusEffect> veceffect;
+    veceffect.push_back(effect);
+    InflictStatus* stat = new InflictStatus(veceffect);
+    stat->SetActionName("Bleeding");
+    Actionlists.push_back(stat);
+
+    effect.kind = StateType::STUN;
+    effect.turnsRemaining = 2;
+    effect.name = "기절";
+    veceffect.clear();
+    veceffect.push_back(effect);
+    stat = new InflictStatus(veceffect);
+    stat->SetActionName("Stun");
+    Actionlists.push_back(stat);
+
+    effect.kind = StateType::STUN;
+    effect.turnsRemaining = 1;
+    effect.name = "기절";
+    veceffect.clear();
+    veceffect.push_back(effect);
+    stat = new InflictStatus(veceffect);
+    stat->SetActionName("Stun");
+    Actionlists.push_back(stat);
+
+
 
     // 상점 리스트 등록
     AddToShoplists("Attack(6)");
@@ -269,6 +300,9 @@ void TemplateManager::InitActions()
     AddToShoplists("AllAttack(5)");
     AddToShoplists("AllHeal(3)");
     AddToShoplists("AllDefence(5)");
+    AddToShoplists("Bleeding(3)");
+    AddToShoplists("Stun(2)");
+    AddToShoplists("Stun(1)");
 
     IsActionlists = true;
 }
