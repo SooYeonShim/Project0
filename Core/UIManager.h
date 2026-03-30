@@ -59,6 +59,8 @@ public:
      */    
     void PrintHP(int HP);
 
+    void PrintShield(int shield);
+
     void PrintTarget(Action* action);
 
     void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters);
@@ -139,6 +141,8 @@ private:
     static constexpr const char* BLOCK_RED = "\x1b[31m■\x1b[0m";
     static constexpr const char* BLOCK_YELLOW = "\x1b[33m■\x1b[0m";
     static constexpr const char* BLOCK_GREEN = "\x1b[32m■\x1b[0m";
+    static constexpr const char* BLOCK_SKY = "\x1b[36m■\x1b[0m";
+
     static constexpr const char* HP_BLOCKS[4] = { BLOCK_BLACK, BLOCK_RED, BLOCK_YELLOW, BLOCK_GREEN };
 
     int Width = 150;

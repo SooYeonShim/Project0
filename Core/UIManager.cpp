@@ -43,6 +43,24 @@ void UIManager::PrintHP(int HP)
 
 }
 
+void UIManager::PrintShield(int shield)
+{
+    if (shield <= 0)
+    {
+        return;
+    }        
+
+    cout << "[";
+    int countRec = shield <= 10 ? shield : 10;
+    for (int i = 0; i < countRec; ++i)
+    {
+        cout << BLOCK_SKY;
+    }
+
+    cout << "]";
+}
+
+
 void UIManager::PrintTarget(Action* action)
 {
 
@@ -97,7 +115,9 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
             std::cout << "\x1b[6C";
         }
 
+        PrintShield(monsters[i].GetShield());
         PrintHP(monsters[i].GetHP());
+
 
         if (i == 0)
         {
@@ -129,17 +149,18 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
     {
         if (i == 0)
         {
-            PrintPlayerSprite(players[i], 0, true);
+            PrintPlayerSprite(players[i], 2, true);
             std::cout << std::endl;
         }
         else
         {
             std::cout << "\x1b[6A";
-            PrintPlayerSprite(players[i], 40 * i);
+            PrintPlayerSprite(players[i], 40 * i + 4);
             std::cout << "\x1b[1B";
             std::cout << "\x1b[" << 40 * i << "G";
             std::cout << "\x1b[6C";
         }
+        PrintShield(players[i].GetShield());
         PrintHP(players[i].GetHP());
 
         if (!players[i].GetIsDead())
@@ -560,8 +581,54 @@ void UIManager::PrintMonsterSprite(std::string monsterType, int startColumn, boo
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[6C";
-        std::cout << "고블린";
+        std::cout << "오크";
     }
+    else if (monsterType == "트롤")
+    {
+        std::cout << "\x1b[9C";
+        std::cout << "^!_!^";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[8C";
+        std::cout << ">)|)(|>";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[9C";
+        std::cout << "/   \\";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[6C";
+        std::cout << "트롤";
+        }
 
 }
 
@@ -573,7 +640,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
     if (player.GetJobType() == JobType::Fighter)
     {
-        std::cout << "\x1b[11C";
+        std::cout << "\x1b[4C";
         std::cout << "O   +=";
         if (isNewLine)
         {
@@ -586,7 +653,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[10C";
+        std::cout << "\x1b[3C";
         std::cout << "/|\\ /";
         if (isNewLine)
         {
@@ -599,7 +666,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[10C";
+        std::cout << "\x1b[3C";
         std::cout << "/ \\";
         if (isNewLine)
         {
@@ -615,11 +682,10 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[6C";
-        std::cout << player.GetName();
     }
     else if (player.GetJobType() == JobType::Archer)
     {
-        std::cout << "\x1b[8C";
+        std::cout << "\x1b[2C";
         std::cout << "O  ,----.";
         if (isNewLine)
         {
@@ -632,7 +698,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[7C";
+        std::cout << "\x1b[0C";
         std::cout << "/|\\   |--- |-ㅇ";
         if (isNewLine)
         {
@@ -645,7 +711,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[7C";
+        std::cout << "\x1b[0C";
         std::cout << "/ \\ `-----'";
         if (isNewLine)
         {
@@ -661,12 +727,11 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[6C";
-        std::cout << player.GetName();
     }
     else if (player.GetJobType() == JobType::Defender)
     {
-        std::cout << "\x1b[7C";
-        std::cout << "O  |######| ";
+        std::cout << "\x1b[1C";
+        std::cout << " O  |######| ";
         if (isNewLine)
         {
             std::cout << std::endl;
@@ -678,7 +743,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[6C";
+        std::cout << "\x1b[0C";
         std::cout << "/|\\ |######|";
         if (isNewLine)
         {
@@ -691,7 +756,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[6C";
+        std::cout << "\x1b[0C";
         std::cout << "/ \\ |######|";
         if (isNewLine)
         {
@@ -707,12 +772,11 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[6C";
-        std::cout << player.GetName();
     }
     else if (player.GetJobType() == JobType::Rogue)
     {
-        //std::cout << "\x1b[9C";
-        std::cout << "        O";
+        std::cout << "\x1b[0C";
+        std::cout << " O";
         if (isNewLine)
         {
             std::cout << std::endl;
@@ -724,7 +788,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[7C";
+        std::cout << "\x1b[0C";
         std::cout << "/|\\-=";
         if (isNewLine)
         {
@@ -737,7 +801,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[7C";
+        std::cout << "\x1b[0C";
         std::cout << "/ \\";
         if (isNewLine)
         {
@@ -752,10 +816,15 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 
         std::cout << "\x1b[0G";
         std::cout << "\x1b[" << startColumn << "C";
-        std::cout << "\x1b[6C";
-        std::cout << player.GetName();
+        std::cout << "\x1b[0C";
+    }
+    else // 유효하지 않은 경우임, 애초에 호출되면 아예 안됌.
+    {
+        
+        return;
     }
 
+    std::cout << player.GetName() << " | " << "LV : " << player.GetLevel();
 }
 
 // stream Buffer 가로채기 활성화

@@ -222,6 +222,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 if (allPlayerReadyAction)
                 {
                     UIManager::getInstance().PrintMessage("리롤 할 대상이 없습니다. 먼저 행동을 해제해 주세요.");
+                    UIManager::getInstance().GetUserInputForWait("");
                     break;
                 }
 
@@ -472,8 +473,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     Action* currentAction = it->GetCurrentAction();
 
                     it->DoAction({ menuIndexToTargetMap.find(userInput)->second });
-                    currentAction->DoActive();
-                    //it->DoActive();
+                    //CurrentAction->DoActive();
+                    it->DoActive();
 
                     isValidOrder = true;
                     continue;
@@ -521,8 +522,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             }
 
             UIManager::getInstance().ClearMainWindowBox();
-            it->GetCurrentAction()->DoActive();
-            //it->DoActive();
+            //it->GetCurrentAction()->DoActive();
+            it->DoActive();
             UIManager::getInstance().PrintMessage(turnSS.str());
             UIManager::getInstance().PrintBattleBoard(players, monsters);
         }
