@@ -3,11 +3,27 @@
 
 #include <iostream>
 #include <GameManager.h>
+#include "UIManager.h"
+
 
 
 int main()
 {
-    std::cout << "Game Start!\n";
+    // 콘솔 화면에서 커서를 움직여서 화면을 구성할 거기 때문에, 기존의 콘솔 텍스트를 전부 삭제함 
+    system("cls");
+
+    UIManager::getInstance().WaitForStart("콘솔창 화면을 전체 화면으로 바꿔주세요. 이후, 엔터를 눌러주세요.");
+    std::cout << "\x1b[2J";
+    std::cout << "\x1b[3J";
+    std::cout << "\x1b[H";
+
+    //std::cout << "Game Start!\n";
+
+    UIManager manager = UIManager::getInstance();
+    manager.DrawBorder();
+
+    cout << "모험을 떠날 영웅들이 모였습니다" << std::endl;  
+
 
     GameManager& gm = GameManager::getInstance();
 

@@ -14,14 +14,16 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
     std::cout << std::endl;
     std::cout << std::endl;
 
-    ss << monsters.size() << " 마리의 적이 시비를 걸어왔다." << std::endl;
-    UIManager::PrintMessage(ss.str());
+    ss << monsters.size() << "마리의 적이 시비를 걸어왔다." << std::endl;
+
+    UIManager::getInstance().PrintMessage(ss.str());
 
     int userInput;
 
     while (true) 
     {
-        UIManager::Wait("");
+        UIManager::getInstance().GetUserInputForWait("");
+        UIManager::getInstance().ClearMainWindowBox();
 
 
         // 플레이어 다이스 상태 초기화
@@ -118,22 +120,25 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         }
 
-        UIManager::PrintBattleBoard(players, monsters);
+        std::stringstream ss;
+        ss << "[ 턴 : " << turn << " ]";
+        UIManager::getInstance().PrintMessage(ss.str());
+
+        UIManager::getInstance().PrintBattleBoard(players, monsters);
 
         int remainRerollCount = RerollCount;
 
-        std::stringstream ss;
-        ss << "[ 턴 : " << turn << " ]";
-        UIManager::PrintMessage(ss.str());
+        
 
         // Player Turn
         // DICE PHASE
 
         // 주사위 굴리기
         RollDiceByPlayers(players);
+        UIManager::getInstance().PrintBattleBoard(players, monsters);
 
         bool isDicePhaseFinished = false;
-        std::vector<std::string> dicePhaseMenu = { "플레이어 행동", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 다음 페이즈로" };              
+        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 다음 페이즈로" };              
 
         while (!isDicePhaseFinished)
         {
@@ -145,16 +150,16 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             std::stringstream ss;
             ss << "현재 남은 리롤 횟수 : " << remainRerollCount;
-            UIManager::PrintMessage(ss.str());
+            UIManager::getInstance().PrintMessage(ss.str());
 
-            UIManager::PrintMenu(dicePhaseMenu);
+            UIManager::getInstance().PrintMenuBox(dicePhaseMenu);
 
-            userInput = UIManager::GetInput();
+            userInput = UIManager::getInstance().GetUserInputNumber("");
 
             switch (userInput) 
             {
             case 0:
-                UIManager::PrintBattleBoard(players, monsters);
+                UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
             case 1:
             {
@@ -177,10 +182,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     removeActionMenu.push_back(ss.str());
                     menuIndexToPlayerMap[menuIndex] = &(*it);
                     ++menuIndex;
+
                 }
 
-                UIManager::PrintMenu(removeActionMenu, 80);
-                userInput = UIManager::GetInput();
+                UIManager::getInstance().PrintMenuBox(removeActionMenu);
+                userInput = UIManager::getInstance().GetUserInputNumber("");
                 if (userInput == 0)
                 {
                     break;
@@ -189,7 +195,9 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 if (menuIndexToPlayerMap.find(userInput) != menuIndexToPlayerMap.end())
                 {
                     menuIndexToPlayerMap[userInput]->SetCurrentAction(nullptr);
-                    UIManager::PrintActionStatus(players);
+
+                    UIManager::getInstance().ClearMainWindowBox();
+                    UIManager::getInstance().PrintBattleBoard(players, monsters);
                 }
                 else
                 {
@@ -213,15 +221,19 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 if (allPlayerReadyAction)
                 {
-                    UIManager::PrintMessage("리롤 할 대상이 없습니다. 먼저 행동을 해제해 주세요.");
+                    UIManager::getInstance().PrintMessage("리롤 할 대상이 없습니다. 먼저 행동을 해제해 주세요.");
                     break;
                 }
 
 
                 --remainRerollCount;
 
+                UIManager::getInstance().ClearMenuBox();
+
                 // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
                 RollDiceByPlayers(players);
+                UIManager::getInstance().ClearMainWindowBox();
+                UIManager::getInstance().PrintBattleBoard(players, monsters);
             }
                 break;
             case 3:
@@ -229,27 +241,32 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 {
                     it->SetCurrentAction(nullptr);
                 }
+                UIManager::getInstance().ClearMenuBox();
 
-                // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
+                --remainRerollCount;
                 RollDiceByPlayers(players);
+                UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
             case 4:
                 isDicePhaseFinished = true;
                 break;
 
             default:
-                UIManager::PrintMessage("유효하지 않은 명령입니다.");
+                UIManager::getInstance().PrintMessage("유효하지 않은 명령입니다.");
                 break;
             }
         }
 
+        UIManager::getInstance().ClearMenuBox();
 
         // 장착되지 않은 주사위 플레이어에게 자동 장착하기
 
 
         // TARGET PHASE        
-        UIManager::PrintMessage("* 대상을 선택하자. *");
-        UIManager::Wait("");
+
+        UIManager::getInstance().PrintMessage("* 주사위 결과를 적용할 대상을 선택하자. *");
+        UIManager::getInstance().GetUserInputForWait("");
+        UIManager::getInstance().ClearMainWindowBox();
 
 
         bool isTargetPhaseFinished = false;
@@ -269,6 +286,9 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             {
                 continue;
             }
+
+            UIManager::getInstance().ClearMainWindowBox();
+
 
             Action* currentAction = it->GetCurrentAction();
 
@@ -308,8 +328,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
-
-            UIManager::PrintBattleBoard(players, monsters);
+            UIManager::getInstance().PrintBattleBoard(players, monsters);
 
             int menuIndex = 0;
             std::map<int, Character*> menuIndexToTargetMap;
@@ -371,8 +390,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
-            UIManager::PrintMenu(actionTargetMenu);
-            userInput = UIManager::GetInput();
+            UIManager::getInstance().PrintMenuBox(actionTargetMenu);
+            userInput = UIManager::getInstance().GetUserInputNumber("");
             bool isValidOrder = false;
 
 
@@ -388,12 +407,17 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     isValidOrder = true;
                     continue;
                 }
+
+                // TODO:: 경고 문구 통합 방법 찾기
                 cout << "유효하지 않은 대상입니다." << std::endl;
-                userInput = UIManager::GetInput();
+                userInput = UIManager::getInstance().GetUserInputNumber("");
             }
         }               
 
-        UIManager::PrintBattleBoard(players, monsters);
+        UIManager::getInstance().ClearMainWindowBox();
+        UIManager::getInstance().ClearMenuBox();
+
+        UIManager::getInstance().PrintBattleBoard(players, monsters);
 
 
         // 넘어가기 적들 다 쓰러트리면 적 페이즈 X
@@ -414,8 +438,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             return true;
         }
 
-        UIManager::PrintMessage("* 조심해! 적들이 움직인다 *");
-        UIManager::Wait("");
+        UIManager::getInstance().PrintMessage("* 조심해! 적들이 움직인다 *");
+        UIManager::getInstance().GetUserInputForWait("");
 
         // Enemy Turn
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
@@ -424,8 +448,10 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             {
                 continue;
             }
-           
-            it->GetCurrentAction()->DoActive();           
+
+            UIManager::getInstance().ClearMainWindowBox();
+            it->GetCurrentAction()->DoActive();
+            UIManager::getInstance().PrintBattleBoard(players, monsters);
         }
 
 
@@ -472,18 +498,20 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
 {
 
-    UIManager::PrintMessage("주사위를 굴리자");
-    UIManager::Wait("");    
+    UIManager::getInstance().PrintMessage("주사위를 굴리자");
+    UIManager::getInstance().GetUserInputForWait("");
 
     for (std::vector<Player>::iterator it = player.begin(); it != player.end(); ++it)
     {
         if (it->GetCurrentAction() == nullptr)
         {
             it->RollDice();
+            // 주사위 대상 초기화
+            std::vector<Character*> none;
+            it->GetCurrentAction()->DoAciton(none, none);
         }        
     }    
-
-    UIManager::PrintActionStatus(player);
+    UIManager::getInstance().ClearMainWindowBox();    
 }
 
 void BattleManager::AddRerollCount(int count)
