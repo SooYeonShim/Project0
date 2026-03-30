@@ -18,6 +18,7 @@ public:
     int GetMaxHP();
     bool GetIsDead() const;
 	int GetShield();
+    vector<StatusEffect> GetStatusEffects();
 	Dice GetDice();
 	Action* GetCurrentAction();
 
@@ -26,6 +27,7 @@ public:
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
 	void SetShield(int Shield);
+    void SetStatusEffects(const vector<StatusEffect>& StatusEffects);
 	void SetDice(Dice CharacterDice);
 	void SetCurrentAction(Action* CurrentAction);
 

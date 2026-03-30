@@ -20,6 +20,10 @@ int Character::GetShield()
 {
 	return Shield;
 }
+vector<StatusEffect> Character::GetStatusEffects()
+{
+	return StatusEffects;
+}
 
 Dice Character::GetDice()
 {
@@ -48,6 +52,11 @@ void Character::SetMaxHP(int MaxHP)
 void Character::SetShield(int Shield)
 {
 	this->Shield = Shield;
+}
+
+void Character::SetStatusEffects(const vector<StatusEffect>& StatusEffects)
+{
+	this->StatusEffects = StatusEffects;
 }
 
 void Character::SetDice(Dice CharacterDice)
