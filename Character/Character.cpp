@@ -70,21 +70,20 @@ void Character::RollDice()
 void Character::DoActive()
 {
     // 액션 실행 전 상태 체크
-    //auto it = std::find_if(StatusEffects.begin(), StatusEffects.end(),
-    //    [](const StatusEffect& effect) {
-    //        return effect.Type == StatusType::Stun
-    //            && effect.RemainingTurns > 0;
-    //    }
-    //);
+    auto it = std::find_if(StatusEffects.begin(), StatusEffects.end(),
+        [](const StatusEffect& effect) {
+            return effect.kind == StateType::STUN
+                && effect.turnsRemaining > 0;
+        }
+    );
 
-    //if (it != StatusEffects.end()) {
-    //    cout << "스턴에 걸려 움직일 수 없습니다." << endl;
-    //}
-    // else
-    // {
-
-    CurrentAction->DoActive();
-    // }
+    if (it != StatusEffects.end()) {
+        cout << "스턴에 걸려 움직일 수 없습니다." << endl;
+    }
+     else
+     {
+        CurrentAction->DoActive();
+     }
 }
 
 // 할당된 액션 실행
@@ -146,6 +145,46 @@ void Character::TakeShield(int Shield_)
 // 턴 종료시 호출하는 함수
 void Character::EndTurn()
 {
+
+    // 출혈 체크
+    auto it = std::find_if(StatusEffects.begin(), StatusEffects.end(),
+        [](const StatusEffect& effect) {
+            return effect.kind == StateType::BLEED
+                && effect.turnsRemaining > 0;
+        }
+    );
+
+    // 출혈 중이면 피해 적용
+    if (it != StatusEffects.end())
+    {
+        int damage = this->MaxHP / 10;
+
+        if (damage <= 0)
+            damage = 1;
+
+        this->HP -= damage;
+
+        cout << "출혈 피해: " << damage << endl;
+    }
+
+    // 상태 이상 남은 턴 감소
+    for (auto it = StatusEffects.begin(); it != StatusEffects.end(); )
+    {
+        if (it->turnsRemaining > 0)
+        {
+            --(it->turnsRemaining);
+        }
+
+        if (it->turnsRemaining == 0)
+        {
+            it = StatusEffects.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
+    }
+
     this->Shield = 0;
     CurrentAction = nullptr;
 }

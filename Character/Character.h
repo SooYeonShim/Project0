@@ -3,6 +3,7 @@
 #include <vector>
 #include "Dice.h"
 #include "Action.h"
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -47,5 +48,5 @@ protected:
 private:
     string Name; // 이름
 	Action* CurrentAction; // 이번 턴에 취하는 행동
-    // vector<StatusEffect> StatusEffects; // 상태이상 벡터 or 맵
+    vector<StatusEffect> StatusEffects; // 상태이상 리스트
 };
