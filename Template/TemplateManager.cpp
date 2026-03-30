@@ -82,7 +82,7 @@ Dice TemplateManager::GetDiceByTroll()
 {
     Dice newdice;
     newdice.SetAction(0, new Attack(2));
-    newdice.SetAction(1, CreateActionByName("AllAttack"));
+    newdice.SetAction(1, CreateActionByName("AllAttack(3)"));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
@@ -259,14 +259,25 @@ void TemplateManager::InitActions()
     def->SetActionName("AllDefence");
     Actionlists.push_back(def);
 
+
+    // 상점 리스트 등록
+    AddToShoplists("Attack(6)");
+    AddToShoplists("Attack(7)");
+    AddToShoplists("Heal(5)");
+    AddToShoplists("Defence(6)");
+    AddToShoplists("AllAttack(3)");
+    AddToShoplists("AllAttack(5)");
+    AddToShoplists("AllHeal(3)");
+    AddToShoplists("AllDefence(5)");
+
+    IsActionlists = true;
 }
 
 void TemplateManager::PrintShopActionList()
 {
     // 리스트 초기화없이 호출된거 방지용
-    if (IsActionlists)
+    if (!IsActionlists)
     {
-        IsActionlists = true;
         InitActions();
     }
 
@@ -284,9 +295,8 @@ void TemplateManager::PrintShopActionList()
 Action* TemplateManager::CreateActionByName(const std::string& actionName)
 {
     // 리스트 초기화없이 호출된거 방지용
-    if (IsActionlists)
+    if (!IsActionlists)
     {
-        IsActionlists = true;
         InitActions();
     }
 
@@ -302,4 +312,16 @@ Action* TemplateManager::CreateActionByName(const std::string& actionName)
     }
 
     return nullptr;
+}
+
+void TemplateManager::AddToShoplists(const string& actionName)
+{
+    for (Action* action : Actionlists)
+    {
+        if (action->GetActionName() == actionName)
+        {
+            ShopActionlists.push_back(action);
+            return;
+        }
+    }
 }

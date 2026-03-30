@@ -77,6 +77,10 @@ public:
     Action* CreateActionByName(const std::string& actionName);
 
 private:
+    // 상점에서 이름으로 action등록(매니저 내부에서 사용용도)
+    void AddToShoplists(const string& actionName);
+
+private:
     // 생성자를 private으로 막음
     TemplateManager() {}
     ~TemplateManager();
