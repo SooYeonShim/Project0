@@ -50,8 +50,7 @@ void InflictStatus::DoActive()
 		{
             // 대상에게 상태이상 구조체 넣기
 			cout << "   [" << tmpl.name << "] 적용 (지속 " << tmpl.turnsRemaining << "라운드)" << endl;
-
-            //target->
+            target->AddStatusEffect(tmpl);
 		}
 	}
 }
