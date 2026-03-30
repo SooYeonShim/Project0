@@ -8,12 +8,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
         for (Player& player : Players)
         {
             //모든 플레이어의 체력 5 회복
-            //만약 10을 넘기면 10으로 고정
-            player.SetHP(player.GetHP() + 5);
-            if (player.GetHP() > 10)
-            {
-                player.SetHP(10);
-            }
+            player.TakeHeal(5);
         }
         cout << "모든 플레이어 체력 회복" << endl;
         PlayerMoney -= 50;
