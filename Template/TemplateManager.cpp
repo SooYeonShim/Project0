@@ -4,6 +4,15 @@
 #include "Defence.h"
 #include "Heal.h"
 
+TemplateManager::~TemplateManager()
+{
+    for (size_t i = 0; i < Actionlists.size(); ++i)
+    {
+        delete Actionlists[i];
+    }
+    Actionlists.clear();
+}
+
 Goblin TemplateManager::GetMonsterByGoblin()
 {
     Dice dice = GetDiceByGobline();
@@ -183,4 +192,94 @@ Item* TemplateManager::GetHealingPotion()
     HealingPotion* newPotion = new HealingPotion;
 
     return newPotion;
+}
+
+void TemplateManager::InitActions()
+{
+    // 중복호출 오류시 메모리릭 발생원인제거용
+    for (size_t i = 0; i < Actionlists.size(); ++i)
+    {
+        delete Actionlists[i];
+    }
+    Actionlists.clear();
+    ShopActionlists.clear();
+
+    // 기본 전투 액션
+    Actionlists.push_back(new Attack(3));
+    Actionlists.push_back(new Attack(4));
+    Actionlists.push_back(new Attack(5));
+    Actionlists.push_back(new Attack(6));
+    Actionlists.push_back(new Attack(7));
+    Actionlists.push_back(new Heal(3));
+    Actionlists.push_back(new Heal(5));
+    Actionlists.push_back(new Defence(2));
+    Actionlists.push_back(new Defence(4));
+    Actionlists.push_back(new Defence(6));
+
+    // 광역공격
+    Attack* atk = new Attack(3);
+    atk->SetTargetType(TargetType::ENEMYALL);
+    atk->SetActionName("AllAttack");
+    Actionlists.push_back(atk);
+
+    atk = new Attack(5);
+    atk->SetTargetType(TargetType::ENEMYALL);
+    atk->SetActionName("AllAttack");
+    Actionlists.push_back(atk);
+
+    // 광역 힐
+    Heal* heal = new Heal(3);
+    heal->SetTargetType(TargetType::FRIEDLYALL);
+    heal->SetActionName("AllHeal");
+    Actionlists.push_back(heal);
+
+    // 광역 방어
+    Defence* def = new Defence(5);
+    def->SetTargetType(TargetType::FRIEDLYALL);
+    def->SetActionName("AllDefence");
+    Actionlists.push_back(def);
+
+}
+
+void TemplateManager::PrintShopActionList()
+{
+    // 리스트 초기화없이 호출된거 방지용
+    if (IsActionlists)
+    {
+        IsActionlists = true;
+        InitActions();
+    }
+
+    // 순회하며 상점의 액션리스트들을 알려줌
+    for (int i = 0; i < ShopActionlists.size(); ++i)
+    {
+        if (ShopActionlists[i] == nullptr)
+            continue;
+
+        std::cout << i+1 << ". " << ShopActionlists[i]->GetActionName() << " : ";
+        ShopActionlists[i]->PrintInfo();
+    }
+}
+
+Action* TemplateManager::CreateActionByName(const std::string& actionName)
+{
+    // 리스트 초기화없이 호출된거 방지용
+    if (IsActionlists)
+    {
+        IsActionlists = true;
+        InitActions();
+    }
+
+    // 리스트에서 이름으로 검색 후 찾은 action 복사하여 반환
+    for (int i = 0; i < Actionlists.size(); ++i)
+    {
+        Action* proto = Actionlists[i];
+        if (proto == nullptr)
+            continue;
+
+        if (proto->GetActionName() == actionName)
+            return proto->Clone();
+    }
+
+    return nullptr;
 }
