@@ -81,15 +81,15 @@ void Dice::SetAction(int _faceNumber, Action* _SetAct)
     vecAction[_faceNumber] = _SetAct;
 }
 
-Action& Dice::GetAction(int _faceNumber)
+Action* Dice::GetAction(int _faceNumber)
 {
     if (_faceNumber < 0 || _faceNumber > 5)
     {
         cout << "정상적인 범위가 아닙니다." << endl;
-        return;
+        return nullptr;
     }
 
-    return *vecAction[_faceNumber];
+    return vecAction[_faceNumber];
 }
 
 void Dice::PrintActionInfo()

@@ -20,7 +20,7 @@ public:
 
     // 다이스 면의 포인터를 가져옵니다.
     // 주의) delete하지 말 것. Dice가 관리함
-    Action& GetAction(int _faceNumber);
+    Action* GetAction(int _faceNumber);
 
     // 면들의 정보를 출력합니다.
     void PrintActionInfo();
