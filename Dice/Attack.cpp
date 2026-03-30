@@ -13,7 +13,13 @@ Attack::Attack(int _power)
 
 void Attack::PrintInfo()
 {
-    cout << "적에게"<< power << "의 피해를 줍니다." << endl;
+    // 단일적이냐 모든적이냐에 따라 구별
+    string target = "적에게 ";
+    if (GetTargetType() == TargetType::ENEMYALL)
+        target = "모든 적에게 ";
+
+
+    cout << target << power << "의 피해를 줍니다." << endl;
 }
 
 void Attack::DoActive()
@@ -40,6 +46,12 @@ void Attack::DoActive()
     }
 
 
+    int calculPower = power;
+    if (!vecself.empty())
+    {
+        // 플레이어에게 피해량 증가옵션이 추가된다면...
+    }
+
     // 단일 타겟에게 피해량만큼 피
     for (int i = 0; i < vectarget.size(); ++i)
     {
@@ -49,8 +61,8 @@ void Attack::DoActive()
         }
         else
         {
-            cout << selfnames << " 가 " << targetnames << " 에게 " << power << "의 피해를 가했습니다." << endl;
-            vectarget[i]->TakeDamage(power);
+            cout << selfnames << " 가 " << targetnames << " 에게 " << calculPower << "의 피해를 가했습니다." << endl;
+            vectarget[i]->TakeDamage(calculPower);
         }
     }
 }
