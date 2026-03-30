@@ -1,22 +1,13 @@
 ﻿#pragma once
-#define NOMINMAX // windows.h의 max 매크로 충돌 방지
-#include <windows.h>
+#define _CRT_SECURE_NO_WARNINGS
+#pragma warning(disable:4996)
+
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <iomanip>
 #include <limits>
-#include <algorithm>
-
-// --- ANSI 색상 코드 정의 ---
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define CYAN    "\033[36m"
-#define WHITE   "\033[37m"
-#define BOLD    "\033[1m"
-#define RESET   "\033[0m"
 
 #include "Character.h"
 #include "Player.h"
@@ -24,195 +15,170 @@
 #include "GameEnums.h"
 #include "Monster.h"
 
+// --- ANSI 색상 코드 정의 ---
+/**
+ *
+ * EMCA-48 문서에서
+ * 8.3.117 - SELECT GRAPHIC RENDITION
+ *
+ */
+constexpr const char* RED = "\x1b[31m";
+constexpr const char* RESET = "\x1b[0m";
+constexpr const char* BOLD = "\x1b[1m";
+constexpr const char* YELLOW = "\x1b[33m";
+constexpr const char* CYAN = "\x1b[36m";
+constexpr const char* WHITE = "\x1b[37m";
 
-class UIManager {
+
+class UIManager : public std::streambuf {
 public:
-    // [1] 콘솔 초기화 (색상 및 UTF-8 활성화)
-    static void InitConsole() {
-        HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-        DWORD dwMode = 0;
-        GetConsoleMode(hOut, &dwMode);
-        SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
-        SetConsoleOutputCP(CP_UTF8);
+    static UIManager& getInstance()
+    {
+        static UIManager instance; // 최초 1회만 생성
+        return instance;
     }
 
-    // [2] 화면 전체 지우기 (Windows API 방식)
-    static void ClearScreen() {
-        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        COORD coordScreen = { 0, 0 };
-        DWORD cCharsWritten;
-        CONSOLE_SCREEN_BUFFER_INFO csbi;
-        if (!GetConsoleScreenBufferInfo(hConsole, &csbi)) return;
-        DWORD dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
-        FillConsoleOutputCharacter(hConsole, (TCHAR)' ', dwConSize, coordScreen, &cCharsWritten);
-        FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
-        SetConsoleCursorPosition(hConsole, coordScreen);
-    }
 
-    // [3] 한글 폭 계산 (UTF-8 기준)
-    static int GetVisualWidth(const std::string& str) {
-        int width = 0;
-        for (size_t i = 0; i < str.length(); ++i) {
-            if (static_cast<unsigned char>(str[i]) > 127) {
-                width += 2;
-                i += 2; // UTF-8 한글 3바이트 대응
+    // 시작시 가장 먼저 호출되는 함수
+    // 콘솔 화면을 최대로 키우고 Enter을 눌러 시작하도록 요청함
+    void WaitForStart(std::string msg);
+
+    void PrintMessage(std::string message);
+
+    // HP 출력방식
+    // 검은색 - 10 이하에서 비어있는 부분
+    // 빨강색 - 10 이하에서 남은 것
+    // 주황색 - 20 이하에서 남은 것
+    // 초록색 - 30 이하에서 남은 것
+    /**
+     *
+     * HP가 25인 경우
+     *
+     * [ 초록색 초록색 초록색 초록색 초록색 주황색 주황색 주황색 주황색 주황색 ]
+     * 
+     */    
+    void PrintHP(int HP);
+
+    void PrintTarget(Action* action);
+
+    void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters);
+
+    // MainWindow쪽으로 커서를 설정 함
+    void CursorScrollSet() const;
+
+    // 위쪽 메뉴 박스를 비움
+    void ClearMainWindowBox();
+
+    // 외곽선을 그림
+    void DrawBorder();
+
+    // 문자열 입력받음
+    string GetUserInput(std::string message);
+
+    // 숫자 입력 받음
+    int GetUserInputNumber(std::string message);
+
+    // 엔터 입력 받음 -> 엔터 입력 전까지 블록킹 효과
+    void GetUserInputForWait(std::string msg);
+    void PrintInputWarning(std::string msg);
+    // 입력라인 설명 지움
+    void InputLineClear() const;
+
+    // MainWindow 아래에 있는 Menu 박스의 텍스트를 초기화 함
+    void ClearMenuBox() const;
+
+    // 하단 박스에 메뉴를 출력함
+    void PrintMenuBox(const std::vector<std::string>& menus);
+
+    // isNewLine 을 받는 이유,
+    // 새로 줄 갱신을 해서 그릴 때는 NewLine을 넣고 그림 -> 기존의 텍스트들이 밀림
+    // 하지만, 이미 있는 줄을 사용할 때는 NewLine을 넣지 않고 그림 -> 기존의 텍스트들이 밀리지 않음.
+    // 가로에 스프라이트들을 배치할 때 사용
+    void PrintMonsterSprite(std::string monsterType, int startColumn, bool isNewLine = false);
+
+    // isNewLine 을 받는 이유,
+    // 새로 줄 갱신을 해서 그릴 때는 NewLine을 넣고 그림 -> 기존의 텍스트들이 밀림
+    // 하지만, 이미 있는 줄을 사용할 때는 NewLine을 넣지 않고 그림 -> 기존의 텍스트들이 밀리지 않음.
+    // 가로에 스프라이트들을 배치할 때 사용    
+    void PrintPlayerSprite(Player& player, int startColumn, bool isNewLine = false) const;
+
+protected:
+    // 가로채기가 활성화 된 경우, std::cout 에 입력한 모든 출력들을 가로채서,
+    // MainWindow (가장 위쪽의 화면)에 출력되도독 함.
+    // 주의) Enable과 Disable를 올바르게 하지 않고 std::cout를 사용하면 무한루프등 오류가 발생할 수 있음.
+    virtual int_type overflow(int_type c) override {
+        if (c == EOF) return EOF;
+
+
+        if (AtStartOfLine && IsIntercepting) {
+            if (CurrentWindowIndex == 1) {
+
+                char buf[64];
+                // 전체 시퀀스를 하나의 버퍼에 담습니다.
+                int len = sprintf(buf, "\x1b[3;%dr\x1b[%d;%dH", StartStatusRow, StartStatusRow, LeftMargin);
+                mOriginalBuffer->sputn(buf, len);
+
             }
-            else {
-                width += 1;
-            }
-        }
-        return width;
-    }
-
-    // [4] 고정 폭 문자열 생성
-    static std::string Fit(std::string str, int size) {
-        int cur = GetVisualWidth(str);
-        if (size <= cur) return str;
-        return str + std::string(size - cur, ' ');
-    }
-
-    // [5] HP 게이지 바 생성
-    static std::string GetHPBar(int cur, int max, int width = 10) {
-        float percentage = (max > 0) ? (float)cur / max : 0;
-        int filled = (int)(width * percentage);
-        if (filled < 0) filled = 0;
-
-        std::string bar = "[";
-        for (int i = 0; i < width; ++i) {
-            bar += (i < filled) ? "■" : " ";
-        }
-        bar += "]";
-
-        if (percentage > 0.5f) return std::string(GREEN) + bar + RESET;
-        if (percentage > 0.2f) return std::string(YELLOW) + bar + RESET;
-        return std::string(RED) + bar + RESET;
-    }
-
-    // [6] 상태 아이콘 생성
-    static std::string GetStatusIcon(bool isReady, bool isDead) {
-        if (isDead)  return std::string(RED) + " [X] " + RESET;
-        if (isReady) return std::string(GREEN) + " [V] " + RESET;
-        return std::string(YELLOW) + " [ ] " + RESET;
-    }
-
-    // [7] 메인 전투 현황판
-    static void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters) {
-        const int WIDTH = 95;
-        std::string line(WIDTH, '=');
-        std::cout << BOLD << CYAN << line << RESET << "\n";
-        std::cout << "  " << BOLD << YELLOW << "BATTLE STATUS DASHBOARD" << RESET << "\n";
-        std::cout << CYAN << line << RESET << "\n";
-        std::cout << "  " << Fit("NAME", 16) << " | " << Fit("HP GAUGE", 14) << " | " << Fit("ACTION", 18) << " | TARGET\n";
-        std::cout << std::string(WIDTH, '-') << "\n";
-
-        auto DrawChar = [](Character& c, std::string color) {
-            std::cout << color << "  " << Fit(c.GetName(), 16) << RESET << " | ";
-            if (c.GetIsDead()) {
-                std::cout << RED << Fit("[ ELIMINATED ]", 14) << RESET << " | " << Fit("-", 18) << " | -\n";
-            }
-            else {
-                std::cout << GetHPBar(c.GetHP(), c.GetMaxHP()) << " | ";
-                Action* act = c.GetCurrentAction();
-                if (act) {
-                    std::cout << YELLOW << Fit(act->GetActionName(), 18) << RESET << " | ";
-                    auto targets = act->GetTatgerCharacters();
-                    if (targets.empty()) std::cout << "-";
-                    else for (auto* t : targets) std::cout << CYAN << "[" << t->GetName() << "] " << RESET;
-                }
-                else {
-                    std::cout << Fit("WAITING...", 18) << " | -";
-                }
-                std::cout << "\n";
-            }
-            };
-
-        for (auto& p : players) DrawChar(p, GREEN);
-        std::cout << std::string(WIDTH, '.') << "\n";
-        for (auto& m : monsters) DrawChar(m, RED);
-        std::cout << BOLD << CYAN << line << RESET << "\n\n";
-    }
-
-    // [8] 액션 설정 현황판
-    static void PrintActionStatus(std::vector<Player>& players) {
-        const int WIDTH = 65;
-        std::string line(WIDTH, '=');
-        std::cout << BOLD << CYAN << line << RESET << "\n";
-        std::cout << "  " << BOLD << "PARTY ACTION SELECTION STATUS" << RESET << "\n";
-        std::cout << CYAN << line << RESET << "\n";
-        std::cout << "  " << Fit("STATUS", 8) << " | " << Fit("PLAYER", 16) << " | SELECTED ACTION\n";
-        std::cout << std::string(WIDTH, '-') << "\n";
-
-        for (auto& p : players) {
-            bool hasAction = (p.GetCurrentAction() != nullptr);
-            std::cout << GetStatusIcon(hasAction, p.GetIsDead()) << " | ";
-            std::cout << (p.GetIsDead() ? RED : WHITE) << Fit(p.GetName(), 16) << RESET << " | ";
-            if (p.GetIsDead()) std::cout << RED << "ELIMINATED" << RESET;
-            else if (hasAction) std::cout << YELLOW << BOLD << ">> " << p.GetCurrentAction()->GetActionName() << RESET;
-            else std::cout << std::string(4, ' ') << "... Selecting";
-            std::cout << "\n";
-        }
-        std::cout << BOLD << CYAN << line << RESET << "\n\n";
-    }
-
-    // [9] 박스형 메뉴 출력
-    static void PrintMenu(const std::vector<std::string>& menus, int width = 60) {
-        // 테두리 상단 (좌측 여백 2칸 유지)
-        std::string edge = "  +" + std::string(width - 4, '-') + "+";
-        std::cout << YELLOW << edge << RESET << "\n";
-
-        for (const std::string& menu : menus) {
-            // [중요] 내부에서 번호를 생성하지 않고, 넘겨받은 menu 문자열을 그대로 사용
-            // 만약 번호를 자동으로 붙이고 싶다면 이 줄을 std::string text = std::to_string(i + 1) + ". " + menu; 로 수정
-            const std::string& text = menu;
-
-            int vWidth = GetVisualWidth(text);
-
-            // 중앙 정렬을 위한 가용 여백 (테두리와 내부 공백 제외)
-            int totalPadding = width - 6 - vWidth;
-            if (totalPadding < 0) totalPadding = 0; // 문자열이 너무 길 경우 대비
-
-            int leftPad = totalPadding / 2;
-            int rightPad = totalPadding - leftPad;
-
-            // 출력부
-            std::cout << YELLOW << "  | " << RESET; // 왼쪽 벽
-            std::cout << std::string(leftPad, ' ') << BOLD << text << RESET; // 내용
-            std::cout << std::string(rightPad, ' ') << YELLOW << " |" << RESET << "\n"; // 오른쪽 벽
+            AtStartOfLine = false;
         }
 
-        // 테두리 하단
-        std::cout << YELLOW << edge << RESET << "\n";
-    }
+        // 2. 현재 들어온 실제 문자(c)를 원본 버퍼에 출력
+        int_type result = mOriginalBuffer->sputc(c);
 
-    // [10] 입력 처리 (숫자 전용)
-    static int GetInput() {
-        int choice;
-        while (true) {
-            std::cout << BOLD << WHITE << "  입력 >> " << RESET;
-            if (!(std::cin >> choice)) {
-                std::cin.clear();
-                std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
-                std::cout << RED << "  [!] 숫자를 입력해주세요." << RESET << "\n";
-                continue;
-            }
-            std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
-            return choice;
+        // 3. 현재 문자가 줄바꿈이면 다음 문자가 올 때 위치 조정을 하도록 플래그 설정
+        if (c == '\n') {
+            AtStartOfLine = true;
         }
+
+        return result;
     }
 
-    // [11] 시스템 메시지 및 대기
-    static void Wait(std::string msg) {
-        std::cout << "\n" << BOLD << YELLOW << "  SYSTEM >> " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
-        std::cout << std::endl;
-        std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+
+private:
+    static constexpr const char* BLOCK_BLACK = "\x1b[30m■\x1b[0m";
+    static constexpr const char* BLOCK_RED = "\x1b[31m■\x1b[0m";
+    static constexpr const char* BLOCK_YELLOW = "\x1b[33m■\x1b[0m";
+    static constexpr const char* BLOCK_GREEN = "\x1b[32m■\x1b[0m";
+    static constexpr const char* HP_BLOCKS[4] = { BLOCK_BLACK, BLOCK_RED, BLOCK_YELLOW, BLOCK_GREEN };
+
+    int Width = 150;
+    int Height = 46;
+    int LeftMargin = 4;
+
+    // 위쪽 Window Row 시작지점 표시 -> 아래에서 위로 쌓이는 구조
+    int StartStatusRow = 35;
+
+    // 아래쪽 Window Row 시작지점 표시 -> 위에서 아래로 쌓이는 구조
+    int StartMenuRow = 40;
+
+    // 사용자 입력을 받는 Row
+    int InputRow = 50;
+    int CurrentWindowIndex = 1;
+
+
+    std::streambuf* mOriginalBuffer = nullptr;
+    bool IsIntercepting = false;
+    bool AtStartOfLine = true;
+
+    UIManager()
+    {
+        // 위쪽 현황판 스크롤
+        // MainWindow 쪽이 스크롤링이 되도록 터미널 스크롤링을 사용함
+        std::cout << "\x1b[" << 3 << "; " << StartStatusRow << "r";
     }
 
-    static void Log(std::string msg) {
-        std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << msg << "\n";
-    }
+    /**
+     *
+     * 외부에 두는 게 맞다고 생각하지만,
+     * Default로 UImanager에서 제공하는 방식대로 출력을 사용해도
+     * 현재까지는 해제하거나 활성화 할 일이 없었기 때문에
+     * 필요한 일이 생기면 그때 Public으로 옮기겠음
+     * 
+     */
+    // stream Buffer 가로채기 활성화
+    void EnableStreamMarginHook();
 
-    //
-    static void PrintMessage(std::string message) {
-        std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
-    }
+    // stream Buffer 가로채기 해제
+    void DisableStreamMarginHook();
+
 };

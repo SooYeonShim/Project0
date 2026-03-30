@@ -21,7 +21,7 @@ public:
     void SetPrice(int Price);
     void SetItemInfo(string ItemInfo);
 
-    virtual void Use(Character& target) = 0;
+    virtual bool Use(Character& target) = 0;
 
 private:
     string Name;

@@ -8,7 +8,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     int PlayerCount = 0;
     string Name;
 
-    for (int i = 0; i < 2; ++i)
+    for (int i = 0; i < 3; ++i)
     {
         int jobChoice;
 
@@ -74,14 +74,13 @@ void GameManager::GameStart()
     while (true)
     {
         cout << "=================================" << endl;
-        cout << "1. 직업별 주사위 확인" << endl;
+        cout << "1. 플레이어 직업 주사위 확인" << endl;
         cout << "2. 전투 시작" << endl;
         int PlayerChoice = GetUserInputNum();
 
         //플레이어의 이름을 통해 주사위 보여줌
         if (PlayerChoice == 1)
         {
-            cout << "확인하고 싶은 직업을 선택해주세요.(1:Warrior, 2:Archer, 3:Defender, 4:Rogue)" << endl;
             PrintPlayerDice();
             continue;
         }
@@ -153,23 +152,12 @@ bool GameManager::BattleResult(bool Result)
 }
 
 
-// PlayerIndex를 통해 플레이어가 보유하고 있는 다이스 출력
+// 모든 Player의 직업 다이스 출력
 void GameManager::PrintPlayerDice()
 {
-    int JobIndex = GetUserInputNum();
-    
-    if (JobIndex >= 1 && JobIndex <= 4)
+    for (Player player : Players)
     {
-        JobType ChoicedJob = static_cast<JobType>(JobIndex - 1);
-
-        Dice dice = TemplateManager::getInstance().GetDiceByType(ChoicedJob);
-        dice.PrintActionInfo();
-    }
-    else
-    {
-
-        cout << endl;
-        cout << "잘못된 숫자를 입력하셨습니다." << endl;
+        player.GetDice().PrintActionInfo();
     }
     
 }
