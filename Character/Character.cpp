@@ -69,7 +69,22 @@ void Character::RollDice()
 //
 void Character::DoActive()
 {
+    // 액션 실행 전 상태 체크
+    //auto it = std::find_if(StatusEffects.begin(), StatusEffects.end(),
+    //    [](const StatusEffect& effect) {
+    //        return effect.Type == StatusType::Stun
+    //            && effect.RemainingTurns > 0;
+    //    }
+    //);
 
+    //if (it != StatusEffects.end()) {
+    //    cout << "스턴에 걸려 움직일 수 없습니다." << endl;
+    //}
+    // else
+    // {
+
+    CurrentAction->DoActive();
+    // }
 }
 
 // 할당된 액션 실행

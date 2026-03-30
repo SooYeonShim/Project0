@@ -122,10 +122,10 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
         }
 
-        std::stringstream ss;
-        ss << "[ 턴 : " << turn << " ]";
-        UIManager::getInstance().PrintMessage(ss.str());
+        std::stringstream turnSS;
+        turnSS << "[ 턴 : " << turn << " ]";
 
+        UIManager::getInstance().PrintMessage(turnSS.str());
         UIManager::getInstance().PrintBattleBoard(players, monsters);
 
         int remainRerollCount = RerollCount;
@@ -133,9 +133,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         // Player Turn
         // DICE PHASE
 
-        // 주사위 굴리기
-        RollDiceByPlayers(players);
-        UIManager::getInstance().PrintBattleBoard(players, monsters);
+        // 주사위 굴리기 + 전황 출력
+        RollDiceByPlayersAndPrintStatus(players, monsters);
 
         bool isDicePhaseFinished = false;
         std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 아이템 사용", "5. 다음 페이즈로"};
@@ -148,6 +147,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 break;
             }
 
+            UIManager::getInstance().ClearMainWindowBox();
+            UIManager::getInstance().PrintMessage(turnSS.str());
+            UIManager::getInstance().PrintBattleBoard(players, monsters);
+
+
             std::stringstream ss;
             ss << "현재 남은 리롤 횟수 : " << remainRerollCount;
             UIManager::getInstance().PrintMessage(ss.str());
@@ -159,7 +163,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             switch (userInput) 
             {
             case 0:
-                UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
             case 1:
             {
@@ -195,9 +198,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 if (menuIndexToPlayerMap.find(userInput) != menuIndexToPlayerMap.end())
                 {
                     menuIndexToPlayerMap[userInput]->SetCurrentAction(nullptr);
-
-                    UIManager::getInstance().ClearMainWindowBox();
-                    UIManager::getInstance().PrintBattleBoard(players, monsters);
                 }
                 else
                 {
@@ -232,8 +232,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 // 주사위 새로 굴리기 -> 주사위 설정 안한 사람만
                 RollDiceByPlayers(players);
-                UIManager::getInstance().ClearMainWindowBox();
-                UIManager::getInstance().PrintBattleBoard(players, monsters);
             }
                 break;
             case 3:
@@ -245,7 +243,6 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                 --remainRerollCount;
                 RollDiceByPlayers(players);
-                UIManager::getInstance().PrintBattleBoard(players, monsters);
                 break;
 
             case 4:
@@ -331,12 +328,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         }
 
         UIManager::getInstance().ClearMenuBox();
-
-        // 장착되지 않은 주사위 플레이어에게 자동 장착하기
-
+        UIManager::getInstance().ClearMainWindowBox();       
 
         // TARGET PHASE        
-
+        UIManager::getInstance().PrintMessage(turnSS.str());
+        UIManager::getInstance().PrintBattleBoard(players, monsters);
         UIManager::getInstance().PrintMessage("* 주사위 결과를 적용할 대상을 선택하자. *");
         UIManager::getInstance().GetUserInputForWait("");
         UIManager::getInstance().ClearMainWindowBox();
@@ -401,6 +397,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
+            UIManager::getInstance().PrintMessage(turnSS.str());
             UIManager::getInstance().PrintBattleBoard(players, monsters);
 
             int menuIndex = 0;
@@ -456,7 +453,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             
 
 
-            // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이즈를 종료시킴
+            // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이지를 종료시킴
             if (menuIndex == 0)
             {
                 isTargetPhaseFinished = true;
@@ -476,6 +473,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                     it->DoAction({ menuIndexToTargetMap.find(userInput)->second });
                     currentAction->DoActive();
+                    //it->DoActive();
 
                     isValidOrder = true;
                     continue;
@@ -489,6 +487,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         UIManager::getInstance().ClearMainWindowBox();
         UIManager::getInstance().ClearMenuBox();
 
+        UIManager::getInstance().PrintMessage(turnSS.str());
         UIManager::getInstance().PrintBattleBoard(players, monsters);
 
 
@@ -523,6 +522,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             UIManager::getInstance().ClearMainWindowBox();
             it->GetCurrentAction()->DoActive();
+            //it->DoActive();
+            UIManager::getInstance().PrintMessage(turnSS.str());
             UIManager::getInstance().PrintBattleBoard(players, monsters);
         }
 
@@ -578,6 +579,13 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
     
     return false;
 }
+
+void BattleManager::RollDiceByPlayersAndPrintStatus(std::vector<Player>& players, std::vector<Monster>& monsters)
+{
+    RollDiceByPlayers(players);
+    UIManager::getInstance().PrintBattleBoard(players, monsters);
+}
+
 
 void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
 {
