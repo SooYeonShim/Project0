@@ -13,14 +13,10 @@
     }
 
     bool InventoryManager::IsValidIndex(int index) {
-        if (ItemList[index] != nullptr)
-        {
-            return true;
+        if (index < 0 || index >= ItemList.size()) {
+            return false; // 범위 밖이면 바로 false
         }
-        else
-        {
-            return false;
-        }
+        return ItemList[index] != nullptr;
     }
 
     bool InventoryManager::Use(int index, Character* target) {
