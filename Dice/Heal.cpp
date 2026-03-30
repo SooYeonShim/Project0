@@ -13,7 +13,12 @@ Heal::Heal(int _power)
 
 void Heal::PrintInfo()
 {
-    cout << "아군에게 " << power << "만큼 hp가 회복합니다." << endl;
+    // 단일이냐 모든이냐에 따라 구별
+    string target = "아군에게 ";
+    if (GetTargetType() == TargetType::FRIEDLYALL)
+        target = "모든 아군에게 ";
+
+    cout << target << power << "만큼 hp가 회복합니다." << endl;
 }
 
 void Heal::DoActive()

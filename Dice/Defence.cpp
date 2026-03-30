@@ -13,7 +13,12 @@ Defence::Defence(int _power)
 
 void Defence::PrintInfo()
 {
-    cout << "아군에게" << power << "의 쉴드를 줍니다." << endl;
+    // 단일이냐 모든이냐에 따라 구별
+    string target = "아군에게 ";
+    if (GetTargetType() == TargetType::FRIEDLYALL)
+        target = "모든 아군에게 ";
+
+    cout << target << power << "의 쉴드를 줍니다." << endl;
 }
 
 void Defence::DoActive()

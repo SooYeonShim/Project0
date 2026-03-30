@@ -29,6 +29,8 @@ public:
     void SetSelfCharacters(std::vector<Character*>& _vec) { vecself = _vec; }
     void SetTatgerCharacters(std::vector<Character*>& _vec) { vectarget = _vec; }
 
+    // 타겟 리셋
+    void ResetTarget() { vecself.clear(); vectarget.clear(); }
 
     // 타겟 설정만 한 단계
     virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
