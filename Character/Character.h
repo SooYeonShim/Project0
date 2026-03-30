@@ -3,6 +3,7 @@
 #include <vector>
 #include "Dice.h"
 #include "Action.h"
+#include "StatusEffect.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
     int GetMaxHP();
     bool GetIsDead() const;
 	int GetShield();
+    vector<StatusEffect> GetStatusEffects();
 	Dice GetDice();
 	Action* GetCurrentAction();
 
@@ -25,6 +27,7 @@ public:
 	void SetHP(int HP);
     void SetMaxHP(int MaxHP);
 	void SetShield(int Shield);
+    void SetStatusEffects(const vector<StatusEffect>& StatusEffects);
 	void SetDice(Dice CharacterDice);
 	void SetCurrentAction(Action* CurrentAction);
 
@@ -32,6 +35,7 @@ public:
     void RollDice();
     void DoActive();
 	void DoAction(vector<Character*> target);
+    void AddStatusEffect(StatusEffect);
     void TakeDamage(int Damage);
     void TakeHeal(int Damage);
     void TakeShield(int Damage);
@@ -47,5 +51,5 @@ protected:
 private:
     string Name; // 이름
 	Action* CurrentAction; // 이번 턴에 취하는 행동
-    // vector<StatusEffect> StatusEffects; // 상태이상 벡터 or 맵
+    vector<StatusEffect> StatusEffects; // 상태이상 리스트
 };
