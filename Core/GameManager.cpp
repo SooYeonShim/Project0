@@ -50,6 +50,10 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         Players.push_back(Player(10, dice, Name, ChoicedJob));
     }
 
+    InventoryManager& IM = InventoryManager::getInstance();
+    Item* hpPotion = new HealingPotion();
+    IM.AddItem(hpPotion);
+    IM.ShowInventory();
 }
 
 void GameManager::GameStart()
@@ -64,7 +68,7 @@ void GameManager::GameStart()
     cout << "첫 번째 플레이어 이름: " << Players[0].GetName() << " 직업: " << static_cast<int>(Players[0].GetJobType())+1 << endl;
     cout << "두 번째 플레이어 이름: " << Players[1].GetName() << " 직업: " << static_cast<int>(Players[1].GetJobType())+1 << endl;
 
-
+    SM.EnterShop(Players, PlayerMoney);
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
     while (true)
@@ -113,7 +117,7 @@ void GameManager::GameStart()
     }
 
     //상점 진입
-    SM.EnterShop(Players, PlayerMoney);
+    //SM.EnterShop(Players, PlayerMoney);
 
     //게임 종료
     return;

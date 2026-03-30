@@ -1,6 +1,9 @@
 ﻿#pragma once
 #include <iostream>
 #include "Player.h"
+#include "InventoryManager.h"
+#include "HealingPotion.h"
+#include "Item.h"
 
 using namespace std;
 
