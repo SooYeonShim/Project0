@@ -35,6 +35,7 @@ public:
     void RollDice();
     void DoActive();
 	void DoAction(vector<Character*> target);
+    void AddStatusEffect(StatusEffect);
     void TakeDamage(int Damage);
     void TakeHeal(int Damage);
     void TakeShield(int Damage);
