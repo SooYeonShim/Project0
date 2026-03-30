@@ -8,6 +8,15 @@ void UIManager::WaitForStart(std::string msg)
     std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
+void UIManager::WaitForEnterInTempScreen(std::string msg)
+{
+    std::cout << "\n" << BOLD << YELLOW << "  " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+}
+
+
 void UIManager::PrintMessage(std::string message)
 {
     std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
@@ -845,3 +854,25 @@ void UIManager::DisableStreamMarginHook()
         IsIntercepting = false;
     }
 }
+
+void UIManager::NewTempScreen()
+{
+    DisableStreamMarginHook();
+    std::cout << "\x1b[14;34H";
+    std::cout << "\x1b[0:34r";
+    std::cout << SCREEN_ALT;
+    return;
+}
+
+void UIManager::CloseTempScreen()
+{
+    std::cout << SCREEN_MAIN;
+    EnableStreamMarginHook();
+    return;
+}
+
+int_type UIManager::overflow(int_type c)
+{
+    return int_type();
+}
+

@@ -29,6 +29,11 @@ constexpr const char* YELLOW = "\x1b[33m";
 constexpr const char* CYAN = "\x1b[36m";
 constexpr const char* WHITE = "\x1b[37m";
 
+constexpr const char* SCREEN_ALT = "\x1b[?1049h";
+constexpr const char* SCREEN_MAIN = "\x1b[?1049l";
+
+
+
 
 class UIManager : public std::streambuf {
 public:
@@ -42,6 +47,9 @@ public:
     // 시작시 가장 먼저 호출되는 함수
     // 콘솔 화면을 최대로 키우고 Enter을 눌러 시작하도록 요청함
     void WaitForStart(std::string msg);
+
+    // TempScreen에서 Enter 받는 거 대기용으로 사용
+    void WaitForEnterInTempScreen(std::string msg);
 
     void PrintMessage(std::string message);
 
@@ -103,6 +111,13 @@ public:
     // 하지만, 이미 있는 줄을 사용할 때는 NewLine을 넣지 않고 그림 -> 기존의 텍스트들이 밀리지 않음.
     // 가로에 스프라이트들을 배치할 때 사용    
     void PrintPlayerSprite(Player& player, int startColumn, bool isNewLine = false) const;
+
+
+    void NewTempScreen();
+
+    void CloseTempScreen();
+
+
 
 protected:
     // 가로채기가 활성화 된 경우, std::cout 에 입력한 모든 출력들을 가로채서,
@@ -184,5 +199,8 @@ private:
 
     // stream Buffer 가로채기 해제
     void DisableStreamMarginHook();
+
+
+
 
 };
