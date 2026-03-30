@@ -65,7 +65,13 @@ void Character::RollDice()
     // 주사위의 GetRandomAction 메서드를 호출해 현재 액션에 저장
    CurrentAction = &CharacterDice.GetRandomAction();
 }
- 
+
+//
+void Character::DoActive()
+{
+
+}
+
 // 할당된 액션 실행
 void Character::DoAction(vector<Character*> target)
 {
