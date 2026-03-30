@@ -43,6 +43,41 @@ Troll TemplateManager::GetMonsterByTroll()
     return Troll(dice);
 }
 
+Goblin TemplateManager::GetMonsterByElitGoblin()
+{
+    Dice dice = GetDiceByElitGobline();
+    Goblin monster(dice);
+    // 엘리트몹의 체력은 기존의 1.5배
+    monster.SetMaxHP(monster.GetMaxHP() * 1.5);
+    monster.SetHP(monster.GetMaxHP());
+    monster.SetName("정예고블린");
+
+    return monster;
+}
+
+Orc TemplateManager::GetMonsterByElitOrc()
+{
+    Dice dice = GetDiceByElitOrc();
+    Orc monster(dice);
+    // 엘리트몹의 체력은 기존의 1.5배
+    monster.SetMaxHP(monster.GetMaxHP() * 1.5);
+    monster.SetHP(monster.GetMaxHP());
+
+    return monster;
+}
+
+Wolf TemplateManager::GetMonsterByElitWolf()
+{
+    Dice dice = GetDiceByElitWolf();
+    Wolf monster(dice);
+    // 엘리트몹의 체력은 기존의 1.2배
+    monster.SetMaxHP(monster.GetMaxHP() * 1.2);
+    monster.SetHP(monster.GetMaxHP());
+    monster.SetName("정예늑대");
+
+    return monster;
+}
+
 Dice TemplateManager::GetDiceByGobline()
 {
     Dice newdice;
@@ -82,12 +117,51 @@ Dice TemplateManager::GetDiceByWolf()
 Dice TemplateManager::GetDiceByTroll()
 {
     Dice newdice;
-    newdice.SetAction(0, new Attack(2));
+    newdice.SetAction(0, CreateActionByName("Stun(2)"));
     newdice.SetAction(1, CreateActionByName("AllAttack(3)"));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
     newdice.SetAction(5, new Attack(5));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByElitGobline()
+{
+    Dice newdice;
+    newdice.SetAction(0, new Attack(3));
+    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(4));
+    newdice.SetAction(5, CreateActionByName("AllHeal(3)"));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByElitWolf()
+{
+    Dice newdice;
+    newdice.SetAction(0, CreateActionByName("Bleeding(3)"));
+    newdice.SetAction(1, CreateActionByName("Bleeding(3)"));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Attack(5));
+    newdice.SetAction(5, new Attack(5));
+
+    return newdice;
+}
+
+Dice TemplateManager::GetDiceByElitOrc()
+{
+    Dice newdice;
+    newdice.SetAction(0, CreateActionByName("AllAttack(3)"));
+    newdice.SetAction(1, new Attack(5));
+    newdice.SetAction(2, new Attack(5));
+    newdice.SetAction(3, new Attack(7));
+    newdice.SetAction(4, new Attack(7));
+    newdice.SetAction(5, CreateActionByName("Stun(2)"));
 
     return newdice;
 }
@@ -135,11 +209,12 @@ Dice TemplateManager::GetDiceByRogue()
 {
     Dice newdice;
     
-    newdice.SetAction(1, new Attack(3));
+    newdice.SetAction(0, CreateActionByName("Bleeding(3)"));
+    newdice.SetAction(1, CreateActionByName("Bleeding(3)"));
     newdice.SetAction(2, new Attack(3));
-    newdice.SetAction(3, new Attack(4));
+    newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Attack(5));
-    newdice.SetAction(5, new Attack(5));
+    newdice.SetAction(5, CreateActionByName("Stun(1)"));
 
     return newdice;
 }
@@ -292,16 +367,13 @@ void TemplateManager::InitActions()
 
 
     // 상점 리스트 등록
-    AddToShoplists("Attack(6)");
     AddToShoplists("Attack(7)");
     AddToShoplists("Heal(5)");
     AddToShoplists("Defence(6)");
-    AddToShoplists("AllAttack(3)");
     AddToShoplists("AllAttack(5)");
     AddToShoplists("AllHeal(3)");
     AddToShoplists("AllDefence(5)");
     AddToShoplists("Bleeding(3)");
-    AddToShoplists("Stun(2)");
     AddToShoplists("Stun(1)");
 
     IsActionlists = true;
@@ -324,6 +396,15 @@ void TemplateManager::PrintShopActionList()
         std::cout << i+1 << ". " << ShopActionlists[i]->GetActionName() << " : ";
         ShopActionlists[i]->PrintInfo();
     }
+}
+
+Action* TemplateManager::CreateActionByShopIndex(int _idx)
+{
+    // 범위초과한 인덱스를 요구한경우 nullptr
+    if(ShopActionlists.size() < _idx || _idx < 0)
+        return nullptr;
+
+    return ShopActionlists[_idx]->Clone();
 }
 
 Action* TemplateManager::CreateActionByName(const std::string& actionName)

@@ -41,11 +41,18 @@ public:
     Orc GetMonsterByOrc();
     Wolf GetMonsterByWolf();
     Troll GetMonsterByTroll();
+    // 엘리트 몹
+    Goblin GetMonsterByElitGoblin();
+    Orc GetMonsterByElitOrc();
+    Wolf GetMonsterByElitWolf();
 
     Dice GetDiceByGobline();
     Dice GetDiceByOrc();
     Dice GetDiceByWolf();
     Dice GetDiceByTroll();
+    Dice GetDiceByElitGobline();
+    Dice GetDiceByElitWolf();
+    Dice GetDiceByElitOrc();
 
     // 직업 주사위
     Dice GetDiceByWarrior();
@@ -68,6 +75,9 @@ public:
 
     // 상점 UI용, 판매 액션 목록 출력
     void PrintShopActionList();
+
+    // 인덱스 입력시 액션 반환. 실패시 nullptr반환
+    Action* CreateActionByShopIndex(int _idx);
 
     // 만일 UI커스텀을 원한다면 상점의 액션리스트 전부 보내주기용도
     const std::vector<Action*> GetShopActionList() const { return ShopActionlists; }
