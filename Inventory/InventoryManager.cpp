@@ -16,10 +16,16 @@
         if (index < 0 || index >= ItemList.size())
             return false;
         std::cout << ItemList[index]->GetName() << " 사용!\n";
-        ItemList[index]->Use(*target);
-        delete ItemList[index];
-        ItemList.erase(ItemList.begin() + index);
-        return true;
+        if (ItemList[index]->Use(*target))
+        {
+            delete ItemList[index];
+            ItemList.erase(ItemList.begin() + index);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void InventoryManager::ShowInventory() {
