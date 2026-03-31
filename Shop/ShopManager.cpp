@@ -14,7 +14,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
             //모든 플레이어의 체력 5 회복
             player.TakeHeal(5);
         }
-        UM.PrintMessage("모든 플레이어 체력 회복");
+        UM.PrintMessage("모든 플레이어 체력 회복!");
         PlayerMoney -= 50;
     }
     else
@@ -32,7 +32,7 @@ void ShopManager::BuyItem(int& PlayerMoney)
     UIManager& UM = UIManager::getInstance();
 
     UM.ClearMenuBox();
-    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요", "", "1. 힐링 포션" };
+    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요.", "", "1. 힐링 포션" };
     UM.PrintMenuBox(Menu);
 
 
