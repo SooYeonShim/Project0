@@ -29,6 +29,7 @@ int main()
 
     while (true)
     {
+        manager.ClearMainWindowBox();
         cout << "Dice With Death!" << endl;
         cout << "  _____   _____  _____  ______ " << endl;
         cout << " |  __ \\ |_   _|/ ____||  ____|" << endl;
