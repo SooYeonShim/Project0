@@ -145,7 +145,10 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
         }
         else
         {
+
             std::cout << "\x1b[7A";
+            std::cout << "\x1b[0G";
+            std::cout << "\x1b[" << 40 * i + 4 << "C";            
             PrintEffectStatus(monsters[i].GetStatusEffects());
             std::cout << "\x1b[1B";
             PrintMonsterSprite(monsters[i].GetName(), 40 * i);
