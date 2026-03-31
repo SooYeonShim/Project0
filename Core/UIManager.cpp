@@ -22,12 +22,6 @@ void UIManager::PrintMessage(std::string message)
     std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
 }
 
-void UIManager::PrintMessageNormal(std::string message)
-{
-    std::cout << message << std::endl;
-}
-
-
 void UIManager::PrintHP(int hp, int maxHp)
 {
     cout << "[";
@@ -963,7 +957,7 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 void UIManager::EnableStreamMarginHook() {
     if (!IsIntercepting) {
         std::cout.rdbuf(StreamBuffer);
-        IsIntercepting = true;        
+        IsIntercepting = true;
     }
 }
 
