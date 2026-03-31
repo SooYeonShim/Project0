@@ -39,6 +39,15 @@ public:
     // 전멸
     void GameOverStory();
 
+    // 던전 입장
+    void IntroDungeon();
+
+    // 상점 진입
+    void MerchantIncounter();
+
+    // 초기 상점 진입
+    void MechantStart();
+
 private:
     // 생성자를 private으로 막음
     StoryManager() {}

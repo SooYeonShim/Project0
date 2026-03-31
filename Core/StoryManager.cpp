@@ -79,20 +79,6 @@ void StoryManager::Stage1Story()
     UIManager::getInstance().ClearMainWindowBox();
     UIManager::getInstance().ClearMenuBox();
 
-    cout << "숲 속의 던전은 고요하고, 가끔씩 새소리만 들려옵니다." << endl;
-    cout << "던전 안쪽으로 좀 더 들어가자, 순찰 중인 듯한 고블린과 마주칩니다." << endl;
-    cout << "고블린은 간만에 먹잇감을 발견했다는 듯, 망설임 없이 달려듭니다." << endl;
-
-    // 임시 ui
-    UIManager::getInstance().GetUserInputForWait("");
-    UIManager::getInstance().ClearMainWindowBox();
-}
-
-void StoryManager::Stage2Story()
-{
-    UIManager::getInstance().ClearMainWindowBox();
-    UIManager::getInstance().ClearMenuBox();
-
     cout << "더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은" << endl;
     cout << "마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다." << endl;
     cout << "하지만 그런 생각도 잠시, 어디선가 소리 없이 나타난 늑대와 고블린에게" << endl;
@@ -103,7 +89,7 @@ void StoryManager::Stage2Story()
     UIManager::getInstance().ClearMainWindowBox();
 }
 
-void StoryManager::Stage3Story()
+void StoryManager::Stage2Story()
 {
     UIManager::getInstance().ClearMainWindowBox();
     UIManager::getInstance().ClearMenuBox();
@@ -119,18 +105,30 @@ void StoryManager::Stage3Story()
     UIManager::getInstance().ClearMainWindowBox();
 }
 
-void StoryManager::BossStageStory()
+void StoryManager::Stage3Story()
 {
     UIManager::getInstance().ClearMainWindowBox();
     UIManager::getInstance().ClearMenuBox();
 
-    cout << "오크를 쓰러뜨리고 던전의 최심부로 들어가자," << endl;
     cout << "쿵, 하는 위압적인 소리가 들려옵니다." << endl;
     cout << "당신의 파티는 갑자기 들려온 소리에 긴장하며 청각을 돋웁니다." << endl;
     cout << "나무 사이로 거대한 그림자가 비치는가 싶더니, 금세 트롤이 모습을 나타냅니다." << endl;
     cout << "트롤은 자신의 몸집에 어울리는 나무 한 그루만한 몽둥이를 들고," << endl;
     cout << "조그만 인간 따위는 파리나 다름없다는 듯 휘둘러대기 시작합니다." << endl;
     cout << "이 트롤이 바로 던전의 주인입니다. 당신의 파티는 전투 준비를 합니다." << endl;
+
+    // 임시 ui
+    UIManager::getInstance().GetUserInputForWait("");
+    UIManager::getInstance().ClearMainWindowBox();
+}
+
+void StoryManager::BossStageStory()
+{
+    UIManager::getInstance().ClearMainWindowBox();
+    UIManager::getInstance().ClearMenuBox();
+
+    cout << "생각보다 위압적인 상대는 아니었지만, 운이 따르지 않았다면 죽을 수도 있었습니다." << endl;
+    cout << "안도의 한숨을 내쉬며, 당신의 파티는 다친 몸을 이끌고 마을로 돌아갑니다." << endl;
 
     // 임시 ui
     UIManager::getInstance().GetUserInputForWait("");
@@ -170,6 +168,47 @@ void StoryManager::GameOverStory()
     cout << "[ GAME OVER ]\n" << endl;
 
     cout << "당신의 파티는 다른 모험가들에 비해 운이 좋지는 않았던 모양입니다. 당신은 몬스터의 공격에 쓰러지고 말았습니다." << endl;
+
+    // 임시 ui
+    UIManager::getInstance().GetUserInputForWait("초기화면으로 돌아갑니다.");
+    UIManager::getInstance().ClearMainWindowBox();
+}
+
+void StoryManager::IntroDungeon()
+{
+    UIManager::getInstance().ClearMainWindowBox();
+    UIManager::getInstance().ClearMenuBox();
+
+    cout << "숲 속의 던전은 고요하고, 가끔씩 새소리만 들려옵니다." << endl;
+    cout << "던전 안쪽으로 좀 더 들어가자, 순찰 중인 듯한 고블린과 마주칩니다." << endl;
+    cout << "고블린은 간만에 먹잇감을 발견했다는 듯, 망설임 없이 달려듭니다." << endl;
+
+    // 임시 ui
+    UIManager::getInstance().GetUserInputForWait("");
+    UIManager::getInstance().ClearMainWindowBox();
+
+}
+
+void StoryManager::MerchantIncounter()
+{
+    UIManager::getInstance().ClearMainWindowBox();
+    UIManager::getInstance().ClearMenuBox();
+
+    cout << "당신의 파티는 숲 속을 다니던 행상인과 조우했습니다." << endl;
+    cout << "\"원하는 상품골라봐 친구.\"\n" << endl;
+
+    // 임시 ui
+    UIManager::getInstance().GetUserInputForWait("");
+    UIManager::getInstance().ClearMainWindowBox();
+}
+
+void StoryManager::MechantStart()
+{
+    UIManager::getInstance().ClearMainWindowBox();
+    UIManager::getInstance().ClearMenuBox();
+
+    cout << "당신의 파티는 모험을 떠나기 전, 상인이 다가옵니다." << endl;
+    cout << "\"바로가려고? 준비는 철저히 해야지\"\n" << endl;
 
     // 임시 ui
     UIManager::getInstance().GetUserInputForWait("");
