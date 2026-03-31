@@ -84,7 +84,7 @@ bool GameManager::GameStart()
     {
         UM.CreateNewScreenForStoryPrint();
         cout << "\"어라 ? 이런 곳에 누군가가 흘린 돈이 있네... 이건 주사위의 신이 주신 노잣돈이라고 치자.\"" << endl;
-        cout << "[System]" << "당신의 파티는" << PlayerMoney << "골드를 얻었습니다." << endl;
+        cout << "[System]" << " 당신의 파티는 " << PlayerMoney << "골드를 얻었습니다." << endl;
         UM.CloseAnyTempScreen();
     }
 

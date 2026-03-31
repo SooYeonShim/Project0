@@ -14,8 +14,10 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
             //모든 플레이어의 체력 5 회복
             player.TakeHeal(5);
         }
-        UM.PrintMessage("모든 파티원 체력 회복!");
         PlayerMoney -= 50;
+        UM.PrintMessage("모든 파티원 체력 회복! -50 골드");
+        cout << "보유 골드: " << PlayerMoney << endl;
+
     }
     else
     {
@@ -132,7 +134,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
 
     vector<string> Menu;
 
-    Menu = { "     ★  상점  ★", "파티원이 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
+    Menu = { "     ★  상점  ★", "파티원이 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
     UM.PrintMenuBox(Menu);
 }
 
