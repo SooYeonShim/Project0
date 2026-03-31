@@ -33,7 +33,7 @@ public:
     void ResetTarget() { vecself.clear(); vectarget.clear(); }
 
     // 타겟 설정만 한 단계
-    virtual void DoAciton(std::vector<Character*>& _self, std::vector<Character*>& _target)
+    virtual void DoAction(std::vector<Character*>& _self, std::vector<Character*>& _target)
     {
         vecself = _self;
         vectarget = _target;

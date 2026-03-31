@@ -3,7 +3,7 @@
 bool HealingPotion::Use(Character& target) {
     if (target.GetHP() != 0)
     {
-        target.SetHP(max(target.GetMaxHP(), target.GetHP() + 5));
+        target.SetHP(min(target.GetMaxHP(), target.GetHP() + 5));
         return true;
     }
     else
