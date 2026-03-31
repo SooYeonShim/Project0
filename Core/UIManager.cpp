@@ -279,12 +279,14 @@ void UIManager::ClearMainWindowBox()
 
     std::cout << "\x1b[1E";
 
-    // TODO:: Clear 이후에, 최초 newLine이 스크롤링이 안되고 덮어쓰기가 되어 강제로 넣음.
-    std::cout << "\n";
+    
 
     CursorScrollSet();
 
     EnableStreamMarginHook();
+
+    // TODO:: Clear 이후에, 최초 newLine이 스크롤링이 안되고 덮어쓰기가 되어 강제로 넣음.    
+    std::cout << std::endl;
 }
 
 void UIManager::DrawBorder()
@@ -371,6 +373,7 @@ std::string UIManager::GetUserInput(std::string message)
 
     CursorScrollSet();
     EnableStreamMarginHook();
+    
 
     return input;
 }
