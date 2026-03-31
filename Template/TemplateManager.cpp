@@ -452,6 +452,27 @@ Action* TemplateManager::CreateActionByName(const std::string& actionName)
     return nullptr;
 }
 
+Action* TemplateManager::CreateDebugAction(bool _chat)
+{
+    Action* action = nullptr;
+
+    // 적 전체 99뎀
+    if (_chat)
+    {
+        action = new Attack(99);
+        action->SetTargetType(TargetType::ENEMYALL);
+    }
+    // 아군 단일 99뎀
+    else
+    {
+        action = new Attack(99);
+        action->SetTargetType(TargetType::FRIENDLY);
+    }
+
+
+    return action;
+}
+
 void TemplateManager::AddToShoplists(const string& actionName)
 {
     for (Action* action : Actionlists)
