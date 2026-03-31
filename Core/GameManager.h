@@ -33,7 +33,6 @@ public:
     void PrintPlayerDice();
     int GetPlayerByName();
     string GetJobName(JobType JobType);
-    void PrintStoryClear(int CurrentStage);
 
 
 private:
