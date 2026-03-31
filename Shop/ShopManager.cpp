@@ -14,7 +14,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
             //모든 플레이어의 체력 5 회복
             player.TakeHeal(5);
         }
-        UM.PrintMessage("모든 플레이어 체력 회복!");
+        UM.PrintMessage("모든 파티원 체력 회복!");
         PlayerMoney -= 50;
     }
     else
@@ -132,7 +132,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
 
     vector<string> Menu;
 
-    Menu = { "     ★  상점  ★", "플레이어가 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
+    Menu = { "     ★  상점  ★", "파티원이 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
     UM.PrintMenuBox(Menu);
 }
 
@@ -188,17 +188,17 @@ void ShopManager::ShopActionUI(vector<Player>& Players, int& PlayerMoney)
             // 선택지
             UM.ClearMenuBox();
             UM.ClearMainWindowBox();
-            Menu = { "장착할 플레이어를 선택하세요.", "0. 돌아가기", "99. 플레이어 다이스 정보 자세히 보기"};
+            Menu = { "장착할 파티원을 선택하세요.", "0. 돌아가기", "99. 파티원 다이스 정보 자세히 보기"};
             UM.PrintMenuBox(Menu);
 
             // 메인윈도우 창에 플레이어 다이스정보 간략 출력
             for (int i = 0; i < Players.size(); ++i)
             {
-                cout << i+1 << "번 플레이어 [" << Players[i].GetName() << "]" << endl;
+                cout << i+1 << "번 파티원 [" << Players[i].GetName() << "]" << endl;
                 Players[i].GetDice().PrintActionSmallInfo();
             }
 
-            num = UM.GetUserInputNumber("플레이어 번호 입력: ");
+            num = UM.GetUserInputNumber("파티원 번호 입력: ");
 
             // 돌아가는 버튼 입력 시
             if (num == 0)
