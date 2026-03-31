@@ -622,6 +622,7 @@ void BattleManager::EndBattleResetPlayers(std::vector<Player>& players)
         {
             players[i].SetHP(1);
         }
+        players[i].EndTurn();
     }
 }
 
