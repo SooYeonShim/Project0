@@ -31,7 +31,6 @@ public:
     void GameStart();
     bool BattleResult(bool Result);
     void PrintPlayerDice();
-    int GetPlayerByName();
     string GetJobName(JobType JobType);
 
 
@@ -47,7 +46,6 @@ private:
     int CurrentStage;
     bool GameResult;
     int PlayerMoney = 100;
-
     vector<Player> Players;
 
 

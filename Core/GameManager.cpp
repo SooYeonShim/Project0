@@ -189,7 +189,7 @@ void GameManager::PrintPlayerDice()
         UM.PrintMessage(to_string(CurrentPlayer+1) + " 번째 플레이어 이름: " + Players[CurrentPlayer].GetName() + " 직업: " + GetJobName(Players[CurrentPlayer].GetJobType()));
         Players[CurrentPlayer].GetDice().PrintActionInfo();
 
-        //현재 플레이어 수에 따라 선택 메뉴 출력
+        //현재 출력 중인 플레이어 번호에 따라 선택 메뉴 다르게 출력
         if (CurrentPlayer == 0)
         {
             menu = { "1. 다음 주사위", "0. 나가기" };
@@ -232,38 +232,7 @@ void GameManager::PrintPlayerDice()
     UM.ClearMainWindowBox();
 }
 
-
-
-//Player의 인덱스를 이름으로 반환
-//찾지못하면 -1 반환
-int GameManager::GetPlayerByName()
-{
-    string PlayerInput;
-    int PlayerIndex = -1;
-    while (true)
-    {
-        cout << "선택 입력 : ";
-        cin >> PlayerInput;
-        if (cin.fail())
-        {
-            cout << "잘못된 입력입니다. 문자를 입력해주세요." << endl;
-        }
-        else
-        {
-            for (int i=0; i<Players.size(); ++i)
-            {
-                if (Players[i].GetName() == PlayerInput)
-                {
-                    PlayerIndex = i;                   
-                }
-            }
-        }
-        break;
-
-    }
-    return PlayerIndex;
-}
-
+//직업 타입을 string으로 출력
 string GameManager::GetJobName(JobType JobType)
 {
     switch (JobType)
