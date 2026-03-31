@@ -44,14 +44,12 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         }
 
 
-        auto& TM = TemplateManager::getInstance();
+        TemplateManager& TM = TemplateManager::getInstance();
      
         JobType ChoicedJob = static_cast<JobType>(jobChoice-1);
 
-        Dice dice = TemplateManager::getInstance().GetDiceByType(ChoicedJob);
-
         // 입력받은 숫자를 JobType으로 변환하여 추가
-        Players.push_back(Player(10, dice, Name, ChoicedJob));
+        Players.push_back(TM.GetPlayerByType(Name, ChoicedJob));
     }
 
     UM.ClearMainWindowBox();
@@ -59,6 +57,12 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     // 인벤토리에 힐링 포션 하나 넣기
     Item* hpPotion = new HealingPotion();
     IM.AddItem(hpPotion);
+
+    if (PlayerMoney == 0)
+    {
+        PlayerMoney += 50;
+    }
+   
 }
 
 bool GameManager::GameStart()
@@ -75,6 +79,14 @@ bool GameManager::GameStart()
 
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
+
+    if (DeathCount > 0)
+    {
+        UM.CreateNewScreenForStoryPrint();
+        cout << "\"어라 ? 이런 곳에 누군가가 흘린 돈이 있네... 이건 주사위의 신이 주신 노잣돈이라고 치자.\"" << endl;
+        cout << "[System]" << "당신의 파티는" << PlayerMoney << "골드를 얻었습니다." << endl;
+        UM.CloseAnyTempScreen();
+    }
 
     //초기화 정상작동 확인
     for (int i=0; i<Players.size(); ++i)
@@ -155,6 +167,7 @@ bool GameManager::GameStart()
     }
 
     // 게임오버
+    ++DeathCount;
     return false;
 
 }
@@ -176,7 +189,7 @@ bool GameManager::BattleResult(bool Result)
             }
         }
         // 돈 획득
-        PlayerMoney += 100;
+        PlayerMoney += 10;
 
         UM.ClearMainWindowBox();
         cout << "보상으로 모든 파티원이 10의 경험치를 얻고 100골드를 획득했습니다." << endl;
