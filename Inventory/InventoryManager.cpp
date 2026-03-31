@@ -36,6 +36,7 @@
     }
 
     void InventoryManager::ShowInventory() {
+        std::cout << "현재 인벤토리:\n";
         if (ItemList.empty()) {
             std::cout << "아이템이 없습니다.\n";
             return;
