@@ -3,6 +3,8 @@
 
 using namespace std;
 
+
+//캐릭터 생성
 void GameManager::InitializeCharacter(vector<Player>& Players)
 {
     UIManager& UM = UIManager::getInstance();
@@ -106,6 +108,7 @@ void GameManager::GameStart()
     {
 
         //전투 돌입
+        UM.ClearMenuBox();
         GameResult = BattleResult(BM.Battle(Players, CurrentStage));
 
         //배틀 결과에 따라 전멸 시 즉시 게임 죵로
