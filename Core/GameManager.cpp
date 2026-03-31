@@ -115,6 +115,9 @@ bool GameManager::GameStart()
     {
         // 전투 돌입
         bool isWin = BM.Battle(Players, CurrentStage);
+
+        BM.EndBattleResetPlayers(Players);
+
         GameResult = BattleResult(isWin);
 
         // 패배 시 종료
