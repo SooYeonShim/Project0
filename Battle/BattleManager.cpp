@@ -137,7 +137,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         RollDiceByPlayersAndPrintStatus(players, monsters);
 
         bool isDicePhaseFinished = false;
-        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "0. 현황판 확인", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 아이템 사용", "5. 다음 페이즈로"};
+        std::vector<std::string> dicePhaseMenu = { "무엇을 하시겠습니까?", "", "1. 액션 해제하기", "2. 리롤 하기", "3. 전부 리롤하기", "4. 아이템 사용", "5. 다음 페이즈로"};
 
         while (!isDicePhaseFinished)
         {
@@ -161,9 +161,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             userInput = UIManager::getInstance().GetUserInputNumber("");
 
             switch (userInput) 
-            {
-            case 0:
-                break;
+            {            
             case 1:
             {
                 // 주사위 리셋할 수 있게 처리

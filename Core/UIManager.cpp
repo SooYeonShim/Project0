@@ -827,6 +827,50 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[0C";
     }
+    else if (player.GetJobType() == JobType::Cleric)
+    {
+        std::cout << "   O  _|_";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+        std::cout << " /|\\  |";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+        std::cout << " / \\  |";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+    }
     else // 유효하지 않은 경우임, 애초에 호출되면 아예 안됌.
     {
         
