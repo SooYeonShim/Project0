@@ -19,7 +19,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
     }
     else
     {
-        UM.PrintInputWarning("보유한 돈이 부족합니다.");
+        UM.PrintInputWarning("보유 돈이 부족합니다.");
     }
 
 }
@@ -54,7 +54,7 @@ void ShopManager::BuyItem(int& PlayerMoney)
         }
         else
         {
-            UM.PrintInputWarning("보유한 돈이 부족합니다.");
+            UM.PrintInputWarning("보유 돈이 부족합니다.");
         }
         break;
     default:
