@@ -36,13 +36,13 @@
     }
 
     void InventoryManager::ShowInventory() {
-        std::cout << "현재 인벤토리:\n";
+        std::cout << "\n현재 인벤토리:\n";
         if (ItemList.empty()) {
             std::cout << "아이템이 없습니다.\n";
             return;
         }
         for (int i = 0; i < ItemList.size(); i++) {
-            std::cout << "[" << i+1 << "] " << ItemList[i]->GetName() << " : " << ItemList[i]->GetItemInfo() << ")\n";
+            std::cout << "[" << i+1 << "] " << ItemList[i]->GetName() << " : " << ItemList[i]->GetItemInfo() << "\n";
         }
     }
 
