@@ -104,6 +104,32 @@ void UIManager::PrintTarget(Action* action)
     }
 }
 
+void UIManager::PrintEffectStatus(const vector<StatusEffect>& effects)
+{
+    if (effects.size() == 0)
+    {
+        return;
+    }    
+
+    for (std::vector<StatusEffect>::const_iterator it = effects.begin(); it != effects.end(); ++it)
+    {
+        switch (it->kind)
+        {
+        case StateType::STUN:
+            cout << YELLOW << " S (";
+            cout << it->turnsRemaining;
+            cout << ")" << RESET;
+            break;
+        case StateType::BLEED:
+            cout << RED << " B (";
+            cout << it->turnsRemaining;
+            cout << ")" << RESET;
+            break;
+        }
+    }
+
+}
+
 void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters)
 {
     std::cout << std::endl;
@@ -112,12 +138,16 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
     {
         if (i == 0)
         {
+            PrintEffectStatus(monsters[i].GetStatusEffects());
+            std::cout << std::endl;
             PrintMonsterSprite(monsters[i].GetName(), 0, true);
             std::cout << std::endl;
         }
         else
         {
-            std::cout << "\x1b[6A";
+            std::cout << "\x1b[7A";
+            PrintEffectStatus(monsters[i].GetStatusEffects());
+            std::cout << "\x1b[1B";
             PrintMonsterSprite(monsters[i].GetName(), 40 * i);
             std::cout << "\x1b[1B";
             std::cout << "\x1b[" << 40 * i << "G";
@@ -158,12 +188,18 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
     {
         if (i == 0)
         {
+            std::cout << "\x1b[" << 0 << "C";
+            PrintEffectStatus(players[i].GetStatusEffects());
+            std::cout << std::endl;
             PrintPlayerSprite(players[i], 2, true);
             std::cout << std::endl;
         }
         else
         {
-            std::cout << "\x1b[6A";
+            std::cout << "\x1b[7A";
+            std::cout << "\x1b[" << 40 * i + 5 << "G";
+            PrintEffectStatus(players[i].GetStatusEffects());
+            std::cout << "\x1b[1B";
             PrintPlayerSprite(players[i], 40 * i + 4);
             std::cout << "\x1b[1B";
             std::cout << "\x1b[" << 40 * i << "G";
@@ -240,7 +276,11 @@ void UIManager::ClearMainWindowBox()
 
     std::cout << "\x1b[1E";
 
+    // TODO:: Clear 이후에, 최초 newLine이 스크롤링이 안되고 덮어쓰기가 되어 강제로 넣음.
+    std::cout << "\n";
+
     CursorScrollSet();
+
     EnableStreamMarginHook();
 }
 
@@ -897,8 +937,6 @@ void UIManager::DisableStreamMarginHook()
     }
 }
 
-
-
 void UIManager::CreateNewScreenForStoryPrint()
 {    
 
@@ -922,7 +960,7 @@ void UIManager::CreateNewScreenForStoryPrint()
 
     // TODO:: 최초 문장에 대해서 버그가 있어서 넣어둔 것
     // 최초의 \n은 스크롤링이 갱신되는 줄바꿈이 안돼서 시작때 넣어버림;
-    // 근데 그거하면 빈 화면에 엔터를 입력받는 상태가 되니까, 그걸 비 활성화 했다가 이후에 활성화함
+    // \n을 추가하면 빈 화면에 엔터를 입력받는 상태가 되니까, 그걸 비활성화 했다가 이후에 활성화함
 
     StreamBuffer->SetPressEnterWhenNewLine(false);
     std::cout << "\n";
@@ -942,6 +980,7 @@ void UIManager::CloseAnyTempScreen()
 
     CursorScrollSet();
 
+
     return;
 }
 
@@ -953,8 +992,8 @@ UIManager::UIManager()
 
 
     // TODO:: 만약에 CreateNewScreenForStoryPrint() 열고 CloseAnyTempScreen() 닫으면 초기화 됨.    
-
     StreamBuffer->SetParameterCursorPos(LeftMargin, StartStatusRow, 3, StartStatusRow);
     StreamBuffer->SetIsScrolling(true);
     CursorScrollSet();
+
 }

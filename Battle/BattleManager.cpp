@@ -504,7 +504,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         }
 
         if (isWin)
-        {
+        {            
             return true;
         }
 
@@ -585,7 +585,6 @@ void BattleManager::RollDiceByPlayersAndPrintStatus(std::vector<Player>& players
     UIManager::getInstance().PrintBattleBoard(players, monsters);
 }
 
-
 void BattleManager::RollDiceByPlayers(std::vector<Player>& player)
 {
 
@@ -613,6 +612,19 @@ void BattleManager::AddRerollCount(int count)
         RerollCount = 0;
     }
 }
+
+void BattleManager::EndBattleResetPlayers(std::vector<Player>& players)
+{
+    for (int i = 0; i < players.size(); ++i)
+    {
+        players[i].EndStage();
+        if (players[i].GetIsDead())
+        {
+            players[i].SetHP(1);
+        }
+    }
+}
+
 
 BattleManager::BattleManager()
 {
