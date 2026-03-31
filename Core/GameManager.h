@@ -37,7 +37,10 @@ public:
 
 private:
     // 생성자를 private으로 막음
-    GameManager() {}
+    GameManager()
+    {
+        PlayerMoney = 0;
+    }
 
     // 복사/대입도 막음
     GameManager(const GameManager&) = delete;
@@ -46,7 +49,8 @@ private:
 
     int CurrentStage;
     bool GameResult;
-    int PlayerMoney = 100;
+    int PlayerMoney;
+    int DeathCount = 0;
     vector<Player> Players;
 
 
