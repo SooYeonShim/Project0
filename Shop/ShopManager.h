@@ -20,7 +20,6 @@ public:
     void HealAllPlayer(vector<Player>& Players, int& PlayerMoney);
     void BuyItem(int& PlayerMoney);
     void EnterShop(vector<Player>& Players, int& PlayerMoney);
-    int GetUserInputNum();
     void PrintShopUI(int PlayerMoney);
 
     // Action 구입 창
