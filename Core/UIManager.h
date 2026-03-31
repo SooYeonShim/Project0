@@ -29,6 +29,11 @@ constexpr const char* YELLOW = "\x1b[33m";
 constexpr const char* CYAN = "\x1b[36m";
 constexpr const char* WHITE = "\x1b[37m";
 
+constexpr const char* SCREEN_ALT = "\x1b[?1049h";
+constexpr const char* SCREEN_MAIN = "\x1b[?1049l";
+
+
+
 
 class UIManager : public std::streambuf {
 public:
@@ -42,6 +47,9 @@ public:
     // 시작시 가장 먼저 호출되는 함수
     // 콘솔 화면을 최대로 키우고 Enter을 눌러 시작하도록 요청함
     void WaitForStart(std::string msg);
+
+    // TempScreen에서 Enter 받는 거 대기용으로 사용
+    void WaitForEnterInTempScreen(std::string msg);
 
     void PrintMessage(std::string message);
 
@@ -58,6 +66,8 @@ public:
      * 
      */    
     void PrintHP(int HP);
+
+    void PrintShield(int shield);
 
     void PrintTarget(Action* action);
 
@@ -102,36 +112,18 @@ public:
     // 가로에 스프라이트들을 배치할 때 사용    
     void PrintPlayerSprite(Player& player, int startColumn, bool isNewLine = false) const;
 
+
+    void NewTempScreen();
+
+    void CloseTempScreen();
+
+
+
 protected:
     // 가로채기가 활성화 된 경우, std::cout 에 입력한 모든 출력들을 가로채서,
     // MainWindow (가장 위쪽의 화면)에 출력되도독 함.
     // 주의) Enable과 Disable를 올바르게 하지 않고 std::cout를 사용하면 무한루프등 오류가 발생할 수 있음.
-    virtual int_type overflow(int_type c) override {
-        if (c == EOF) return EOF;
-
-
-        if (AtStartOfLine && IsIntercepting) {
-            if (CurrentWindowIndex == 1) {
-
-                char buf[64];
-                // 전체 시퀀스를 하나의 버퍼에 담습니다.
-                int len = sprintf(buf, "\x1b[3;%dr\x1b[%d;%dH", StartStatusRow, StartStatusRow, LeftMargin);
-                mOriginalBuffer->sputn(buf, len);
-
-            }
-            AtStartOfLine = false;
-        }
-
-        // 2. 현재 들어온 실제 문자(c)를 원본 버퍼에 출력
-        int_type result = mOriginalBuffer->sputc(c);
-
-        // 3. 현재 문자가 줄바꿈이면 다음 문자가 올 때 위치 조정을 하도록 플래그 설정
-        if (c == '\n') {
-            AtStartOfLine = true;
-        }
-
-        return result;
-    }
+    virtual int_type overflow(int_type c) override;
 
 
 private:
@@ -139,6 +131,8 @@ private:
     static constexpr const char* BLOCK_RED = "\x1b[31m■\x1b[0m";
     static constexpr const char* BLOCK_YELLOW = "\x1b[33m■\x1b[0m";
     static constexpr const char* BLOCK_GREEN = "\x1b[32m■\x1b[0m";
+    static constexpr const char* BLOCK_SKY = "\x1b[36m■\x1b[0m";
+
     static constexpr const char* HP_BLOCKS[4] = { BLOCK_BLACK, BLOCK_RED, BLOCK_YELLOW, BLOCK_GREEN };
 
     int Width = 150;
@@ -180,5 +174,8 @@ private:
 
     // stream Buffer 가로채기 해제
     void DisableStreamMarginHook();
+
+
+
 
 };
