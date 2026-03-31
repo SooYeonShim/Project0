@@ -15,6 +15,9 @@
 #include "GameEnums.h"
 #include "Monster.h"
 
+#include "CustomStreamBuf.h"
+
+
 // --- ANSI 색상 코드 정의 ---
 /**
  *
@@ -22,6 +25,7 @@
  * 8.3.117 - SELECT GRAPHIC RENDITION
  *
  */
+
 constexpr const char* RED = "\x1b[31m";
 constexpr const char* RESET = "\x1b[0m";
 constexpr const char* BOLD = "\x1b[1m";
@@ -35,7 +39,7 @@ constexpr const char* SCREEN_MAIN = "\x1b[?1049l";
 
 
 
-class UIManager : public std::streambuf {
+class UIManager {
 public:
     static UIManager& getInstance()
     {
@@ -113,17 +117,19 @@ public:
     void PrintPlayerSprite(Player& player, int startColumn, bool isNewLine = false) const;
 
 
-    void NewTempScreen();
+    void CreateNewScreenForStoryPrint();
 
-    void CloseTempScreen();
+    void CloseAnyTempScreen();
 
+    ~UIManager()
+    {
+        if (StreamBuffer != nullptr)
+        {
+            delete StreamBuffer;
+            StreamBuffer = nullptr;
+        }
+    }
 
-
-protected:
-    // 가로채기가 활성화 된 경우, std::cout 에 입력한 모든 출력들을 가로채서,
-    // MainWindow (가장 위쪽의 화면)에 출력되도독 함.
-    // 주의) Enable과 Disable를 올바르게 하지 않고 std::cout를 사용하면 무한루프등 오류가 발생할 수 있음.
-    virtual int_type overflow(int_type c) override;
 
 
 private:
@@ -151,15 +157,13 @@ private:
 
 
     std::streambuf* mOriginalBuffer = nullptr;
+
+    // \n마다 Blocking을 넣어줄 버퍼
+    CustomStreamBuf* StreamBuffer = nullptr;
+
     bool IsIntercepting = false;
     bool AtStartOfLine = true;
 
-    UIManager()
-    {
-        // 위쪽 현황판 스크롤
-        // MainWindow 쪽이 스크롤링이 되도록 터미널 스크롤링을 사용함
-        std::cout << "\x1b[" << 3 << "; " << StartStatusRow << "r";
-    }
 
     /**
      *
@@ -176,6 +180,6 @@ private:
     void DisableStreamMarginHook();
 
 
-
+    UIManager();
 
 };

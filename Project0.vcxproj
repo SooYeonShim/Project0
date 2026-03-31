@@ -129,6 +129,7 @@
     <ClCompile Include="Character\Character.cpp" />
     <ClCompile Include="Character\Player.cpp" />
     <ClCompile Include="Core\GameManager.cpp" />
+    <ClCompile Include="Core\CustomStreamBuf.cpp" />
     <ClCompile Include="Core\UIManager.cpp" />
     <ClCompile Include="Dice\Attack.cpp" />
     <ClCompile Include="Dice\AttackStatus.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Battle\MonsterSpawn.h" />
     <ClInclude Include="Character\Troll.h" />
     <ClInclude Include="Common\StatusEffect.h" />
+    <ClInclude Include="Core\CustomStreamBuf.h" />
     <ClInclude Include="Core\UIManager.h" />
     <ClInclude Include="Dice\Action.h" />
     <ClInclude Include="Dice\Action\Attack.h" />

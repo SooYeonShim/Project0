@@ -1,5 +1,5 @@
 ﻿#include "GameManager.h"
-
+#include "StoryManager.h"
 
 using namespace std;
 
@@ -55,7 +55,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     IM.AddItem(hpPotion);
 }
 
-void GameManager::GameStart()
+bool GameManager::GameStart()
 {
 
     BattleManager& BM = BattleManager::getInstance();
@@ -65,6 +65,8 @@ void GameManager::GameStart()
 
     UM.ClearMenuBox();
 
+    StoryManager::getInstance().StoryByIndex(0);
+
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
 
@@ -73,9 +75,11 @@ void GameManager::GameStart()
     {
         UM.PrintMessage(to_string(i+1) + " 번째 플레이어 이름: " + Players[i].GetName() + " 직업: " + GetJobName(Players[i].GetJobType()));
     }
-    //IM.ShowInventory();
 
+    // 초기 상인 진입
+    StoryManager::getInstance().MechantStart();
     SM.EnterShop(Players, PlayerMoney);
+
     //주사위 확인 혹은 전투 시작 선택지
     //전투 시작 선택지 입력 전까지 반복
     while (true)
@@ -103,35 +107,44 @@ void GameManager::GameStart()
     //처음 스테이지 초기화
     CurrentStage = 1;
 
+    // 던전입장 스토리
+    StoryManager::getInstance().IntroDungeon();
+
     //스테이지가 3이 되기전까지 전투 반복
     while (CurrentStage != 5)
     {
+        // 전투 돌입
+        bool isWin = BM.Battle(Players, CurrentStage);
+        GameResult = BattleResult(isWin);
 
-        //전투 돌입
-        UM.ClearMenuBox();
-        GameResult = BattleResult(BM.Battle(Players, CurrentStage));
-
-        //배틀 결과에 따라 전멸 시 즉시 게임 죵로
-        if (GameResult == true)
-        {
-            //게임 종료 후 스테이지 증가
-            ++CurrentStage;
-
-        }
-        else
-        {
+        // 패배 시 종료
+        if (GameResult == false)
             break;
-        }
-        if (CurrentStage == 4)
+
+        // 상점진입
+        if (CurrentStage == 3)
         {
+            StoryManager::getInstance().MerchantIncounter();
             SM.EnterShop(Players, PlayerMoney);
         }
 
+        // 승리 시 해당 스테이지 클리어 스토리 출력
+        StoryManager::getInstance().StoryByIndex(CurrentStage);
 
+        // 스테이지 증가
+        ++CurrentStage;
+
+        // 보스 클리어 후 엔딩 처리
+        if (CurrentStage == 5)
+        {
+            StoryManager::getInstance().StoryByIndex(98);
+            // 게임 클리어
+            return true;
+        }
     }
 
-    //게임 종료
-    return;
+    // 게임오버
+    return false;
 
 }
 
@@ -162,12 +175,16 @@ bool GameManager::BattleResult(bool Result)
             cout << player.GetName() << "의 경험치: " << player.GetExp() << "/" << player.GetNextLevelExp() << endl;
         }
         cout << "현재 보유 골드: " << PlayerMoney << endl;
+
+        UIManager::getInstance().GetUserInputForWait("");
         return true;
     }
     else
     {
         // 플레이어 캐릭터 전멸 게임 종료
-        cout << "모든 캐릭터 사망하였습니다. 게임 종료" << endl;
+        //cout << "모든 캐릭터 사망하였습니다. 게임 종료" << endl;
+
+        StoryManager::getInstance().StoryByIndex(99);
         return false;
     }
 }
