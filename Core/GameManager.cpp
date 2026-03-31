@@ -132,9 +132,11 @@ bool GameManager::GameStart()
 
         // 상점진입
         if (CurrentStage == 3)
-        {
+        {        
             StoryManager::getInstance().MerchantIncounter();
             SM.EnterShop(Players, PlayerMoney);
+            UM.ClearMainWindowBox();
+            UM.ClearMenuBox();
         }
 
         // 승리 시 해당 스테이지 클리어 스토리 출력
