@@ -9,7 +9,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
 {
     UIManager& UM = UIManager::getInstance();
     InventoryManager& IM = InventoryManager::getInstance();
-
+    vector<string> Menu;
     int PlayerCount = 0;
     string Name;
 
@@ -18,15 +18,19 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     {
         int jobChoice;
 
-        
-        Name = UM.GetUserInput(to_string(i+1) + "번 파티원 이름을 입력해주세요: ");
+        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요" };
+        UM.PrintMenuBox(Menu);
+
+        Name = UM.GetUserInput("선택 입력: ");
 
         //0~3사이의 값이 안들어오는거 방지
         while (true)
         {
-            UM.ClearMainWindowBox();
-            UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
-            jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 파티원의 직업을 정해주세요: ");
+            UM.ClearMenuBox();
+            Menu = { to_string(i + 1) + "번 파티원의 직업을 정해주세요", "", "직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)" };
+            UM.PrintMenuBox(Menu);
+            //UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
+            jobChoice = UM.GetUserInputNumber("선택 입력: ");
             if (jobChoice >= 1 && jobChoice <= 5)
             {
                 break;
@@ -269,6 +273,9 @@ string GameManager::GetJobName(JobType JobType)
         break;
     case JobType::Defender:
         return "Defender";
+        break;
+    case JobType::Cleric:
+        return "Cleric";
         break;
     }
   }
