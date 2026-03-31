@@ -38,7 +38,7 @@ public:
     void AddStatusEffect(StatusEffect);
     void TakeDamage(int Damage);
     void TakeHeal(int Damage);
-    void TakeShield(int Damage);
+    virtual void TakeShield(int Shield_);
     virtual void EndTurn();
     void EndStage();
 
