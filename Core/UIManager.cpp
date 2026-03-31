@@ -276,7 +276,11 @@ void UIManager::ClearMainWindowBox()
 
     std::cout << "\x1b[1E";
 
+    // TODO:: Clear 이후에, 최초 newLine이 스크롤링이 안되고 덮어쓰기가 되어 강제로 넣음.
+    std::cout << "\n";
+
     CursorScrollSet();
+
     EnableStreamMarginHook();
 }
 
@@ -933,8 +937,6 @@ void UIManager::DisableStreamMarginHook()
     }
 }
 
-
-
 void UIManager::CreateNewScreenForStoryPrint()
 {    
 
@@ -958,7 +960,7 @@ void UIManager::CreateNewScreenForStoryPrint()
 
     // TODO:: 최초 문장에 대해서 버그가 있어서 넣어둔 것
     // 최초의 \n은 스크롤링이 갱신되는 줄바꿈이 안돼서 시작때 넣어버림;
-    // 근데 그거하면 빈 화면에 엔터를 입력받는 상태가 되니까, 그걸 비 활성화 했다가 이후에 활성화함
+    // \n을 추가하면 빈 화면에 엔터를 입력받는 상태가 되니까, 그걸 비활성화 했다가 이후에 활성화함
 
     StreamBuffer->SetPressEnterWhenNewLine(false);
     std::cout << "\n";
@@ -978,6 +980,7 @@ void UIManager::CloseAnyTempScreen()
 
     CursorScrollSet();
 
+
     return;
 }
 
@@ -989,8 +992,8 @@ UIManager::UIManager()
 
 
     // TODO:: 만약에 CreateNewScreenForStoryPrint() 열고 CloseAnyTempScreen() 닫으면 초기화 됨.    
-
     StreamBuffer->SetParameterCursorPos(LeftMargin, StartStatusRow, 3, StartStatusRow);
     StreamBuffer->SetIsScrolling(true);
     CursorScrollSet();
+
 }

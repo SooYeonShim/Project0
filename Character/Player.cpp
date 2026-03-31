@@ -41,6 +41,8 @@ void Player::SetExp(int Exp)
 
         HP = (int)(MaxHP * HPRatio);
 
+        cout << "레벨 업!" << Name << "의 레벨이 " << Level << "로 올랐습니다! [최대 체력 3 증가]" << endl;
+
         // NextLevelExp += NextLevelExp/4; 레벨링
         this->Exp -= NextLevelExp;
     }
