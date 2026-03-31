@@ -22,20 +22,20 @@ void UIManager::PrintMessage(std::string message)
     std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
 }
 
-void UIManager::PrintHP(int HP)
+void UIManager::PrintHP(int hp, int maxHp)
 {
     cout << "[";
 
-    if (HP <= 0)
+    if (hp <= 0)
     {
 
         std::cout << RED << "   사망   " << RESET << " ]";
         return;
     }
 
-    int subColor = HP / 10 + 1; // 0 -> BLACK 1 -> RED 2 -> YELLO, 3 -> GREEN;
+    int subColor = hp / 10 + 1; // 0 -> BLACK 1 -> RED 2 -> YELLO, 3 -> GREEN;
 
-    int remain = (HP % 10);
+    int remain = (hp % 10);
 
 
     for (int i = 0; i < remain; ++i)
@@ -48,7 +48,7 @@ void UIManager::PrintHP(int HP)
         std::cout << UIManager::HP_BLOCKS[subColor - 1];
     }
 
-    cout << "]";
+    cout << "] " << hp << " / " << maxHp;
 
 }
 
@@ -158,7 +158,7 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
         }
 
         PrintShield(monsters[i].GetShield());
-        PrintHP(monsters[i].GetHP());
+        PrintHP(monsters[i].GetHP(), monsters[i].GetMaxHP());
 
 
         if (i == 0)
@@ -209,7 +209,7 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
             std::cout << "\x1b[6C";
         }
         PrintShield(players[i].GetShield());
-        PrintHP(players[i].GetHP());
+        PrintHP(players[i].GetHP(), players[i].GetMaxHP());
 
         if (!players[i].GetIsDead())
         {
@@ -392,7 +392,7 @@ int UIManager::GetUserInputNumber(std::string message)
         else
         {
             std::cout << message;
-        }
+        }        
 
 
         std::string input;
@@ -451,6 +451,13 @@ void UIManager::PrintInputWarning(std::string msg)
     InputLineClear();
 
     std::cout << RED << msg << RESET << "\n";
+    
+
+    // 커서 위치만 변경
+    std::cout << "\x1b[" << (InputRow + 1) << ";0H";        
+    std::cout << "\x1b[" << InputRow << ";999H";
+    std::cout << std::flush;
+
 
     // TODO:: 엔터가 아니라 아무키나 눌러도 넘어가게 하고싶어
     std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
@@ -469,7 +476,6 @@ void UIManager::InputLineClear() const
 
     // InputLine 시작 위치로 변경
     std::cout << "\x1b[" << InputRow << ";0H";
-
     std::cout << std::flush;
 }
 
