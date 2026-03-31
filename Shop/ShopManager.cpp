@@ -112,6 +112,16 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
             UM.ClearMainWindowBox();
             continue;
         }
+        else if (PlayerInput == 7)
+        {
+            CheatShop(Players);
+            continue;
+        }
+        else if (PlayerInput == 8)
+        {
+            CheatShop2(Players);
+            continue;
+        }
         else if (PlayerInput == 0)
         {
             break;
@@ -276,4 +286,27 @@ void ShopManager::ShopActionUI(vector<Player>& Players, int& PlayerMoney)
         delete FundAction;
 
     return;
+}
+
+void ShopManager::CheatShop(vector<Player>& Players)
+{
+    for (auto& player : Players)
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            player.GetDice().SetAction(i, TemplateManager::getInstance().CreateDebugAction(true));
+        }
+    }
+
+}
+
+void ShopManager::CheatShop2(vector<Player>& Players)
+{
+    for (auto& player : Players)
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            player.GetDice().SetAction(i, TemplateManager::getInstance().CreateDebugAction(false));
+        }
+    }
 }

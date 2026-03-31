@@ -374,6 +374,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
 
                 it->DoAction(aliveCharacters);
+                it->DoActive();
                 continue;
             }
             else if (currentAction->GetTargetType() == TargetType::ENEMYALL)
@@ -387,12 +388,13 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
 
                 it->DoAction(aliveCharacters);
-
+                it->DoActive();
                 continue;
             }
             else if (currentAction->GetTargetType() == TargetType::MYSELF)
             {
                 it->DoAction({ &(*it) });
+                it->DoActive();
                 continue;
             }
 
