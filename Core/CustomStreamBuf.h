@@ -14,7 +14,6 @@ public:
     // 인자를 받는 생성자만 존재함
     CustomStreamBuf(std::streambuf* original) : Dest(original) {}
 
-
     // -1인 경우 기존 값 사용, 아닌 경우 덮어쓰기
     void SetParameterCursorPos(int newLineLeftMargin, int newLineTopMargin, int scrollingEndTop, int ScrollingStartBottom);
 
