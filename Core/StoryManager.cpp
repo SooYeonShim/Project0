@@ -53,7 +53,8 @@ void StoryManager::Prologue()
     cout << "\"황금 주사위의 힘 때문에 마물들은 주사위를 통해서만 쓰러뜨릴 수 있게 됐어.\"\n" << endl;
 
     cout << "상인은 잠시 말을 멈추고 먼 산을 바라보며 깊은 한숨을 내쉽니다." << endl;
-    cout << "\"다른 모험가들이 몇 번 목숨을 걸고 던전에 들어갔지만, 모두 불운한 결말을 맞았지. 임금님께선 황금 주사위만 구해온다면 그에 걸맞은 보상을 약속하셨다네.\"" << endl;
+    cout << "\"다른 모험가들이 몇 번 목숨을 걸고 던전에 들어갔지만, 모두 불운한 결말을 맞았지." << endl;
+    cout << "임금님께선 황금 주사위만 구해온다면 그에 걸맞은 보상을 약속하셨다네.\"" << endl;
     cout << "\"혹시 모르지, 운만 좋다면 자네들이 그 주인공이 될지도.\"" << endl;
 
     cout << "당신은 흥미를 느끼며, 자신의 운을 시험해보기로 결심하고 던전으로 향합니다." << endl;
@@ -66,7 +67,7 @@ void StoryManager::Stage1Story()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다." << endl;
+    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다.";    
     cout << "하지만 그런 생각도 잠시, 어디선가 소리 없이 나타난 늑대와 고블린에게 파티는 포위되었습니다." << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -91,7 +92,8 @@ void StoryManager::Stage3Story()
     cout << "쿵, 하는 위압적인 소리가 들려옵니다." << endl;
     cout << "당신의 파티는 갑자기 들려온 소리에 긴장하며 청각을 돋웁니다." << endl;
     cout << "나무 사이로 거대한 그림자가 비치는가 싶더니, 금세 트롤이 모습을 나타냅니다." << endl;
-    cout << "트롤은 자신의 몸집에 어울리는 나무 한 그루만한 몽둥이를 들고, 조그만 인간 따위는 파리나 다름없다는 듯 휘둘러대기 시작합니다." << endl;
+    cout << "트롤은 자신의 몸집에 어울리는 나무 한 그루만한 몽둥이를 들고," << endl;
+    cout << "조그만 인간 따위는 파리나 다름없다는 듯 휘둘러대기 시작합니다." << endl;
     cout << "이 트롤이 바로 던전의 주인입니다. 당신의 파티는 전투 준비를 합니다." << endl;
 
     // 임시 ui
@@ -122,10 +124,6 @@ void StoryManager::EndingStory()
     cout << "왕은 당신의 파티를 융숭히 대접하고, 넉넉한 상금을 지급합니다." << endl;
     cout << "잔치는 6일간 지속됩니다. 왕국에는 활기가 돌고, 거리는 즐거움이 가득해졌습니다." << endl;
 
-
-
-
-
     cout << "\n- 제작 : 팀 9조대 -" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -135,7 +133,8 @@ void StoryManager::GameOverStory()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "당신의 파티는 다른 모험가들에 비해 운이 좋지는 않았던 모양입니다. 당신은 몬스터의 공격에 쓰러지고 말았습니다." << endl;
+    cout << "당신의 파티는 다른 모험가들에 비해 운이 좋지는 않았던 모양입니다." << endl;
+    cout << "당신은 몬스터의 공격에 쓰러지고 말았습니다." << endl;
     cout << "[ GAME OVER ]\n" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -156,7 +155,8 @@ void StoryManager::MerchantIncounter()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "던전에는 어디서 솟았는지 모를 작은 가판대가 보입니다. 이런 곳에서 장사를 하는 건 위험하지 않을까요? 상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
+    cout << "던전에는 어디서 솟았는지 모를 작은 가판대가 보입니다. 이런 곳에서 장사를 하는 건 위험하지 않을까요?" << std::endl;
+    cout << "상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
     cout << "\"물건을 사지 않는다면, 쉬어가기만 해도 괜찮아요.\"" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -166,7 +166,8 @@ void StoryManager::MechantStart()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "던전 입구에는 작은 가판대가 보입니다. 이 외진 곳에도 모험가가 자주 오는 걸까요? 상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
+    cout << "던전 입구에는 작은 가판대가 보입니다. 이 외진 곳에도 모험가가 자주 오는 걸까요?" << endl;
+    cout << "상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
     cout << "\"바로가려고? 준비는 철저히 해야지.\"" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
