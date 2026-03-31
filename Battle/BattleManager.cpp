@@ -577,7 +577,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         
         ++turn;
     }
-    
+
     return false;
 }
 
