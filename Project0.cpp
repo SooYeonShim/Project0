@@ -29,7 +29,28 @@ int main()
 
     while (true)
     {
-        cout << "Dice With Death!" << std::endl;
+        cout << "Dice With Death!" << endl;
+        cout << "  _____   _____  _____  ______ " << endl;
+        cout << " |  __ \\ |_   _|/ ____||  ____|" << endl;
+        cout << " | |  | |  | | | |     | |__   " << endl;
+        cout << " | |  | |  | | | |     |  __|  " << endl;
+        cout << " | |__| | _| |_| |____ | |____ " << endl;
+        cout << " |_____/ |_____|\\_____||______|" << endl;
+        cout << "                                " << endl;
+        cout << "  __         _______ _______ _    _ " << endl;
+        cout << " \\ \\        / /_   _|__   __| |  | |" << endl;
+        cout << "  \\ \\  /\\  / /  | |    | |  | |__| |" << endl;
+        cout << "   \\ \\/  \\/ /   | |    | |  |  __  |" << endl;
+        cout << "    \\  /\\  /   _| |_   | |  | |  | |" << endl;
+        cout << "     \\/  \\/   |_____|  |_|  |_|  |_|" << endl;
+        cout << "                                    " << endl;
+        cout << "  _____  ______        _______ _    _  _ " << endl;
+        cout << " |  __ \\|  ____|   /\\ |__   __| |  | || |" << endl;
+        cout << " | |  | | |__     /  \\   | |  | |__| || |" << endl;
+        cout << " | |  | |  __|   / /\\ \\  | |  |  __  || |" << endl;
+        cout << " | |__| | |____ / ____ \\ | |  | |  | ||_|" << endl;
+        cout << " |_____/|______/_/    \\_\\|_|  |_|  |_|(_)" << endl;
+
         vector<string> menu = { "1. 게임 시작", "2. 게임 종료" };
         manager.PrintMenuBox(menu);
         int PlayerChoice = manager.GetUserInputNumber("선택 입력: ");
