@@ -35,7 +35,10 @@ int main()
         int PlayerChoice = manager.GetUserInputNumber("선택 입력: ");
         if (PlayerChoice == 1)
         {
-            GM.GameStart();
+            if (GM.GameStart())
+            {
+                break;
+            }
         }
         else if(PlayerChoice == 2)
         {
