@@ -169,7 +169,7 @@ void StoryManager::GameOverStory()
 
     cout << "[ GAME OVER ]\n" << endl;
 
-    cout << "주사위의 운이 당신의 손을 들어주지 않았습니다..." << endl;
+    cout << "당신의 파티는 다른 모험가들에 비해 운이 좋지는 않았던 모양입니다. 당신은 몬스터의 공격에 쓰러지고 말았습니다." << endl;
 
     // 임시 ui
     UIManager::getInstance().GetUserInputForWait("");
