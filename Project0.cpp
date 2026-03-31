@@ -19,7 +19,7 @@ int main()
 
     //std::cout << "Game Start!\n";
 
-    UIManager manager = UIManager::getInstance();
+    UIManager& manager = UIManager::getInstance();
     manager.DrawBorder();
 
     
@@ -51,6 +51,8 @@ int main()
         cout << " | |  | |  __|   / /\\ \\  | |  |  __  || |" << endl;
         cout << " | |__| | |____ / ____ \\ | |  | |  | ||_|" << endl;
         cout << " |_____/|______/_/    \\_\\|_|  |_|  |_|(_)" << endl;
+
+
 
         vector<string> menu = { "1. 게임 시작", "2. 게임 종료" };
         manager.PrintMenuBox(menu);
