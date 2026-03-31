@@ -2,7 +2,8 @@
 #include <vector>
 #include <memory>
 
-class Action;
+#include "Action.h"
+
 class Dice
 {
 private:
@@ -31,5 +32,25 @@ public:
 public:
 	Dice();
     Dice(const Dice& _Other);
+
 	~Dice();
+
+    Dice& operator=(const Dice& _Other)
+    {
+        for (Action* action : vecAction)
+        {
+            delete action;
+        }
+        vecAction.clear();
+
+        for (Action* action : _Other.vecAction)
+        {
+            if (action != nullptr)
+            {
+                this->vecAction.push_back(action->Clone());
+            }
+        }
+
+        return *this;
+    }
 };
