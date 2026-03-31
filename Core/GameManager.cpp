@@ -180,6 +180,7 @@ bool GameManager::BattleResult(bool Result)
         cout << "현재 보유 골드: " << PlayerMoney << endl;
 
         UIManager::getInstance().GetUserInputForWait("");
+        UIManager::getInstance().ClearMainWindowBox();
         return true;
     }
     else
