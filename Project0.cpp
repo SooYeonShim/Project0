@@ -22,12 +22,31 @@ int main()
     UIManager manager = UIManager::getInstance();
     manager.DrawBorder();
 
-    cout << "모험을 떠날 영웅들이 모였습니다" << std::endl;  
+    
+    
 
+    GameManager& GM = GameManager::getInstance();
 
-    GameManager& gm = GameManager::getInstance();
-
-    gm.GameStart();
+    while (true)
+    {
+        cout << "Dice With Death!" << std::endl;
+        vector<string> menu = { "1. 게임 시작", "2. 게임 종료" };
+        manager.PrintMenuBox(menu);
+        int PlayerChoice = manager.GetUserInputNumber("선택 입력: ");
+        if (PlayerChoice == 1)
+        {
+            GM.GameStart();
+        }
+        else if(PlayerChoice == 2)
+        {
+            return 0;
+        }
+        else
+        {
+            manager.PrintInputWarning("1~2 사이의 숫자를 입력해주세요.");
+        }
+    }
+    
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

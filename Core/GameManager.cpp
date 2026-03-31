@@ -23,15 +23,15 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         while (true)
         {
             UM.ClearMainWindowBox();
-            UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue)");         
+            UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
             jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 플레이어의 직업을 정해주세요: ");
-            if (jobChoice >= 1 && jobChoice <= 4)
+            if (jobChoice >= 1 && jobChoice <= 5)
             {
                 break;
             }
             else
             {
-                UM.PrintInputWarning("1~4자리 숫자를 입력해주세요.");
+                UM.PrintInputWarning("1~5 사이 숫자를 입력해주세요.");
             }
         }
 
@@ -60,6 +60,8 @@ void GameManager::GameStart()
     ShopManager& SM = ShopManager::getInstance();
     UIManager& UM = UIManager::getInstance();
     InventoryManager& IM = InventoryManager::getInstance();
+
+    UM.ClearMenuBox();
 
     //플레이어 캐릭터 초기화
     InitializeCharacter(Players);
@@ -99,10 +101,6 @@ void GameManager::GameStart()
     //처음 스테이지 초기화
     CurrentStage = 1;
 
-    cout << "\"숲 속의 던전은 고요하고, 가끔씩 새소리만 들려옵니다.\"" << endl;
-    cout << "\"던전 안쪽으로 좀 더 들어가자,순찰 중인 듯한 고블린과 마주칩니다.\"" << endl;
-    cout << "\"고블린은 간만에 먹잇감을 발견했다는 듯, 망설임없이 달려듭니다.\"" << endl;
-
     //스테이지가 3이 되기전까지 전투 반복
     while (CurrentStage != 5)
     {
@@ -114,7 +112,6 @@ void GameManager::GameStart()
         if (GameResult == true)
         {
             //게임 종료 후 스테이지 증가
-            PrintStoryClear(CurrentStage);
             ++CurrentStage;
 
         }
@@ -284,37 +281,4 @@ string GameManager::GetJobName(JobType JobType)
   }
 
 
-void GameManager::PrintStoryClear(int CurrentStage)
-{
-    switch (CurrentStage)
-    {
-    case 1:
-        cout << endl;
-        cout << "\"더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다.\"" << endl;
-        cout << "\"하지만 그런 생각도 잠시, 어디선가 소리없이 나타난 늑대와 고블린에게 파티는 포위되었습니다.\"" << endl;
-        break;
-    case 2:
-        cout << endl;
-        cout << "\"주변은 빽빽한 나무들로 인해 상당히 어둡습니다.\"" << endl;
-        cout << "\"뿌리가 우거진 땅을 간신히 넘어서 나아가니, 앞에 희미한 불빛이 보입니다.\"" << endl;
-        cout << "\"당신의 파티는 조심스럽게 다가갑니다.\"" << endl;
-        cout << "\"그것은 오크가 피운 모닥불이었고, 오크 자신의 휴식을 방해한 자들을 용서할 기색이 없습니다.\"" << endl;
-        break;
-    case 3:
-        cout << endl;
-        cout << "\"오크를 쓰러뜨리고 던전의 최심부로 들어가자, 쿵, 하는 위압적인 소리가 들려옵니다.\"" << endl;
-        cout << "\"당신의 파티는 갑자기 들려온 소리에 긴장하며 청각을 곤두세웁니다.\"" << endl;
-        cout << "\"나무 사이로 거대한 그림자가 비치는가 싶더니, 금세 트롤이 모습을 나타냅니다.\"" << endl;
-        cout << "\"트롤은 자신의 몸집에 어울리는 나무 한 그루만한 몽둥이를 들고, 조그만 인간 따위는 파리나 다름없다는 듯 휘둘러대기 시작합니다.\"" << endl;
-        cout << "\"이 트롤이 바로 던전의 주인입니다. 당신의 파티는 전투 준비를 합니다.\"" << endl;
-        break;
-    case 4:
-        cout << endl;
-        cout << "\"생각보다 위압적인 상대는 아니었지만, 운이 따르지 않았다면 죽을 수도 있었습니다.\"" << endl;
-        cout << "\"안도의 한숨을 내쉬며, 당신의 파티는 다친 몸을 이끌고 마을로 돌아갑니다.\"" << endl;
-        break;
-    default:
-        break;
-    }
-}
 
