@@ -22,20 +22,20 @@ void UIManager::PrintMessage(std::string message)
     std::cout << BOLD << WHITE << " [SYSTEM] " << RESET << message << std::endl;
 }
 
-void UIManager::PrintHP(int HP)
+void UIManager::PrintHP(int hp, int maxHp)
 {
     cout << "[";
 
-    if (HP <= 0)
+    if (hp <= 0)
     {
 
         std::cout << RED << "   사망   " << RESET << " ]";
         return;
     }
 
-    int subColor = HP / 10 + 1; // 0 -> BLACK 1 -> RED 2 -> YELLO, 3 -> GREEN;
+    int subColor = hp / 10 + 1; // 0 -> BLACK 1 -> RED 2 -> YELLO, 3 -> GREEN;
 
-    int remain = (HP % 10);
+    int remain = (hp % 10);
 
 
     for (int i = 0; i < remain; ++i)
@@ -48,7 +48,7 @@ void UIManager::PrintHP(int HP)
         std::cout << UIManager::HP_BLOCKS[subColor - 1];
     }
 
-    cout << "]";
+    cout << "] " << hp << " / " << maxHp;
 
 }
 
@@ -158,7 +158,7 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
         }
 
         PrintShield(monsters[i].GetShield());
-        PrintHP(monsters[i].GetHP());
+        PrintHP(monsters[i].GetHP(), monsters[i].GetMaxHP());
 
 
         if (i == 0)
@@ -209,7 +209,7 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
             std::cout << "\x1b[6C";
         }
         PrintShield(players[i].GetShield());
-        PrintHP(players[i].GetHP());
+        PrintHP(players[i].GetHP(), players[i].GetMaxHP());
 
         if (!players[i].GetIsDead())
         {

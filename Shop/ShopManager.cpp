@@ -19,7 +19,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
     }
     else
     {
-        UM.PrintInputWarning("보유 돈이 부족합니다.");
+        UM.PrintInputWarning("보유한 돈이 부족합니다.");
     }
 
 }
@@ -54,7 +54,7 @@ void ShopManager::BuyItem(int& PlayerMoney)
         }
         else
         {
-            UM.PrintInputWarning("보유 돈이 부족합니다.");
+            UM.PrintInputWarning("보유한 돈이 부족합니다.");
         }
         break;
     default:
@@ -132,7 +132,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
 
     vector<string> Menu;
 
-    Menu = { "     ★  상점  ★", "플레이어 보유 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
+    Menu = { "     ★  상점  ★", "플레이어가 보유한 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
     UM.PrintMenuBox(Menu);
 }
 
@@ -238,7 +238,7 @@ void ShopManager::ShopActionUI(vector<Player>& Players, int& PlayerMoney)
                 // 다이스면을 벗어나는 인덱스 입력
                 if (idx < 1 || idx > 6)
                 {
-                    UM.PrintInputWarning("잘못된 번호를 입력하셧습니다.");
+                    UM.PrintInputWarning("잘못된 번호를 입력하셨습니다.");
                     continue;
                 }
 

@@ -20,7 +20,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     {
         int jobChoice;
 
-        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요" };
+        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요." };
         UM.PrintMenuBox(Menu);
 
         Name = UM.GetUserInput("선택 입력: ");
@@ -179,7 +179,7 @@ bool GameManager::BattleResult(bool Result)
         PlayerMoney += 100;
 
         UM.ClearMainWindowBox();
-        cout << "보상으로 100골드와 모든 파티원은 각각 10의 경험치 획득했습니다." << endl;
+        cout << "보상으로 모든 파티원이 10의 경험치를 얻고 100골드를 획득했습니다." << endl;
         cout << endl;
         for (Player player : Players)
         {
