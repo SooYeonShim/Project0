@@ -10,9 +10,9 @@ void UIManager::WaitForStart(std::string msg)
 
 void UIManager::WaitForEnterInTempScreen(std::string msg)
 {
-    std::cout << "\n" << BOLD << YELLOW << "  " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
+    /*std::cout << "\n" << BOLD << YELLOW << "  " << RESET << msg << CYAN << " [PRESS ENTER]" << RESET;
     std::cout << std::endl;
-    std::cout << std::endl;
+    std::cout << std::endl;*/
     std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
 }
 
@@ -827,6 +827,50 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
         std::cout << "\x1b[" << startColumn << "C";
         std::cout << "\x1b[0C";
     }
+    else if (player.GetJobType() == JobType::Cleric)
+    {
+        std::cout << "   O  _|_";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+        std::cout << " /|\\  |";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+        std::cout << " / \\  |";
+        if (isNewLine)
+        {
+            std::cout << std::endl;
+            std::cout << std::endl;
+        }
+        else
+        {
+            std::cout << "\x1b[1E";
+            std::cout << "\x1b[1E";
+        }
+
+        std::cout << "\x1b[0G";
+        std::cout << "\x1b[" << startColumn << "C";
+        std::cout << "\x1b[0C";
+    }
     else // 유효하지 않은 경우임, 애초에 호출되면 아예 안됌.
     {
         
@@ -839,10 +883,8 @@ void UIManager::PrintPlayerSprite(Player& player, int startColumn, bool isNewLin
 // stream Buffer 가로채기 활성화
 void UIManager::EnableStreamMarginHook() {
     if (!IsIntercepting) {
-        mOriginalBuffer = std::cout.rdbuf();
-        std::cout.rdbuf(this);
+        std::cout.rdbuf(StreamBuffer);
         IsIntercepting = true;
-        AtStartOfLine = true;
     }
 }
 
@@ -855,46 +897,64 @@ void UIManager::DisableStreamMarginHook()
     }
 }
 
-void UIManager::NewTempScreen()
-{
-    DisableStreamMarginHook();
-    std::cout << "\x1b[14;34H";
-    std::cout << "\x1b[0:34r";
-    std::cout << SCREEN_ALT;
+
+
+void UIManager::CreateNewScreenForStoryPrint()
+{    
+
+    std::cout << SCREEN_ALT;    
+
+    // Story출력 위치 설정
+    StreamBuffer->SetParameterCursorPos(34, 30, 0, 30);   
+
+    // Scrolling 동작하게 처리
+    StreamBuffer->SetIsScrolling(true);
+
+    // Enter 위치 설정
+    StreamBuffer->SetPressEnterPos(34, 32);
+
+
+    // 스토리 시작지점으로 커서를 바꿈
+    std::cout << "\x1b[30;34H";
+    std::cout.flush();
+
+    std::cout.rdbuf(StreamBuffer);
+
+    // TODO:: 최초 문장에 대해서 버그가 있어서 넣어둔 것
+    // 최초의 \n은 스크롤링이 갱신되는 줄바꿈이 안돼서 시작때 넣어버림;
+    // 근데 그거하면 빈 화면에 엔터를 입력받는 상태가 되니까, 그걸 비 활성화 했다가 이후에 활성화함
+
+    StreamBuffer->SetPressEnterWhenNewLine(false);
+    std::cout << "\n";
+    StreamBuffer->SetPressEnterWhenNewLine(true);
+
     return;
 }
 
-void UIManager::CloseTempScreen()
+void UIManager::CloseAnyTempScreen()
 {
-    std::cout << SCREEN_MAIN;
-    EnableStreamMarginHook();
+    std::cout << SCREEN_MAIN;    
+
+    // 게임할때로 복귀
+    StreamBuffer->SetParameterCursorPos(LeftMargin, StartStatusRow, 3, StartStatusRow);
+    StreamBuffer->SetPressEnterWhenNewLine(false);
+
+
+    CursorScrollSet();
+
     return;
 }
 
-streambuf::int_type UIManager::overflow(int_type c)
+
+UIManager::UIManager()
 {
-    if (c == EOF) return EOF;
+    mOriginalBuffer = std::cout.rdbuf();
+    StreamBuffer = new CustomStreamBuf(mOriginalBuffer);
 
 
-    if (AtStartOfLine && IsIntercepting) {
-        if (CurrentWindowIndex == 1) {
+    // TODO:: 만약에 CreateNewScreenForStoryPrint() 열고 CloseAnyTempScreen() 닫으면 초기화 됨.    
 
-            char buf[64];
-            // 전체 시퀀스를 하나의 버퍼에 담습니다.
-            int len = sprintf(buf, "\x1b[3;%dr\x1b[%d;%dH", StartStatusRow, StartStatusRow, LeftMargin);
-            mOriginalBuffer->sputn(buf, len);
-
-        }
-        AtStartOfLine = false;
-    }
-
-    // 2. 현재 들어온 실제 문자(c)를 원본 버퍼에 출력
-    int_type result = mOriginalBuffer->sputc(c);
-
-    // 3. 현재 문자가 줄바꿈이면 다음 문자가 올 때 위치 조정을 하도록 플래그 설정
-    if (c == '\n') {
-        AtStartOfLine = true;
-    }
-
-    return result;
+    StreamBuffer->SetParameterCursorPos(LeftMargin, StartStatusRow, 3, StartStatusRow);
+    StreamBuffer->SetIsScrolling(true);
+    CursorScrollSet();
 }

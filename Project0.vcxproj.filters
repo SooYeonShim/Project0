@@ -93,7 +93,7 @@
     <ClCompile Include="Shop\ShopManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Core\StoryManager.cpp">
+    <ClCompile Include="Core\CustomStreamBuf.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -188,7 +188,7 @@
     <ClInclude Include="Shop\ShopManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Core\StoryManager.h">
+    <ClInclude Include="Core\CustomStreamBuf.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
