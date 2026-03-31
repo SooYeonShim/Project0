@@ -1,12 +1,9 @@
 ﻿#pragma once
-#define _CRT_SECURE_NO_WARNINGS
-#pragma warning(disable:4996)
 
 #include <cstdio>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iomanip>
 #include <limits>
 
 #include "Character.h"
@@ -16,6 +13,7 @@
 #include "Monster.h"
 
 #include "CustomStreamBuf.h"
+#include "StatusEffect.h"
 
 
 // --- ANSI 색상 코드 정의 ---
@@ -74,6 +72,8 @@ public:
     void PrintShield(int shield);
 
     void PrintTarget(Action* action);
+
+    void PrintEffectStatus(const vector<StatusEffect>& effects);
 
     void PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters);
 

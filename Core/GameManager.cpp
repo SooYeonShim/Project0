@@ -19,14 +19,14 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         int jobChoice;
 
         
-        Name = UM.GetUserInput(to_string(i+1) + "번 플레이어 이름을 입력해주세요: ");
+        Name = UM.GetUserInput(to_string(i+1) + "번 파티원 이름을 입력해주세요: ");
 
         //0~3사이의 값이 안들어오는거 방지
         while (true)
         {
             UM.ClearMainWindowBox();
             UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
-            jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 플레이어의 직업을 정해주세요: ");
+            jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 파티원의 직업을 정해주세요: ");
             if (jobChoice >= 1 && jobChoice <= 5)
             {
                 break;
@@ -73,7 +73,7 @@ bool GameManager::GameStart()
     //초기화 정상작동 확인
     for (int i=0; i<Players.size(); ++i)
     {
-        UM.PrintMessage(to_string(i+1) + " 번째 플레이어 이름: " + Players[i].GetName() + " 직업: " + GetJobName(Players[i].GetJobType()));
+        UM.PrintMessage(to_string(i+1) + " 번째 파티원 이름: " + Players[i].GetName() + " 직업: " + GetJobName(Players[i].GetJobType()));
     }
 
     // 초기 상인 진입
@@ -84,7 +84,7 @@ bool GameManager::GameStart()
     //전투 시작 선택지 입력 전까지 반복
     while (true)
     {
-        vector<string> menu = { "1. 플레이어 직업 주사위 확인", "2. 전투 시작" };
+        vector<string> menu = { "1. 파티원 직업 주사위 확인", "2. 던전 입장" };
         UM.PrintMenuBox(menu);
 
         int PlayerChoice = UM.GetUserInputNumber("선택 입력: ");
@@ -168,7 +168,7 @@ bool GameManager::BattleResult(bool Result)
         PlayerMoney += 100;
 
         UM.ClearMainWindowBox();
-        cout << "보상으로 모든 플레이어는 각각 10의 경험치와 100골드를 획득했습니다." << endl;
+        cout << "보상으로 100골드와 모든 파티원은 각각 10의 경험치 획득했습니다." << endl;
         cout << endl;
         for (Player player : Players)
         {
@@ -203,7 +203,7 @@ void GameManager::PrintPlayerDice()
     while (CurrentPlayer >= 0 && CurrentPlayer < TotalPlayer)
     {
         UM.ClearMainWindowBox();
-        UM.PrintMessage(to_string(CurrentPlayer+1) + " 번째 플레이어 이름: " + Players[CurrentPlayer].GetName() + " 직업: " + GetJobName(Players[CurrentPlayer].GetJobType()));
+        UM.PrintMessage(to_string(CurrentPlayer+1) + " 번째 파티원 이름: " + Players[CurrentPlayer].GetName() + " 직업: " + GetJobName(Players[CurrentPlayer].GetJobType()));
         Players[CurrentPlayer].GetDice().PrintActionInfo();
 
         //현재 출력 중인 플레이어 번호에 따라 선택 메뉴 다르게 출력
