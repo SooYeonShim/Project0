@@ -9,24 +9,30 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
 {
     UIManager& UM = UIManager::getInstance();
     InventoryManager& IM = InventoryManager::getInstance();
-
+    vector<string> Menu;
     int PlayerCount = 0;
     string Name;
+
+    Players.clear();
 
     //플레이어 이름 및 직업 정하기
     for (int i = 0; i < 3; ++i)
     {
         int jobChoice;
 
-        
-        Name = UM.GetUserInput(to_string(i+1) + "번 파티원 이름을 입력해주세요: ");
+        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요" };
+        UM.PrintMenuBox(Menu);
+
+        Name = UM.GetUserInput("선택 입력: ");
 
         //0~3사이의 값이 안들어오는거 방지
         while (true)
         {
-            UM.ClearMainWindowBox();
-            UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
-            jobChoice = UM.GetUserInputNumber(to_string(i + 1) + "번 파티원의 직업을 정해주세요: ");
+            UM.ClearMenuBox();
+            Menu = { to_string(i + 1) + "번 파티원의 직업을 정해주세요", "", "직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)" };
+            UM.PrintMenuBox(Menu);
+            //UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
+            jobChoice = UM.GetUserInputNumber("선택 입력: ");
             if (jobChoice >= 1 && jobChoice <= 5)
             {
                 break;
@@ -175,8 +181,11 @@ bool GameManager::BattleResult(bool Result)
         cout << endl;
         for (Player player : Players)
         {
-            cout << player.GetName() << "의 경험치: " << player.GetExp() << "/" << player.GetNextLevelExp() << endl;
+            cout << player.GetName() << "의 레벨: " << player.GetLevel() +1 << endl;
+            cout << "   경험치: " << player.GetExp() << "/" << player.GetNextLevelExp() << endl;
+            cout << endl;
         }
+        cout << endl;
         cout << "현재 보유 골드: " << PlayerMoney << endl;
 
         UIManager::getInstance().GetUserInputForWait("");
@@ -269,6 +278,9 @@ string GameManager::GetJobName(JobType JobType)
         break;
     case JobType::Defender:
         return "Defender";
+        break;
+    case JobType::Cleric:
+        return "Cleric";
         break;
     }
   }
