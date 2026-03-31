@@ -87,6 +87,11 @@ public:
     // 주의! 해당 포인터는 힙메모리에 있고 명확한 소유주가 없기에 메모리관리를 주의해야함
     Action* CreateActionByName(const std::string& actionName);
 
+    // 치트용 액션
+    // ture: 적 전체99뎀 false: 아군전체 99뎀
+    Action* CreateDebugAction(bool _chat);
+
+
 private:
     // 상점에서 이름으로 action등록(매니저 내부에서 사용용도)
     void AddToShoplists(const string& actionName);

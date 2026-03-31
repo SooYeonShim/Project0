@@ -25,6 +25,10 @@ public:
     // Action 구입 창
     void ShopActionUI(vector<Player>& Players, int& PlayerMoney);
 
+    // 치트 샵
+    void CheatShop(vector<Player>& Players);
+    void CheatShop2(vector<Player>& Players);
+
 private:
     // 생성자를 private으로 막음
     ShopManager() {}
