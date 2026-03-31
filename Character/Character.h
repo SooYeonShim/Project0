@@ -40,6 +40,7 @@ public:
     void TakeHeal(int Damage);
     void TakeShield(int Damage);
     virtual void EndTurn();
+    void EndStage();
 
 protected:
     string Name; // 이름

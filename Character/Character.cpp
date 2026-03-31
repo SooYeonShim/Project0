@@ -222,3 +222,8 @@ void Character::EndTurn()
     this->Shield = 0;
     CurrentAction = nullptr;
 }
+
+void Character::EndStage()
+{
+    StatusEffects.clear();
+}
