@@ -123,6 +123,8 @@ public:
 
     ~UIManager()
     {
+        std::cout.rdbuf(mOriginalBuffer);
+
         if (StreamBuffer != nullptr)
         {
             delete StreamBuffer;
@@ -178,6 +180,10 @@ private:
 
     // stream Buffer 가로채기 해제
     void DisableStreamMarginHook();
+
+
+    UIManager(const UIManager&) = delete;
+    UIManager& operator=(const UIManager&) = delete;
 
 
     UIManager();
