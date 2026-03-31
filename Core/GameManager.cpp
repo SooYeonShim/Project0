@@ -13,6 +13,8 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     int PlayerCount = 0;
     string Name;
 
+    Players.clear();
+
     //플레이어 이름 및 직업 정하기
     for (int i = 0; i < 3; ++i)
     {
