@@ -67,7 +67,7 @@ public:
      * [ 초록색 초록색 초록색 초록색 초록색 주황색 주황색 주황색 주황색 주황색 ]
      * 
      */    
-    void PrintHP(int HP);
+    void PrintHP(int HP, int MaxHP);
 
     void PrintShield(int shield);
 
