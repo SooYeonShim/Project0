@@ -179,21 +179,23 @@ bool GameManager::BattleResult(bool Result)
 
     if (Result == true)
     {
+        UM.ClearMainWindowBox();
+        
+        cout << "보상으로 모든 파티원이 10의 경험치를 얻고 100골드를 획득했습니다." << endl;
+        cout << endl;
+
         // 경험치 획득
         for (Player& player : Players)
         {
             if (player.GetIsDead() == false)
             {
                 player.SetExp(player.GetExp() + 10);
-                
+
             }
         }
         // 돈 획득
         PlayerMoney += 10;
 
-        UM.ClearMainWindowBox();
-        cout << "보상으로 모든 파티원이 10의 경험치를 얻고 100골드를 획득했습니다." << endl;
-        cout << endl;
         for (Player player : Players)
         {
             cout << player.GetName() << "의 레벨: " << player.GetLevel() << endl;
