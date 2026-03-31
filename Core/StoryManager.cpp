@@ -154,7 +154,7 @@ void StoryManager::MerchantIncounter()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "던전에는 어디서 솟았는지 모를 작은 가판대가 보입니다.  상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
+    cout << "던전에는 어디서 솟았는지 모를 작은 가판대가 보입니다. 상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
     cout << "\"물건을 사지 않는다면, 쉬어가기만 해도 괜찮아요.\"" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -164,7 +164,7 @@ void StoryManager::MechantStart()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "던전입구에는 작은 가판대가 보입니다. 상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
+    cout << "던전입구에는 작은 가판대가 보입니다. 상점 주인은 이 상점의 존재에 의문을 가진 파티가 더 의아하다는 듯, 태연하게 물건을 보여줍니다." << endl;
     cout << "\"바로가려고? 준비는 철저히 해야지\"\n" << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
