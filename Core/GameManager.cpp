@@ -29,7 +29,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
         while (true)
         {
             UM.ClearMenuBox();
-            Menu = { to_string(i + 1) + "번 파티원의 직업을 정해주세요", "", "직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)" };
+            Menu = { to_string(i + 1) + "번 파티원의 직업을 정해주세요.", "", "직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)" };
             UM.PrintMenuBox(Menu);
             //UM.PrintMessage("직업 선택 (1:Fighter, 2:Archer, 3:Defender, 4:Rogue, 5:Cleric)");         
             jobChoice = UM.GetUserInputNumber("선택 입력: ");

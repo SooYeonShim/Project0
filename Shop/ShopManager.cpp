@@ -14,7 +14,7 @@ void ShopManager::HealAllPlayer(vector<Player>& Players, int& PlayerMoney)
             //모든 플레이어의 체력 5 회복
             player.TakeHeal(5);
         }
-        UM.PrintMessage("모든 플레이어 체력 회복");
+        UM.PrintMessage("모든 플레이어 체력 회복!");
         PlayerMoney -= 50;
     }
     else
@@ -32,7 +32,7 @@ void ShopManager::BuyItem(int& PlayerMoney)
     UIManager& UM = UIManager::getInstance();
 
     UM.ClearMenuBox();
-    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요", "", "1. 힐링 포션" };
+    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요.", "", "1. 힐링 포션" };
     UM.PrintMenuBox(Menu);
 
 
@@ -132,7 +132,7 @@ void ShopManager::PrintShopUI(int PlayerMoney)
 
     vector<string> Menu;
 
-    Menu = { "     ★  상점  ★", "플레이어 보유 돈: " + to_string(PlayerMoney), "1. 플레이어 회복", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
+    Menu = { "     ★  상점  ★", "플레이어 보유 돈: " + to_string(PlayerMoney), "1. 휴식하기(상점 나가기)", "2. 아이템 구매", "3. 인벤토리 확인", "4. 다이스 면 구입하기","0. 상점 나가기" };
     UM.PrintMenuBox(Menu);
 }
 
@@ -147,7 +147,7 @@ void ShopManager::ShopActionUI(vector<Player>& Players, int& PlayerMoney)
     // 요구조건 = 50골드이상
     if (PlayerMoney < 50)
     {
-        UM.PrintInputWarning("다이스 면을 사기 위해서는 50골드 이상은 보유해야합니다.");
+        UM.PrintInputWarning("다이스 면을 사려면 50골드 이상이 필요합니다.");
         return;
     }
 
