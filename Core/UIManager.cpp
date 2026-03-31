@@ -392,7 +392,7 @@ int UIManager::GetUserInputNumber(std::string message)
         else
         {
             std::cout << message;
-        }
+        }        
 
 
         std::string input;
@@ -451,6 +451,13 @@ void UIManager::PrintInputWarning(std::string msg)
     InputLineClear();
 
     std::cout << RED << msg << RESET << "\n";
+    
+
+    // 커서 위치만 변경
+    std::cout << "\x1b[" << (InputRow + 1) << ";0H";        
+    std::cout << "\x1b[" << InputRow << ";999H";
+    std::cout << std::flush;
+
 
     // TODO:: 엔터가 아니라 아무키나 눌러도 넘어가게 하고싶어
     std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
@@ -469,7 +476,6 @@ void UIManager::InputLineClear() const
 
     // InputLine 시작 위치로 변경
     std::cout << "\x1b[" << InputRow << ";0H";
-
     std::cout << std::flush;
 }
 
