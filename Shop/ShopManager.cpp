@@ -123,30 +123,6 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
 }
 
 
-// 유저 입력 받은 후 입력 값 반환
-int ShopManager::GetUserInputNum()
-{
-    int PlayerInput;
-    while (true)
-    {
-        cout << "선택 입력 : ";
-        cin >> PlayerInput;
-        cout << endl;
-        if (cin.fail())
-        {
-            cout << "잘못된 입력입니다. 숫자를 입력해주세요." << endl;
-            continue;
-
-        }
-        else
-        {
-            break;
-        }
-    }
-    return PlayerInput;
-}
-
-
 // 상점 UI 출력
 void ShopManager::PrintShopUI(int PlayerMoney)
 {
