@@ -143,6 +143,7 @@
     <ClCompile Include="Item\Item.cpp" />
     <ClCompile Include="Project0.cpp" />
     <ClCompile Include="Shop\ShopManager.cpp" />
+    <ClCompile Include="Core\StoryManager.cpp" />
     <ClCompile Include="Template\TemplateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +176,7 @@
     <ClInclude Include="Item\HealingPotion.h" />
     <ClInclude Include="Item\Item.h" />
     <ClInclude Include="Shop\ShopManager.h" />
+    <ClInclude Include="Core\StoryManager.h" />
     <ClInclude Include="Template\TemplateManager.h" />
   </ItemGroup>
   <ItemGroup>
