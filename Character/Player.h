@@ -18,6 +18,8 @@ public:
 	void SetLevel(int Level);
 	void SetExp(int Exp);
     void SetNextLevelExp(int NextLevelExp);
+
+    void EndTurn() override;
     
 private:
 	JobType Job; // 직업
