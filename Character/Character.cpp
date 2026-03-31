@@ -25,7 +25,7 @@ vector<StatusEffect> Character::GetStatusEffects()
 	return StatusEffects;
 }
 
-Dice Character::GetDice()
+Dice& Character::GetDice()
 {
 	return CharacterDice;
 }
@@ -221,4 +221,9 @@ void Character::EndTurn()
 
     this->Shield = 0;
     CurrentAction = nullptr;
+}
+
+void Character::EndStage()
+{
+    StatusEffects.clear();
 }

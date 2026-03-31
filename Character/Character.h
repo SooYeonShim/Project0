@@ -19,7 +19,7 @@ public:
     bool GetIsDead() const;
 	int GetShield();
     vector<StatusEffect> GetStatusEffects();
-	Dice GetDice();
+	Dice& GetDice();
 	Action* GetCurrentAction();
 
     // Setter
@@ -39,17 +39,18 @@ public:
     void TakeDamage(int Damage);
     void TakeHeal(int Damage);
     void TakeShield(int Damage);
-    void EndTurn();
+    virtual void EndTurn();
+    void EndStage();
 
 protected:
+    string Name; // 이름
     int HP; // 체력
     int MaxHP; // 최대 체력
     // bool IsDead; // 사망 여부 -> HP == 0 판정으로 대체
     int Shield; // 방어력
     Dice CharacterDice; // 고유 주사위
+    vector<StatusEffect> StatusEffects; // 상태이상 리스트
+	Action* CurrentAction; // 이번 턴에 취하는 행동
 
 private:
-    string Name; // 이름
-	Action* CurrentAction; // 이번 턴에 취하는 행동
-    vector<StatusEffect> StatusEffects; // 상태이상 리스트
 };
