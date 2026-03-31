@@ -219,6 +219,20 @@ Dice TemplateManager::GetDiceByRogue()
     return newdice;
 }
 
+Dice TemplateManager::GetDiceByCleric()
+{
+    Dice newdice;
+    
+    newdice.SetAction(3, new Heal(3));
+    newdice.SetAction(3, new Heal(3));
+    newdice.SetAction(2, new Attack(3));
+    newdice.SetAction(3, new Attack(3));
+    newdice.SetAction(4, new Defence(4));
+    newdice.SetAction(5, CreateActionByName("Stun(1)"));
+
+    return newdice;
+}
+
 Dice TemplateManager::GetDiceByType(JobType _type)
 {
     switch (_type)
@@ -237,6 +251,10 @@ Dice TemplateManager::GetDiceByType(JobType _type)
 
     case JobType::Rogue:
         return GetDiceByRogue();
+        break;
+
+    case JobType::Cleric:
+        return GetDiceByCleric();
         break;
 
 
@@ -273,6 +291,11 @@ Player TemplateManager::GetPlayerByType(string Nickname, JobType _type)
     case JobType::Rogue:
         HP = 8;
         dice = GetDiceByRogue();
+        break;
+
+    case JobType::Cleric:
+        HP = 9;
+        dice = GetDiceByCleric();
         break;
 
 

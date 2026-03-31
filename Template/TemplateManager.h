@@ -59,6 +59,7 @@ public:
     Dice GetDiceByArcher();
     Dice GetDiceByDefender();
     Dice GetDiceByRogue();
+    Dice GetDiceByCleric();
 
     // 직업타입을 주면 직업주사위반환
     Dice GetDiceByType(JobType _type);
