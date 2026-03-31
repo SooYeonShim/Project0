@@ -72,10 +72,28 @@
     <ClCompile Include="Item\Item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Inventory\Inventory.cpp">
+    <ClCompile Include="Item\HealingPotion.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Item\HealingPotion.cpp">
+    <ClCompile Include="Core\UIManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\AttackStatus.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\Cure.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Dice\InflictStatus.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory\InventoryManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop\ShopManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StoryManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,10 +161,34 @@
     <ClInclude Include="Item\Item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory\Inventory.h">
+    <ClInclude Include="Item\HealingPotion.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Item\HealingPotion.h">
+    <ClInclude Include="Character\Troll.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\StatusEffect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\UIManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\AttackStatus.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\Cure.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Dice\InflictStatus.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory\InventoryManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop\ShopManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StoryManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
