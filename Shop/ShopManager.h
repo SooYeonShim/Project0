@@ -23,6 +23,9 @@ public:
     int GetUserInputNum();
     void PrintShopUI(int PlayerMoney);
 
+    // Action 구입 창
+    void ShopActionUI(vector<Player>& Players, int& PlayerMoney);
+
 private:
     // 생성자를 private으로 막음
     ShopManager() {}
