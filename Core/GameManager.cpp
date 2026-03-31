@@ -20,7 +20,7 @@ void GameManager::InitializeCharacter(vector<Player>& Players)
     {
         int jobChoice;
 
-        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요" };
+        Menu = { to_string(i + 1) + "번 파티원 이름을 입력해주세요." };
         UM.PrintMenuBox(Menu);
 
         Name = UM.GetUserInput("선택 입력: ");
