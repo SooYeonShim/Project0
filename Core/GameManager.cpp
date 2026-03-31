@@ -183,7 +183,7 @@ bool GameManager::BattleResult(bool Result)
         cout << endl;
         for (Player player : Players)
         {
-            cout << player.GetName() << "의 레벨: " << player.GetLevel() +1 << endl;
+            cout << player.GetName() << "의 레벨: " << player.GetLevel() << endl;
             cout << "   경험치: " << player.GetExp() << "/" << player.GetNextLevelExp() << endl;
             cout << endl;
         }
