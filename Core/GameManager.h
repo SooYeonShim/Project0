@@ -28,7 +28,8 @@ public:
 
 
     void InitializeCharacter(vector<Player>& Players);
-    void GameStart();
+    // true : 엔딩 false : 게임오버
+    bool GameStart();
     bool BattleResult(bool Result);
     void PrintPlayerDice();
     string GetJobName(JobType JobType);
