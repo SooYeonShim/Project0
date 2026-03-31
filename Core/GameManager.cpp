@@ -84,7 +84,7 @@ bool GameManager::GameStart()
     //전투 시작 선택지 입력 전까지 반복
     while (true)
     {
-        vector<string> menu = { "1. 플레이어 직업 주사위 확인", "2. 전투 시작" };
+        vector<string> menu = { "1. 파티원 직업 주사위 확인", "2. 던전 입장" };
         UM.PrintMenuBox(menu);
 
         int PlayerChoice = UM.GetUserInputNumber("선택 입력: ");
