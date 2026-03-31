@@ -73,7 +73,7 @@ void Player::EndTurn()
 
         this->HP -= damage;
 
-        cout << "출혈 피해: " << damage << endl;
+        cout << Name << "의 출혈 피해: " << damage << endl;
     }
 
     // 상태 이상 남은 턴 감소
