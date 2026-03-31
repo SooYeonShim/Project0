@@ -25,7 +25,7 @@ vector<StatusEffect> Character::GetStatusEffects()
 	return StatusEffects;
 }
 
-Dice Character::GetDice()
+Dice& Character::GetDice()
 {
 	return CharacterDice;
 }
