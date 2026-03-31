@@ -394,14 +394,35 @@ int UIManager::GetUserInputNumber(std::string message)
             std::cout << message;
         }
 
-        if (!(std::cin >> choice)) {
-            std::cin.clear();
-            std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
-            PrintInputWarning("[!] 숫자를 입력해주세요.");
 
+        std::string input;
+        std::getline(std::cin, input);
+
+        if (input.empty())
+        {
+            std::cin.clear();
+            PrintInputWarning("[!] 숫자를 입력해주세요.");
             continue;
         }
-        std::cin.ignore((std::numeric_limits<std::streamsize>::max)(), '\n');
+
+        // input이 문자열인지 확인
+        bool isDigit = true;
+        for (int i = 0; i < input.length(); ++i)
+        {
+            if (input[i] < '0' || input[i] >= '9')
+            {
+                isDigit = false;
+                break;
+            }
+        }
+
+        if (!isDigit) {
+            PrintInputWarning("[!] 숫자를 입력해주세요.");            
+            continue;
+        }
+
+        choice = stoi(input);
+
         break;
     }
 
