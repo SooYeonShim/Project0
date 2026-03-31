@@ -104,6 +104,32 @@ void UIManager::PrintTarget(Action* action)
     }
 }
 
+void UIManager::PrintEffectStatus(const vector<StatusEffect>& effects)
+{
+    if (effects.size() == 0)
+    {
+        return;
+    }    
+
+    for (std::vector<StatusEffect>::const_iterator it = effects.begin(); it != effects.end(); ++it)
+    {
+        switch (it->kind)
+        {
+        case StateType::STUN:
+            cout << YELLOW << " S (";
+            cout << it->turnsRemaining;
+            cout << ")" << RESET;
+            break;
+        case StateType::BLEED:
+            cout << RED << " B (";
+            cout << it->turnsRemaining;
+            cout << ")" << RESET;
+            break;
+        }
+    }
+
+}
+
 void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monster>& monsters)
 {
     std::cout << std::endl;
@@ -112,12 +138,16 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
     {
         if (i == 0)
         {
+            PrintEffectStatus(monsters[i].GetStatusEffects());
+            std::cout << std::endl;
             PrintMonsterSprite(monsters[i].GetName(), 0, true);
             std::cout << std::endl;
         }
         else
         {
-            std::cout << "\x1b[6A";
+            std::cout << "\x1b[7A";
+            PrintEffectStatus(monsters[i].GetStatusEffects());
+            std::cout << "\x1b[1B";
             PrintMonsterSprite(monsters[i].GetName(), 40 * i);
             std::cout << "\x1b[1B";
             std::cout << "\x1b[" << 40 * i << "G";
@@ -158,12 +188,18 @@ void UIManager::PrintBattleBoard(std::vector<Player>& players, std::vector<Monst
     {
         if (i == 0)
         {
+            std::cout << "\x1b[" << 0 << "C";
+            PrintEffectStatus(players[i].GetStatusEffects());
+            std::cout << std::endl;
             PrintPlayerSprite(players[i], 2, true);
             std::cout << std::endl;
         }
         else
         {
-            std::cout << "\x1b[6A";
+            std::cout << "\x1b[7A";
+            std::cout << "\x1b[" << 40 * i + 5 << "G";
+            PrintEffectStatus(players[i].GetStatusEffects());
+            std::cout << "\x1b[1B";
             PrintPlayerSprite(players[i], 40 * i + 4);
             std::cout << "\x1b[1B";
             std::cout << "\x1b[" << 40 * i << "G";
