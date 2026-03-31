@@ -223,8 +223,8 @@ Dice TemplateManager::GetDiceByCleric()
 {
     Dice newdice;
     
-    newdice.SetAction(3, new Heal(3));
-    newdice.SetAction(3, new Heal(3));
+    newdice.SetAction(0, new Heal(3));
+    newdice.SetAction(1, new Heal(3));
     newdice.SetAction(2, new Attack(3));
     newdice.SetAction(3, new Attack(3));
     newdice.SetAction(4, new Defence(4));
