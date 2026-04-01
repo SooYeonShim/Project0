@@ -463,13 +463,33 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                     }
                 }
 
-            }            
+            }
+            else
+            {
+                for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
+                {
+                    if (mostser_it->GetIsDead())
+                    {
+                        continue;
+                    }
+
+                    ++menuIndex;
+                }
+            }
 
             // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이지를 종료시킴
             if (menuIndex == 0)
             {
                 UIManager::getInstance().GetUserInputForWait("");
                 isTargetPhaseFinished = true;
+                continue;
+            }
+
+            // 이미적전체 아군전체 자기자신일경우 스킵
+            if (actionEnd)
+            {
+                UIManager::getInstance().ClearMenuBox();
+                UIManager::getInstance().GetUserInputForWait("");
                 continue;
             }
 
