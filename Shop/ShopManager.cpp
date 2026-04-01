@@ -34,7 +34,7 @@ void ShopManager::BuyItem(int& PlayerMoney)
     UIManager& UM = UIManager::getInstance();
 
     UM.ClearMenuBox();
-    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요.", "", "1. 힐링 포션" };
+    vector<string> Menu = { "구매하고 싶은 아이템을 선택해주세요.", "", "1. 힐링 포션", "0. 뒤로가기"};
     UM.PrintMenuBox(Menu);
 
 
@@ -46,24 +46,36 @@ void ShopManager::BuyItem(int& PlayerMoney)
     case 1:
         if (PlayerMoney >= 50)
         {
+            bool IsIventoryNotFull = true;
             Item* hpPotion = new HealingPotion();
-            IM.AddItem(hpPotion);
+            IsIventoryNotFull = IM.AddItem(hpPotion);
 
-            UM.ClearMainWindowBox();
-            UM.PrintMessage("힐링 포션이 구매되었습니다. (-50 골드)");
-            PlayerMoney -= 50;
-            UM.PrintMessage("남은 돈: " + to_string(PlayerMoney));        
+            if (IsIventoryNotFull == true)
+            {
+                UM.ClearMainWindowBox();
+                UM.PrintMessage("힐링 포션이 구매되었습니다. (-50 골드)");
+                PlayerMoney -= 50;
+                UM.PrintMessage("남은 돈: " + to_string(PlayerMoney));
+            }
+            else if(IsIventoryNotFull == false)
+            {
+                UM.ClearMainWindowBox();
+                UM.PrintMessage("인벤토리에 빈 공간이 없습니다.");
+            }
+                 
         }
         else
         {
             UM.PrintInputWarning("보유한 돈이 부족합니다.");
         }
         break;
+    case 0:
+        break;
     default:
         UM.PrintInputWarning("잘못된 아이템을 선택하셨습니다.");
         break;
     }
-\
+
     
 
 }
@@ -85,12 +97,14 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
 
         PrintShopUI(PlayerMoney);
         PlayerInput = UM.GetUserInputNumber("선택 입력: ");
+        // 1. 파티원 전체 체력 회복
         if (PlayerInput == 1)
         {
             UM.ClearMainWindowBox();
             HealAllPlayer(Players, PlayerMoney);
             break;
         }
+        // 2. 아이템 구매
         else if (PlayerInput == 2)
         {
             UM.ClearMainWindowBox();
@@ -98,6 +112,7 @@ void ShopManager::EnterShop(vector<Player>& Players, int& PlayerMoney)
             continue;
 
         }
+        // 3. 인벤토리 확인
         else if (PlayerInput == 3)
         {
             UM.ClearMainWindowBox();

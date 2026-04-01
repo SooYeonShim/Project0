@@ -67,7 +67,8 @@ void StoryManager::Stage1Story()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다.";    
+
+    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다." << endl;
     cout << "하지만 그런 생각도 잠시, 어디선가 소리 없이 나타난 늑대와 고블린에게 파티는 포위되었습니다." << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
@@ -90,7 +91,7 @@ void StoryManager::Stage3Story()
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
     cout << "쿵, 하는 위압적인 소리가 들려옵니다." << endl;
-    cout << "당신의 파티는 갑자기 들려온 소리에 긴장하며 청각을 돋웁니다." << endl;
+    cout << "당신의 파티는 갑자기 들려온 소리에 긴장하며 청각을 곤두세웁니다." << endl;
     cout << "나무 사이로 거대한 그림자가 비치는가 싶더니, 금세 트롤이 모습을 나타냅니다." << endl;
     cout << "트롤은 자신의 몸집에 어울리는 나무 한 그루만한 몽둥이를 들고," << endl;
     cout << "조그만 인간 따위는 파리나 다름없다는 듯 휘둘러대기 시작합니다." << endl;
