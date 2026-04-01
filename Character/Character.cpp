@@ -88,7 +88,7 @@ void Character::DoActive()
     );
 
     if (it != StatusEffects.end()) {
-        cout << "스턴에 걸려 움직일 수 없습니다." << endl;
+        cout << Name << "은/는 스턴에 걸려 움직일 수 없습니다." << endl;
     }
      else
      {
