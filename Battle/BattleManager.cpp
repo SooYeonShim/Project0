@@ -454,10 +454,9 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
                         stringstream ss;
 
-                        if (player_it->GetCurrentAction() != nullptr)
-                        {
-                            ss << menuIndex << ". " << player_it->GetName();
-                        }
+
+                        ss << menuIndex << ". " << player_it->GetName();
+
                         actionTargetMenu.push_back(ss.str());
                         menuIndexToTargetMap[menuIndex] = &(*player_it);
                     }
