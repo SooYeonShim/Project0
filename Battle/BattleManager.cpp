@@ -362,6 +362,8 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
 
             std::vector<Character*> aliveCharacters;
 
+            bool actionEnd = false;
+
             // 적 전체 & 아군 전체인 경우 따로 물을 필요 X 바로 적용
             if (currentAction->GetTargetType() == TargetType::FRIEDLYALL)
             {
@@ -374,7 +376,9 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
 
                 it->DoAction(aliveCharacters);
-                continue;
+                it->DoActive();
+
+                actionEnd = true;
             }
             else if (currentAction->GetTargetType() == TargetType::ENEMYALL)
             {
@@ -387,14 +391,18 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 }
 
                 it->DoAction(aliveCharacters);
+                it->DoActive();
 
-                continue;
+                actionEnd = true;
             }
             else if (currentAction->GetTargetType() == TargetType::MYSELF)
             {
                 it->DoAction({ &(*it) });
-                continue;
+                it->DoActive();
+
+                actionEnd = true;
             }
+
 
             UIManager::getInstance().PrintMessage(turnSS.str());
             UIManager::getInstance().PrintBattleBoard(players, monsters);
@@ -407,54 +415,60 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
             std::vector<std::string> actionTargetMenu = { sst.str(), ""};
 
             // 몬스터 단일 대상
-            if (currentAction->GetTargetType() == TargetType::ENEMY)
+
+
+            if (!actionEnd)
             {
-                for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
+
+                if (currentAction->GetTargetType() == TargetType::ENEMY)
                 {
-                    if (mostser_it->GetIsDead())
+                    for (std::vector<Monster>::iterator mostser_it = monsters.begin(); mostser_it != monsters.end(); ++mostser_it)
                     {
-                        continue;
+                        if (mostser_it->GetIsDead())
+                        {
+                            continue;
+                        }
+
+                        ++menuIndex;
+
+                        stringstream ss;
+
+                        if (mostser_it->GetCurrentAction() != nullptr)
+                        {
+                            ss << menuIndex << ". " << mostser_it->GetName();
+                        }
+                        actionTargetMenu.push_back(ss.str());
+                        menuIndexToTargetMap[menuIndex] = &(*mostser_it);
                     }
-
-                    ++menuIndex;
-
-                    stringstream ss;
-
-                    if (mostser_it->GetCurrentAction() != nullptr)
-                    {
-                        ss << menuIndex << ". " << mostser_it->GetName();
-                    }
-                    actionTargetMenu.push_back(ss.str());
-                    menuIndexToTargetMap[menuIndex] = &(*mostser_it);
                 }
-            }
-            else if (currentAction->GetTargetType() == TargetType::FRIENDLY) // 아군 단일 대상
-            {
-                for (std::vector<Player>::iterator player_it = players.begin(); player_it != players.end(); ++player_it)
+                else if (currentAction->GetTargetType() == TargetType::FRIENDLY) // 아군 단일 대상
                 {
-                    if (player_it->GetIsDead())
+                    for (std::vector<Player>::iterator player_it = players.begin(); player_it != players.end(); ++player_it)
                     {
-                        continue;
+                        if (player_it->GetIsDead())
+                        {
+                            continue;
+                        }
+
+                        ++menuIndex;
+
+                        stringstream ss;
+
+                        if (player_it->GetCurrentAction() != nullptr)
+                        {
+                            ss << menuIndex << ". " << player_it->GetName();
+                        }
+                        actionTargetMenu.push_back(ss.str());
+                        menuIndexToTargetMap[menuIndex] = &(*player_it);
                     }
-
-                    ++menuIndex;
-
-                    stringstream ss;
-
-                    if (player_it->GetCurrentAction() != nullptr)
-                    {
-                        ss << menuIndex << ". " << player_it->GetName();
-                    }
-                    actionTargetMenu.push_back(ss.str());
-                    menuIndexToTargetMap[menuIndex] = &(*player_it);
                 }
-            }
-            
 
+            }            
 
             // 메뉴 인덱스가 0이면 몬스터가 전부 죽었다는 뜻이므로 플레이어 타겟 페이지를 종료시킴
             if (menuIndex == 0)
             {
+                UIManager::getInstance().GetUserInputForWait("");
                 isTargetPhaseFinished = true;
                 continue;
             }
@@ -481,7 +495,10 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 UIManager::getInstance().PrintInputWarning("유효하지 않은 대상입니다.");
                 userInput = UIManager::getInstance().GetUserInputNumber("");
             }
-        }               
+
+            UIManager::getInstance().GetUserInputForWait("");
+        }
+
 
         UIManager::getInstance().ClearMainWindowBox();
         UIManager::getInstance().ClearMenuBox();
