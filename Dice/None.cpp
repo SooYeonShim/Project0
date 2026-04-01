@@ -32,5 +32,5 @@ void None::DoActive()
     }
 
 
-    cout << selfnames <<"는 농땡이를 피우는 것 같다..." << endl;
+    cout << selfnames <<"은/는 농땡이를 피우는 것 같다..." << endl;
 }
