@@ -549,6 +549,7 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
         UIManager::getInstance().GetUserInputForWait("");
 
         // Enemy Turn
+        UIManager::getInstance().ClearMainWindowBox();
         for (std::vector<Monster>::iterator it = monsters.begin(); it != monsters.end(); ++it)
         {
             if (it->GetIsDead())
@@ -556,13 +557,11 @@ bool BattleManager::Battle(std::vector<Player>& players, int stage)
                 continue;
             }
 
-            UIManager::getInstance().ClearMainWindowBox();
             //it->GetCurrentAction()->DoActive();
             it->DoActive();
-            UIManager::getInstance().PrintMessage(turnSS.str());
-            UIManager::getInstance().PrintBattleBoard(players, monsters);
         }
-
+        UIManager::getInstance().PrintMessage(turnSS.str());
+        UIManager::getInstance().PrintBattleBoard(players, monsters);
 
 
         // TURN 엔드 처리 (상태이상 등)
