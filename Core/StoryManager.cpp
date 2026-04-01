@@ -67,7 +67,8 @@ void StoryManager::Stage1Story()
 {
     UIManager::getInstance().CreateNewScreenForStoryPrint();
 
-    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다." << endl;    
+
+    cout << "몬스터를 해치우고 더 깊숙이 들어갔지만, 입구에서도 느낀 것처럼 던전은 마물이 산다는 것을 믿기 힘들 정도로 평화로워 보입니다." << endl;
     cout << "하지만 그런 생각도 잠시, 어디선가 소리 없이 나타난 늑대와 고블린에게 파티는 포위되었습니다." << endl;
 
     UIManager::getInstance().CloseAnyTempScreen();
